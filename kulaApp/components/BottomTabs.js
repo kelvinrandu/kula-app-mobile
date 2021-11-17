@@ -4,7 +4,7 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 export default function BottomTabs() {
     return (
-      <TouchableOpacity>
+      
         <View
           style={{
             flexDirection: "row",
@@ -19,16 +19,18 @@ export default function BottomTabs() {
           <Icon icon="receipt" text="Orders" />
           <Icon icon="user" text="Account" />
         </View>
-      </TouchableOpacity>
+  
     );
 }
 
 
 const Icon=(props)=>(
+  <TouchableOpacity>
     <View>
     <FontAwesome5 name={props.icon} size={25} style={{
         marginBottom:3 ,alignSelf:'center',
     }}/>
     <Text>{props.text}</Text>
     </View>
+    </TouchableOpacity>
 )
