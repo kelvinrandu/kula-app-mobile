@@ -2,8 +2,8 @@ import React from 'react'
 import { View, Text , Image } from 'react-native'
 
 
-const title = "Farmhouse kitchen Thai Cuisine";
-const description = "Thai • Solace Food • $$  • 🎫 •4 ⭐ (2913+)";
+const title = "Soul food";
+const description = "African •  Fast Food • $$  • 🎫 •4 ⭐ (2913+)";
  
 export default function About() {
     return (
