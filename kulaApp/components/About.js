@@ -2,22 +2,12 @@ import React from 'react'
 import { View, Text , Image } from 'react-native'
 
 
-// const title = "Soul food";
-// const description = "African •  Fast Food • $$  • 🎫 •4 ⭐ (2913+)";
-// const restaurantInfo = {
-//   name: "Soul food",
-//   image: "",
-//   price: "$$",
-//   reviews: "1500",
-//   rating: 4.5,
-//   categories: [{ title: "African" }, { title: "Comfort Food" }],
-// };
 export default function About(props) {
   const {name,image,price,reviews,rating,categories} = props.route.params;
   const formattedCategories = categories.map((cat) => cat.title).join(" • ");
   const description = `${formattedCategories} ${
     price ? " • " + price : ""
-  }   •🎫 • ${rating} ⭐  (${reviews}+)`;
+  }   • 🎫 • ${rating} ⭐  (${reviews}+)`;
     return (
       <View>
         <RestaurantImage image={image}/>
