@@ -4,23 +4,23 @@ import { View, Text , Image } from 'react-native'
 
 // const title = "Soul food";
 // const description = "African •  Fast Food • $$  • 🎫 •4 ⭐ (2913+)";
-const restaurantInfo = {
-  name: "Soul food",
-  image: "",
-  price: "$$",
-  reviews: "1500",
-  rating: 4.5,
-  categories: [{ title: "African" }, { title: "Comfort Food" }],
-};
-  const {name,image,price,reviews,rating,categories} = restaurantInfo;
+// const restaurantInfo = {
+//   name: "Soul food",
+//   image: "",
+//   price: "$$",
+//   reviews: "1500",
+//   rating: 4.5,
+//   categories: [{ title: "African" }, { title: "Comfort Food" }],
+// };
+export default function About(props) {
+  const {name,image,price,reviews,rating,categories} = props.route.params;
   const formattedCategories = categories.map((cat) => cat.title).join(" • ");
   const description = `${formattedCategories} ${
     price ? " • " + price : ""
   }   •🎫 • ${rating} ⭐  (${reviews}+)`;
-export default function About() {
     return (
       <View>
-        <RestaurantImage />
+        <RestaurantImage image={image}/>
         <RestaurantTitle name={name} />
         <RestaurantDescription description={description} />
       </View>
@@ -29,7 +29,9 @@ export default function About() {
 
 const RestaurantImage = (props) => (
   <Image
-    source={require("../assets/images/foodthai.jpg")}
+    source={{
+      uri: props.image,
+    }}
     style={{ width: "100%", height: 180 }}
   />
 );
