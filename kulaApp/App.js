@@ -6,7 +6,7 @@ import HomeScreen from "./screens/HomeScreen";
 import RestaurantDetails from "./screens/RestaurantDetails";
 
 export default function App() {
-  // return <HomeScreen />;
-  return <RestaurantDetails/>
+  return <Routes />;
+  // return <RestaurantDetails/>
     // return <LoginScreen2 />;
 }

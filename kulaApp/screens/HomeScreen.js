@@ -11,9 +11,10 @@ import Firebase from "../config/firebase";
 import { IconButton } from "../components";
 import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
 
+
 const auth = Firebase.auth();
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const [restaurantData, setRestaurantData] = useState(localRestaurants)
     const { user } = useContext(AuthenticatedUserContext);
     const handleSignOut = async () => {
@@ -38,7 +39,7 @@ const HomeScreen = () => {
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Categories />
-        <RestaurantItems restaurantData={restaurantData} />
+        <RestaurantItems navigation={navigation}  restaurantData={restaurantData} />
       </ScrollView>
       <Divider width={1} />
       <BottomTabs />
