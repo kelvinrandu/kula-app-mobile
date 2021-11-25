@@ -1,6 +1,14 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import { Divider } from "react-native-elements";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
+
+
+const logo = {
+  uri: "https://reactnative.dev/img/tiny_logo.png",
+  width: 64,
+  height: 64,
+};
 const foods = [
   {
     title: "Lasagna",
@@ -60,7 +68,7 @@ const styles = StyleSheet.create({
   menuItemStyle: {
     flexDirection: "row",
     justifyContent: "space-between",
-    margin: 20,
+    margin: 10,
   },
   titleStyle: {
     fontSize: 19,
@@ -69,7 +77,7 @@ const styles = StyleSheet.create({
   listWrapper: {
     flex:1,
     flexGrow:1,
-    // width: "80%",
+    width: "100%",
     height: 2000 ,
   },
   contentContainer: {
@@ -77,24 +85,36 @@ const styles = StyleSheet.create({
   },
 });
 export default function MenuItems() {
-    return (
-      <View style={styles.listWrapper}>
+  return (
+    <View>
+      <ScrollView style={styles.listWrapper}>
         {foods.map((food, index) => (
           <View key={index}>
             <View style={styles.menuItemStyle}>
+              <BouncyCheckbox
+                iconStyle={{ borderColor: "lightgray", borderRadius: 0 }}
+                fillColor="green"
+              />
+
               <FoodInfo food={food} />
               <FoodImage food={food} />
             </View>
-            <Divider width={0.5} orientation='vertical' style={{ marginHorizontal:20}} />
+            <Divider
+              width={0.5}
+              orientation="vertical"
+              style={{ marginHorizontal: 20 }}
+            />
           </View>
         ))}
-      </View>
-    );
+      </ScrollView>
+    </View>
+  );
 }
+
 
 const FoodInfo = (props) =>{
     return (
-      <View style={{ width:240, justifyContent:"space-evenly"}}>
+      <View style={{ width:220, justifyContent:"space-evenly"}}>
         <Text style={ styles.titleStyle }>{props.food.title}</Text> 
         <Text>{props.food.description}</Text>
         <Text>{props.food.price}</Text>
