@@ -12,11 +12,15 @@ export default function RestaurantDetails({ route ,navigation}) {
         <About route={route} />
         <Divider width={1.8} style={{ marginVertical: 20 }} />
 
-        <ScrollView showsVerticalScrollIndicator={true}>
-        <ViewCart navigation={navigation} restaurantName={route.params.name} />
-        <MenuItems />
-     
-
+        <ScrollView
+          showsVerticalScrollIndicator={true}
+          stickyHeaderIndices={[0]}
+        >
+          <ViewCart
+            navigation={navigation}
+            restaurantName={route.params.name}
+          />
+          <MenuItems restaurantName={route.params.name} />
         </ScrollView>
       </View>
     );
