@@ -18,15 +18,11 @@ let cartReducer = (state = defaultState, action) => {
         };
       } else {
         console.log("REMOVE FROM CART");
-        // console.log('payload',action.payload.title);
-        //  const index = state.findIndex(
-        //    (item) => item.title === action.payload.title
-        //  );
-        //  console.log(index,"index")
+  
         const index =   newState.selectedItems.items.findIndex(
-              (item) => item.title === action.payload.title
+              (item) => item.item.title === action.payload.item.title
             );
-            // console.log(index)
+       
         newState.selectedItems = {
           items: [
             ...newState.selectedItems.items.filter((_, i) => i !== index),
