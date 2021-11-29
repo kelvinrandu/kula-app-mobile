@@ -3,7 +3,9 @@ let defaultState = {
 };
 
 let cartReducer = (state = defaultState, action) => {
+   console.log(action.type);
   switch (action.type) {
+   
     case "ADD_TO_CART": {
       let newState = { ...state };
 
@@ -16,12 +18,18 @@ let cartReducer = (state = defaultState, action) => {
         };
       } else {
         console.log("REMOVE FROM CART");
-        console.log('payload',action.payload.title);
+        // console.log('payload',action.payload.title);
+        //  const index = state.findIndex(
+        //    (item) => item.title === action.payload.title
+        //  );
+        //  console.log(index,"index")
+        const index =   newState.selectedItems.items.findIndex(
+              (item) => item.title === action.payload.title
+            );
+            // console.log(index)
         newState.selectedItems = {
           items: [
-            ...newState.selectedItems.items.filter(
-              (item) => item.title !== action.payload.title
-            ),
+            ...newState.selectedItems.items.filter((_, i) => i !== index),
           ],
           restaurantName: action.payload.restaurantName,
         };
@@ -36,3 +44,4 @@ let cartReducer = (state = defaultState, action) => {
 };
 
 export default cartReducer;
+
