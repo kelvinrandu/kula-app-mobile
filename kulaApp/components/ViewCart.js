@@ -1,12 +1,24 @@
-import React,{ useState} from 'react'
+import React,{ useState,useContext} from 'react'
 import { View, Text , TouchableOpacity, Modal, StyleSheet} from 'react-native'
 import { useSelector } from 'react-redux';
 import OrderItem from './OrderItem';
+import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
+import Firebase, { Firestore } from "../config/firebase";
+import { collection, addDoc } from "firebase/firestore"; 
+
+import { getFirestore, doc, Timestamp } from "firebase/firestore";
+import "firebase/firestore";
+import firebase from "firebase";
+
+
+
 
 export default function ViewCart() {
   const [modalVisible,setModalVisible] = useState(false);
   const {items, restaurantName} = useSelector((state)=> state.cartReducer.selectedItems);  
+  const { user } = useContext(AuthenticatedUserContext);
   console.log(items);
+  console.log(user.email)
   const total = items
     .map((item) => Number(item.item.price.replace("$", "")))
     .reduce((prev, curr) => prev + curr, 0);
@@ -14,6 +26,32 @@ export default function ViewCart() {
     style: "currency",
     currency: "USD",
   });
+  const addOrderToFirebase =()=>{
+    (async () => {
+  
+  try {
+
+    	Firestore.collection("orders").add({
+        items: items,
+        total: totalUSD,
+        restaurantName: restaurantName,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        user: user.email,
+        checked: false,
+      });
+    
+
+
+    console.log("Document written with ID: ");
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+})();
+
+    setModalVisible(false)
+
+
+  }
   const styles = StyleSheet.create({
     modalContainer: {
       flex: 1,
@@ -70,7 +108,7 @@ export default function ViewCart() {
                 width:300,
                 position: "relative",
               }}
-              onPress={() =>setModalVisible(false)}
+              onPress={() => addOrderToFirebase()}
               >
               <Text style={{ color:"white", fontSize: 20 }}> Checkout</Text>
               <Text style ={{ position:'absolute',color:"white",right:20 ,fontSize:15,top:17}}>{total ? totalUSD : ""}</Text>

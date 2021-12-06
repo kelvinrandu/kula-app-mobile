@@ -17,6 +17,7 @@ const auth = Firebase.auth();
 const HomeScreen = ({navigation}) => {
   const [restaurantData, setRestaurantData] = useState(localRestaurants)
     const { user } = useContext(AuthenticatedUserContext);
+    
     const handleSignOut = async () => {
       try {
         await auth.signOut();
