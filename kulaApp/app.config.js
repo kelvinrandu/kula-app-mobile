@@ -17,10 +17,12 @@ export default {
     assetBundlePatterns: ["**/*"],
     ios: {
       supportsTablet: true,
+      bundleIdentifier: "com.meko.kulaapp",
     },
     android: {
+      package: "com.meko.kulaapp",
+      versionCode: 1,
       adaptiveIcon: {
-
         foregroundImage: "./assets/adaptive-icon.png",
         backgroundColor: "#FFFFFF",
       },
@@ -34,8 +36,11 @@ export default {
       projectId: process.env.PROJECT_ID,
       storageBucket: process.env.STORAGE_BUCKET,
       messagingSenderId: process.env.MESSAGING_SENDER_ID,
-       databaseURL:process.env.DATABASE_URL,
+      databaseURL: process.env.DATABASE_URL,
       appId: process.env.APP_ID,
-    }
-  }
+      eas: {
+        projectId: process.env.EAS_PROJECT_ID,
+      },
+    },
+  },
 };

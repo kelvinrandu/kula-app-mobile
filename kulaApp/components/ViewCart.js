@@ -5,10 +5,12 @@ import OrderItem from './OrderItem';
 import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
 import Firebase, { Firestore } from "../config/firebase";
 import { collection, addDoc } from "firebase/firestore"; 
+import "firebase/compat/firestore";
+import firebase from "firebase/compat/app";
 
 import { getFirestore, doc, Timestamp } from "firebase/firestore";
-import "firebase/firestore";
-import firebase from "firebase";
+// import "firebase/firestore";
+// import firebase from "firebase";
 
 
 
