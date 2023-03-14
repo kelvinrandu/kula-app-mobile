@@ -17,20 +17,26 @@ const auth = Firebase.auth();
 const HomeScreen = ({navigation}) => {
   // const [restaurantData, setRestaurantData] = useState(localRestaurants)
    const [restaurantData, setRestaurantData] = useState(localRestaurants);
+   const [query, setQuery] = useState('');
     const { user } = useContext(AuthenticatedUserContext);
 
     useEffect(() => {
       // setRestaurantData(restaurantData);
-      console.log("changed", restaurantData);
-      setRestaurantData(restaurantData);
-      
+      console.log("changed");
+      // setRestaurantData(restaurantData);
     }, [restaurantData]);
-  const search=( query) =>{
-    let resti = restaurantData.filter(
-      
-      (price) => price.categories.find((o) => o.title === "African")
+        // useEffect(() => {
+        //   setRestaurantData(localRestaurants);
+        //   console.log(" query changed");
+        //   // setRestaurantData(restaurantData);
+        // }, [query]);
+  const search=(query) =>{
+    console.log(query)
+    let resti = localRestaurants.filter((price) =>
+      price.categories.find((o) => o.title === query)
     );
       let result = resti;
+      setQuery(query);
       setRestaurantData(result);
      
 

@@ -5,26 +5,32 @@ const items = [
   {
     image: require("../assets/images/deals.png"),
     text: "Groceries",
+    category: "Groceries",
   },
   {
     image: require("../assets/images/fast-food.png"),
     text: "Fast Food",
+    category: "African",
   },
   {
     image: require("../assets/images/soft-drink.png"),
     text: "Drinks",
+    category: "American",
   },
   {
     image: require("../assets/images/coffee.png"),
     text: "Coffee",
+    category: "African",
   },
   {
     image: require("../assets/images/bread.png"),
     text: "Bread",
+    category: "Groceries",
   },
   {
     image: require("../assets/images/desserts.png"),
     text: "Cake",
+    category: "Groceries",
   },
 ];
 export default function Categories({search}) {
@@ -54,7 +60,7 @@ export default function Categories({search}) {
               //   width: 300,
               //   position: "relative",
               // }}
-              onPress={() => search(item.text)}
+              onPress={() => search(item.category)}
             >
               <Image
                 source={item.image}

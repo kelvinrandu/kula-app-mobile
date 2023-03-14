@@ -56,9 +56,8 @@ export const localRestaurants = [
 export default function RestaurantItem({navigation, ...props}) {
    const [restaurants, setRestaurants] = useState(props.restaurantData);
      useEffect(() => {
-       console.log('reached')
-      
-     }, [restaurants]);
+       console.log("reached",restaurants);
+     }, [props.restaurantData]);
   
     // const docRef = doc(Firestore, "restaurants");
   (async () => {
@@ -80,14 +79,14 @@ try {
 }
   })();
   // console.log('restaurants-->',restaurants)
-  // useEffect(() => {
-  //   console.log('hereerr')
-  // }, [restaurants]);
+  useEffect(() => {
+    console.log('hereerr')
+  }, [restaurants]);
   
   return (
     <>
-      {/* {props.restaurantData.map((restaurant, index) => ( */}
-       { restaurants.map((restaurant, index) => (
+      {props.restaurantData.map((restaurant, index) => (
+
         <TouchableOpacity
           key={index}
           activeOpacity={1}
