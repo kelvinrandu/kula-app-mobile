@@ -20,7 +20,7 @@ export default function ViewCart() {
   const {items, restaurantName} = useSelector((state)=> state.cartReducer.selectedItems);  
   const { user } = useContext(AuthenticatedUserContext);
   console.log(items);
-  console.log(user.email)
+  // console.log(user.email)
   const total = items
     .map((item) => Number(item.item.price.replace("$", "")))
     .reduce((prev, curr) => prev + curr, 0);
@@ -38,7 +38,8 @@ export default function ViewCart() {
         total: totalUSD,
         restaurantName: restaurantName,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        user: user.email,
+        // user: user.email,
+        user:{},
         checked: false,
       });
     

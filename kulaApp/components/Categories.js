@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image ,ScrollView} from "react-native";
+import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
 
 const items = [
   {
@@ -27,27 +27,46 @@ const items = [
     text: "Cake",
   },
 ];
-export default function Categories() {
+export default function Categories({search}) {
   return (
-    <View style={{
-        marginTop:5,
-        backgroundColor:"#fff",
+    <View
+      style={{
+        marginTop: 5,
+        backgroundColor: "#fff",
         paddingVertical: 10,
         paddingLeft: 20,
-    }}>
-    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-      {items.map((item, index) => (
-        <View key={index} style={{ alignItems: "center", marginRight: 30 }}>
-          <Image
-            source={item.image}
-            style={{ width: 50, height: 40, resizeMode: "contain" }}
-          />
-          <Text style={{ fontSize: 13, fontWeight: "800" }}>
-            {item.text}
-          </Text>
-        </View>
-      ))}
-    </ScrollView>
+      }}
+    >
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        {items.map((item, index) => (
+          <View
+            onPress={() => console.log("here")}
+            key={index}
+            style={{ alignItems: "center", marginRight: 30 }}
+          >
+            <TouchableOpacity
+              // style={{
+              //   marginTop: 20,
+              //   backgroundColor: "black",
+              //   alignItems: "center",
+              //   padding: 13,
+              //   borderRadius: 30,
+              //   width: 300,
+              //   position: "relative",
+              // }}
+              onPress={() => search(item.text)}
+            >
+              <Image
+                source={item.image}
+                style={{ width: 50, height: 40, resizeMode: "contain" }}
+              />
+              <Text style={{ fontSize: 13, fontWeight: "800" }}>
+                {item.text}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        ))}
+      </ScrollView>
     </View>
   );
 }

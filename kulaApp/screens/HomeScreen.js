@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { View, StyleSheet, Text, SafeAreaView, ScrollView } from "react-native";
 import Categories from "../components/Categories";
@@ -15,9 +15,26 @@ import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvide
 const auth = Firebase.auth();
 
 const HomeScreen = ({navigation}) => {
-  const [restaurantData, setRestaurantData] = useState(localRestaurants)
+  // const [restaurantData, setRestaurantData] = useState(localRestaurants)
+   const [restaurantData, setRestaurantData] = useState(localRestaurants);
     const { user } = useContext(AuthenticatedUserContext);
-    
+
+    useEffect(() => {
+      // setRestaurantData(restaurantData);
+      console.log("changed", restaurantData);
+      setRestaurantData(restaurantData);
+      
+    }, [restaurantData]);
+  const search=( query) =>{
+    let resti = restaurantData.filter(
+      
+      (price) => price.categories.find((o) => o.title === "African")
+    );
+      let result = resti;
+      setRestaurantData(result);
+     
+
+    }
     const handleSignOut = async () => {
       try {
         await auth.signOut();
@@ -25,6 +42,8 @@ const HomeScreen = ({navigation}) => {
         console.log(error);
       }
     };
+    // console.log("res->", restaurantData);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ backgroundColor: "white", padding: 15 }}>
@@ -36,11 +55,14 @@ const HomeScreen = ({navigation}) => {
           onPress={handleSignOut}
         />
         <HeaderTabs />
-        <SearchBar />
+        <SearchBar search={search} />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Categories />
-        <RestaurantItems navigation={navigation}  restaurantData={restaurantData} />
+        <Categories  search={search} />
+        <RestaurantItems
+          navigation={navigation}
+          restaurantData={restaurantData}
+        />
       </ScrollView>
       <Divider width={1} />
       <BottomTabs />

@@ -4,7 +4,7 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import Iconicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
-export default function SearchBar() {
+export default function SearchBar({search}) {
   return (
     <View style={{ marginTop: 15, flexDirection: "row" }}>
       <GooglePlacesAutocomplete
@@ -19,28 +19,35 @@ export default function SearchBar() {
           textInputContainer: {
             backgroundColor: "#eee",
             borderRadius: 50,
-            flexDirection:"row",
+            flexDirection: "row",
             alignItems: "center",
             marginRight: 10,
           },
         }}
-        renderLeftButton={()=>(
-            <View style={{ marginLeft:10 }}>
-                <Iconicons name="location-sharp" size={24} />
-            </View>
+        renderLeftButton={() => (
+          <View style={{ marginLeft: 10 }}>
+            <Iconicons name="location-sharp" size={24} />
+          </View>
         )}
         renderRightButton={() => (
-            <View style={{
-                flexDirection:"row",
-                marginRight: 8,
-                backgroundColor:"white",
-                padding:9,
-                borderRadius:30,
-                alignItems:"center",
-            }}> 
-            <AntDesign name="clockcircle" size={11} style={{ marginRight:6 }} />
-                <Text>Search</Text>
-            </View>
+          <View
+            style={{
+              flexDirection: "row",
+              marginRight: 8,
+              backgroundColor: "white",
+              padding: 9,
+              borderRadius: 30,
+              alignItems: "center",
+            }}
+          >
+            <AntDesign
+              name="clockcircle"
+              size={11}
+              style={{ marginRight: 6 }}
+              onPress={() => search()}
+            />
+            <Text>Search</Text>
+          </View>
         )}
       />
     </View>
