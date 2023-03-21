@@ -46,27 +46,29 @@ export default function Categories({search}) {
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {items.map((item, index) => (
           <View
+
             onPress={() => console.log("here")}
             key={index}
             style={{ alignItems: "center", marginRight: 30 }}
           >
             <TouchableOpacity
-              // style={{
-              //   marginTop: 20,
-              //   backgroundColor: "black",
-              //   alignItems: "center",
-              //   padding: 13,
-              //   borderRadius: 30,
-              //   width: 300,
-              //   position: "relative",
-              // }}
+              style={{
+                // marginTop: 20,
+                background: "#D9D9D9",
+                // backgroundColor: "black",
+                alignItems: "center",
+                // padding: 13,
+                // borderRadius: 30,
+                // width: 300,
+                // position: "relative",
+              }}
               onPress={() => search(item.category)}
             >
               <Image
                 source={item.image}
                 style={{ width: 50, height: 40, resizeMode: "contain" }}
               />
-              <Text style={{ fontSize: 13, fontWeight: "800" }}>
+              <Text style={{ fontSize: 12,  }}>
                 {item.text}
               </Text>
             </TouchableOpacity>

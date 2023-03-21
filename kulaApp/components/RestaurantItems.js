@@ -5,6 +5,7 @@ import { doc, getDoc,getDocs } from "firebase/firestore";
 import Firebase, { Firestore } from "../config/firebase";
 import "firebase/compat/firestore";
 import firebase from "firebase/compat/app";
+// import { normalize } from "path";
 export const localRestaurants = [
   {
     name: "Tiki Bar",
@@ -103,7 +104,7 @@ try {
           }
         >
           <View
-            style={{ marginTop: 10, padding: 15, backgroundColor: "white" }}
+            style={{ marginTop: 10, padding: 10, backgroundColor: "white" }}
           >
             <RestaurantImage image={restaurant.image_url} />
             <RestaurantInfo name={restaurant.name} rating={restaurant.rating} />
@@ -137,11 +138,35 @@ const RestaurantInfo = (props) => (
       marginTop: 10,
     }}
   >
-    <View style={{ fontSize: 15, fontWeight: "bold" }}>
-      <Text> {  props.name }</Text>
-      <Text style={{ fontSize: 13, color: "gray" }}> 35-45 • min </Text>
+    <View style={{ 
+      fontSize: 16 ,
+      fontStyle: "normalize",
+      fontWeight: 900,
+      color: "#616161",
+      // fontSize: 16px;
+      lineHeight: "24px",
+      // /* identical to box height, or 150% */
+
+      // letter-spacing: -0.408px
+
+      color: "#616161" }}>
+      <Text> {props.name}</Text>
+
+      <Text style={{ fontSize: 13, color: "gray" }}>
+        {" "}
+        Open till 8pm • 250 ksh • vegan{" "}
+      </Text>
     </View>
-    <View style={{ backgroundColor: "#eee", height: 30, width: 30 ,alignItems:"center",justifyContent:"center",borderRadius:15,}} >
+    <View
+      style={{
+        backgroundColor: "#eee",
+        height: 30,
+        width: 30,
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 15,
+      }}
+    >
       <Text> {props.rating} </Text>
     </View>
   </View>

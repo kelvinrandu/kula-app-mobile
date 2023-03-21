@@ -10,6 +10,7 @@ import SearchBar from "../components/SearchBar";
 import Firebase from "../config/firebase";
 import { IconButton } from "../components";
 import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
+import SearchText from "../components/SearchText";
 
 
 const auth = Firebase.auth();
@@ -61,17 +62,18 @@ const HomeScreen = ({navigation}) => {
           onPress={handleSignOut}
         />
         <HeaderTabs />
-        <SearchBar search={search} />
+        {/* <SearchBar search={search} /> */}
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Categories  search={search} />
+        <SearchText/>
         <RestaurantItems
           navigation={navigation}
           restaurantData={restaurantData}
         />
       </ScrollView>
-      <Divider width={1} />
-      <BottomTabs />
+      {/* <Divider width={1} />
+      <BottomTabs /> */}
     </SafeAreaView>
   );
 };
@@ -81,8 +83,11 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     paddingHorizontal: 10,
     marginTop: 30,
-    backgroundColor:"#eee",
-    
+    // backgroundColor: "#eee",
+    backgroundColor: "white",
   },
 });
 export default HomeScreen;
+
+
+//  const data2= {"prompt": form.prompt}
