@@ -30,8 +30,38 @@ const RestaurantTitle = (props)=>(
     <Text style={{ fontSize:29,fontWeight:"600",marginTop:10,marginHorizontal:15,}}>{props.name}</Text>
 )
 
-const RestaurantDescription=(props)=>(
-    <Text style={{ marginTop:10, marginHorizontal:15,fontWeight: '400', fontSize:15.5,
-    }} >{props.description}</Text>
+const RestaurantDescription = (props) => (
+  <>
+    <Text
+      style={{
+        marginTop: 10,
+        marginHorizontal: 15,
+        fontWeight: "700",
+        fontSize: 15.5,
+      }}
+    >
+      4.4 -vegan
+    </Text>
+    <Text
+      style={{
+        color: "gray" ,
 
-)
+        marginHorizontal: 15,
+        fontWeight: "400",
+        fontSize: 15.5,
+      }}
+    >
+      Open till 8.pm
+    </Text>
+    <Text
+      style={{
+        color: "gray" ,
+        marginHorizontal: 15,
+        fontWeight: "400",
+        fontSize: 15.5,
+      }}
+    >
+      Click to get more information about the restaurant
+    </Text>
+  </>
+);

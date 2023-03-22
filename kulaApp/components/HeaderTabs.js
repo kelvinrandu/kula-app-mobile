@@ -80,7 +80,7 @@ export default function HeaderTabs () {
           textDecoration: "underline",
           textDecorationColor: "red",
         }}
-        title="Recent"
+        title="Delivery"
       />
       <Tab.Item
         titleStyle={{
@@ -88,7 +88,7 @@ export default function HeaderTabs () {
           textDecoration: "underline",
           textDecorationColor: "red",
         }}
-        title="favourite"
+        title="Pickup"
       />
     </Tab>
   );
