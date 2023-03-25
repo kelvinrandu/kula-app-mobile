@@ -8,76 +8,17 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SafeAreaView from "react-native-safe-area-view";
 import AnimatedHeader from "../components/AnimatedHeader";
 
-const DATA = [
-  {
-    id: 1,
-    title: "The Hunger Games",
-  },
-  {
-    id: 2,
-    title: "Harry Potter and the Order of the Phoenix",
-  },
-  {
-    id: 3,
-    title: "To Kill a Mockingbird",
-  },
-  {
-    id: 4,
-    title: "Pride and Prejudice",
-  },
-  {
-    id: 5,
-    title: "Twilight",
-  },
-  {
-    id: 6,
-    title: "The Book Thief",
-  },
-  {
-    id: 7,
-    title: "The Chronicles of Narnia",
-  },
-  {
-    id: 8,
-    title: "Animal Farm",
-  },
-  {
-    id: 9,
-    title: "Gone with the Wind",
-  },
-  {
-    id: 10,
-    title: "The Shadow of the Wind",
-  },
-  {
-    id: 11,
-    title: "The Fault in Our Stars",
-  },
-  {
-    id: 12,
-    title: "The Hitchhiker's Guide to the Galaxy",
-  },
-  {
-    id: 13,
-    title: "The Giving Tree",
-  },
-  {
-    id: 14,
-    title: "Wuthering Heights",
-  },
-  {
-    id: 15,
-    title: "The Da Vinci Code",
-  },
-];
+
 
 const H_MAX_HEIGHT = 150;
 const H_MIN_HEIGHT = 52;
 const H_SCROLL_DISTANCE = H_MAX_HEIGHT - H_MIN_HEIGHT;
+console.log(H_SCROLL_DISTANCE);
 
 
 export default function RestaurantDetails({ route ,navigation}) {
    const offset = useRef(new Animated.Value(0)).current;
+   console.log('offset',offset)
 
     return (
       // <View>
@@ -100,31 +41,30 @@ export default function RestaurantDetails({ route ,navigation}) {
           <AnimatedHeader route={route} animatedValue={offset} />
 
           <Divider width={1.8} style={{ marginVertical: 20 }} />
-
           {/* <ScrollView
-            style={{ flex: 1, backgroundColor: "white" }}
-            contentContainerStyle={{
-              alignItems: "center",
-              paddingTop: 220,
-              paddingHorizontal: 20,
-            }}
-            showsVerticalScrollIndicator={false}
-            scrollEventThrottle={16}
-            onScroll={Animated.event(
-              [{ nativeEvent: { contentOffset: { y: offset } } }],
-              { useNativeDriver: false }
-            )}
-          >
-            <MenuItems restaurantName={route.params.name} />
-          </ScrollView> */}
+              // style={{ flex: 1, backgroundColor: "white" }}
+              contentContainerStyle={{
+                // alignItems: "center",
+                alignItems: "flex-start",
+                paddingTop: 300,
+                zIndex: 1,
+                paddingHorizontal: 20,
+              }}
+              showsVerticalScrollIndicator={false}
+              scrollEventThrottle={16}
+              onScroll={Animated.event(
+                [{ nativeEvent: { contentOffset: { y: offset } } }],
+                { useNativeDriver: false }
+              )}
+            > */}
           <ScrollView
             style={{ flex: 1, backgroundColor: "white" }}
             contentContainerStyle={{
               // alignItems: "center",
               alignItems: "flex-start",
-              paddingTop: 300,
+              paddingTop: 200,
               zIndex: 1,
-              paddingHorizontal: 20,
+              // paddingHorizontal: 20,
             }}
             showsVerticalScrollIndicator={false}
             scrollEventThrottle={16}
@@ -133,6 +73,7 @@ export default function RestaurantDetails({ route ,navigation}) {
               { useNativeDriver: false }
             )}
           >
+            <RestaurantDescription />
             <ViewCart
               navigation={navigation}
               restaurantName={route.params.name}
@@ -143,3 +84,39 @@ export default function RestaurantDetails({ route ,navigation}) {
       </SafeAreaProvider>
     );
 }
+const RestaurantDescription = (props) => (
+  <>
+    <Text
+      style={{
+        marginTop: 10,
+        marginHorizontal: 15,
+        fontWeight: "700",
+        fontSize: 15.5,
+      }}
+    >
+      4.4 -vegan
+    </Text>
+    <Text
+      style={{
+        color: "gray",
+
+        marginHorizontal: 15,
+        fontWeight: "400",
+        fontSize: 15.5,
+      }}
+    >
+      Open till 8.pm
+    </Text>
+    <Text
+      style={{
+        color: "gray",
+        marginHorizontal: 15,
+        fontWeight: "400",
+        fontSize: 15.5,
+      }}
+    >
+      Click to get more information about the restaurant
+    </Text>
+    
+    </>
+)

@@ -1,6 +1,7 @@
 import React from "react";
 import { Animated, View,Text,Image } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Avatar, Badge, Icon, withBadge } from "react-native-elements";
 
 const HEADER_HEIGHT = 200;
 
@@ -39,20 +40,33 @@ const AnimatedHeader = (props) => {
       >
         <RestaurantImage image={image} />
         <RestaurantTitle name={name} />
-        <RestaurantDescription description={description} />
+        {/* <RestaurantDescription description={description} /> */}
       </Animated.View>
     </>
   );
 };
 
 const RestaurantImage = (props) => (
-  <Image
-    source={{
-      uri: props.image,
-    }}
-    // style={{ width: "100%", height: 180 }}
-    style={{ width: "100%", height: "100%" }}
-  />
+  <View>
+    <Image
+      source={{
+        uri: props.image,
+      }}
+      // style={{ width: "100%", height: 180 }}
+      style={{ width: "100%", height: "100%" }}
+    />
+    <Badge
+      containerStyle={{
+        color: "white",
+        position: "absolute",
+        top: 50,
+        right: 60,
+      }}
+      value={
+        <Text style={{ flex: 1, backgroundColor: "white" }}>Category</Text>
+      }
+    />
+  </View>
 );
 const RestaurantTitle = (props) => (
   <Text
