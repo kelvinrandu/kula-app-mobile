@@ -10,29 +10,26 @@ import { getAuth, signInWithPhoneNumber } from "firebase/auth";
 
 // const auth = Firebase.auth();
 
-export default LoginScreen2 = () => {
+export default LoginScreen = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [code, setCode] = useState("");
   const [verificationId, setVerificationId] = useState(null);
   const recaptchaVerifier = useRef(null);
   const sendVerification = () => {
-    const phoneProvider = new firebase.auth().PhoneAuthProvider();
-    phoneProvider
-      .verifyPhoneNumber(phoneNumber, recaptchaVerifier.current)
-      .then(setVerificationId);
+    // const phoneProvider = new firebase.auth().PhoneAuthProvider();
+    // phoneProvider
+    //   .verifyPhoneNumber(phoneNumber, recaptchaVerifier.current)
+    //   .then(setVerificationId);
 
-      Alert(verificationId)
+    //   Alert(verificationId)
   };
   const confirmCode = () => {
-    var credential = firebase.auth.PhoneAuthProvider.credential(
-     verificationId,
-      code
-    );
-    // const credential = firebase.auth().PhoneAuthProvider.credential(
-    //   verificationId,
+    // var credential = firebase.auth.PhoneAuthProvider.credential(
+    //  verificationId,
     //   code
     // );
-    firebase.auth().signInWithCredential(credential);
+
+    // firebase.auth().signInWithCredential(credential);
     // firebase
     //   .auth()
     //   .signInWithCredential(credential)

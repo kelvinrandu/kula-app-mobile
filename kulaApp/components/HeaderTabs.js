@@ -78,7 +78,7 @@ export default function HeaderTabs () {
         titleStyle={{
           color: "black",
           textDecoration: "underline",
-          textDecorationColor: "red",
+          textDecorationColor: "black",
         }}
         title="Delivery"
       />
@@ -86,7 +86,7 @@ export default function HeaderTabs () {
         titleStyle={{
           color: "black",
           textDecoration: "underline",
-          textDecorationColor: "red",
+          textDecorationColor: "black",
         }}
         title="Pickup"
       />

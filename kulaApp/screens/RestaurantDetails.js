@@ -40,7 +40,7 @@ export default function RestaurantDetails({ route ,navigation}) {
         <SafeAreaView style={{ flex: 1 }} forceInset={{ top: "always" }}>
           <AnimatedHeader route={route} animatedValue={offset} />
 
-          <Divider width={1.8} style={{ marginVertical: 20 }} />
+          <Divider width={1.8} style={{ marginVertical: 10 }} />
           {/* <ScrollView
               // style={{ flex: 1, backgroundColor: "white" }}
               contentContainerStyle={{
@@ -73,6 +73,7 @@ export default function RestaurantDetails({ route ,navigation}) {
               { useNativeDriver: false }
             )}
           >
+            <RestaurantTitle name={route.params.name} />
             <RestaurantDescription />
             <ViewCart
               navigation={navigation}
@@ -120,3 +121,16 @@ const RestaurantDescription = (props) => (
     
     </>
 )
+const RestaurantTitle = (props) => (
+  <Text
+    style={{
+      fontSize: 29,
+      zIndex: 10,
+      fontWeight: "600",
+      marginTop: 0,
+      marginHorizontal: 15,
+    }}
+  >
+    {props.name}
+  </Text>
+);

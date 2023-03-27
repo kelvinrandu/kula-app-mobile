@@ -39,7 +39,7 @@ const AnimatedHeader = (props) => {
         }}
       >
         <RestaurantImage image={image} />
-        <RestaurantTitle name={name} />
+        {/* <RestaurantTitle name={name} /> */}
         {/* <RestaurantDescription description={description} /> */}
       </Animated.View>
     </>
