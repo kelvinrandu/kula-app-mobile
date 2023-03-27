@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { View, Text,Image, Animated, ScrollView } from "react-native";
+import { View, Text,Image,StyleSheet, Animated, ScrollView } from "react-native";
 import { Divider } from 'react-native-elements'
 import About from '../components/About'
 import MenuItems from '../components/MenuItems'
@@ -37,26 +37,13 @@ export default function RestaurantDetails({ route ,navigation}) {
       //   </ScrollView>
       // </View>
       <SafeAreaProvider>
-        <SafeAreaView style={{ flex: 1 }} forceInset={{ top: "always" }}>
+        <SafeAreaView
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          forceInset={{ top: "always" }}
+        >
           <AnimatedHeader route={route} animatedValue={offset} />
 
           <Divider width={1.8} style={{ marginVertical: 10 }} />
-          {/* <ScrollView
-              // style={{ flex: 1, backgroundColor: "white" }}
-              contentContainerStyle={{
-                // alignItems: "center",
-                alignItems: "flex-start",
-                paddingTop: 300,
-                zIndex: 1,
-                paddingHorizontal: 20,
-              }}
-              showsVerticalScrollIndicator={false}
-              scrollEventThrottle={16}
-              onScroll={Animated.event(
-                [{ nativeEvent: { contentOffset: { y: offset } } }],
-                { useNativeDriver: false }
-              )}
-            > */}
           <ScrollView
             style={{ flex: 1, backgroundColor: "white" }}
             contentContainerStyle={{
@@ -75,12 +62,15 @@ export default function RestaurantDetails({ route ,navigation}) {
           >
             <RestaurantTitle name={route.params.name} />
             <RestaurantDescription />
+
+            <MenuItems restaurantName={route.params.name} />
+          </ScrollView>
+          <View style={styles.action}>
             <ViewCart
               navigation={navigation}
               restaurantName={route.params.name}
             />
-            <MenuItems restaurantName={route.params.name} />
-          </ScrollView>
+          </View>
         </SafeAreaView>
       </SafeAreaProvider>
     );
@@ -134,3 +124,32 @@ const RestaurantTitle = (props) => (
     {props.name}
   </Text>
 );
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  scrollView: {
+    marginHorizontal: 20,
+  },
+  text: {
+    fontSize: 30,
+  },
+  action: {
+    flexDirection: "row",
+    // borderWidth: 1,
+    // borderRadius: 25,
+    padding: 15,
+    position: "absolute",
+    bottom: 5,
+    // backgroundColor: "#000",
+    width: "50%",
+    justifyContent: "space-around",
+  },
+  actionItem: {
+    color: "#fff",
+  },
+});
+

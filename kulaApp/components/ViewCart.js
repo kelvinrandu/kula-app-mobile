@@ -125,12 +125,14 @@ export default function ViewCart() {
 
     return (
       <>
-      <Modal animationType='slide' visible={modalVisible}
-      transparent={true}
-      onRequestClose={()=> setModalVisible(false)}
-      >
-        {checkoutModalContent()}
-      </Modal>
+        <Modal
+          animationType="slide"
+          visible={modalVisible}
+          transparent={true}
+          onRequestClose={() => setModalVisible(false)}
+        >
+          {checkoutModalContent()}
+        </Modal>
         {total ? (
           <View
             style={{
@@ -152,23 +154,23 @@ export default function ViewCart() {
               <TouchableOpacity
                 style={{
                   marginTop: 20,
-                  backgroundColor: "gray",
+                  backgroundColor: "#282828",
                   flexDirection: "row",
                   justifyContent: "flex-end",
                   // alignItems: "center",
                   padding: 15,
-                  borderRadius: 30,
+                  borderRadius: 8,
                   width: 300,
                   height: 60,
                   position: "relative",
                 }}
-                onPress={()=>setModalVisible(true)}
+                onPress={() => setModalVisible(true)}
               >
                 <Text style={{ color: "white", fontSize: 20, marginRight: 30 }}>
-                  View cart
+                  Basket( ${totalUSD})
                 </Text>
                 <Text style={{ color: "white", fontSize: 20, marginRight: 30 }}>
-                  ${totalUSD}
+                  {/* ${totalUSD} */}
                 </Text>
               </TouchableOpacity>
             </View>
