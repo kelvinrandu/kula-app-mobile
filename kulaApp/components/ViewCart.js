@@ -1,5 +1,12 @@
 import React,{ useState,useContext} from 'react'
-import { View, Text , TouchableOpacity, Modal, StyleSheet} from 'react-native'
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Modal,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import { useSelector } from 'react-redux';
 import OrderItem from './OrderItem';
 import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
@@ -90,34 +97,32 @@ export default function ViewCart() {
       <View style={styles.modalContainer}>
         <View style={styles.modalCheckoutContainer}>
           <Text style={styles.restaurantName}>{restaurantName}</Text>
-          {items.map((item,index) =>(
-            <OrderItem key={index} item={item} />
-
-          )
-
-          )}
+          <ScrollView>
+            {items.map((item, index) => (
+              <OrderItem key={index} item={item} />
+            ))}
+          </ScrollView>
           <View style={styles.subtotalContainer}>
             <Text style={styles.subtotalText}> subtotal</Text>
             <Text>{totalUSD}</Text>
-            </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
-              <TouchableOpacity 
+          </View>
+          <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <TouchableOpacity
               style={{
-                marginTop:20,
+                marginTop: 20,
                 backgroundColor: "black",
                 alignItems: "center",
                 padding: 13,
                 borderRadius: 8,
-                width:300,
+                width: 300,
                 position: "relative",
               }}
               onPress={() => addOrderToFirebase()}
-              >
-              <Text style={{ color:"white", fontSize: 20 }}> Checkout</Text>
+            >
+              <Text style={{ color: "white", fontSize: 20 }}> Checkout</Text>
               {/* <Text style ={{ position:'absolute',color:"white",right:20 ,fontSize:15,top:17}}>{total ? totalUSD : ""}</Text> */}
-              </TouchableOpacity>
-
-            </View>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     );
