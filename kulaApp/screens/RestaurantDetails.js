@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     padding: 15,
     position: "absolute",
     bottom: 5,
-    // backgroundColor: "#000",
+    backgroundColor: "transparent",
     width: "50%",
     justifyContent: "space-around",
   },
