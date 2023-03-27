@@ -107,14 +107,14 @@ export default function ViewCart() {
                 backgroundColor: "black",
                 alignItems: "center",
                 padding: 13,
-                borderRadius: 30,
+                borderRadius: 8,
                 width:300,
                 position: "relative",
               }}
               onPress={() => addOrderToFirebase()}
               >
               <Text style={{ color:"white", fontSize: 20 }}> Checkout</Text>
-              <Text style ={{ position:'absolute',color:"white",right:20 ,fontSize:15,top:17}}>{total ? totalUSD : ""}</Text>
+              {/* <Text style ={{ position:'absolute',color:"white",right:20 ,fontSize:15,top:17}}>{total ? totalUSD : ""}</Text> */}
               </TouchableOpacity>
 
             </View>
