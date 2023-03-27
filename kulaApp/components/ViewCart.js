@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useSelector } from 'react-redux';
 import OrderItem from './OrderItem';
+import CartDetailsItem from './CartDetailsItem';
 import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
 import Firebase, { Firestore } from "../config/firebase";
 import { collection, addDoc } from "firebase/firestore"; 
@@ -19,7 +20,36 @@ import { getFirestore, doc, Timestamp } from "firebase/firestore";
 // import "firebase/firestore";
 // import firebase from "firebase";
 
+const details = [
+  {
+    title: "Add your Address",
+    description: "With butter lettuce, tomato and sauce bechamel",
 
+  },
+  {
+    title: "Add delivery note",
+    description:
+      "Amazing Indian dish with tenderloin chicken off the sizzles 🔥",
+
+  },
+  {
+    title: "Deliver option",
+    description:
+      "Chilaquiles with cheese and sauce. A delicious mexican dish 🇲🇽",
+
+  },
+  {
+    title: "Paymement option",
+    description:
+      "One can never go wrong with a chicken caesar salad. Healthy option with greens and proteins!",
+  },
+  {
+    title: "Order overview",
+    description: "With butter lettuce, tomato and sauce bechamel",
+
+  },
+
+];
 
 
 export default function ViewCart() {
@@ -100,6 +130,9 @@ export default function ViewCart() {
           <ScrollView>
             {items.map((item, index) => (
               <OrderItem key={index} item={item} />
+            ))}
+            {details.map((item, index) => (
+              <CartDetailsItem key={index} item={item} />
             ))}
           </ScrollView>
           <View style={styles.subtotalContainer}>
