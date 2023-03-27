@@ -79,7 +79,7 @@ const RestaurantDescription = (props) => (
   <>
     <Text
       style={{
-        marginTop: 10,
+        marginTop: 3,
         marginHorizontal: 15,
         fontWeight: "700",
         fontSize: 15.5,
@@ -118,13 +118,13 @@ const RestaurantTitle = (props) => (
       zIndex: 10,
       fontWeight: "600",
       marginTop: 0,
-      marginHorizontal: 15,
+      marginBottom: 0,
+      marginHorizontal: 10,
     }}
   >
     {props.name}
   </Text>
 );
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
