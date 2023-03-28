@@ -1,8 +1,46 @@
 import React from "react";
-import { Animated, View,Text,Image } from "react-native";
+import {
+  Animated,
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Avatar, Badge, Icon, withBadge } from "react-native-elements";
-
+const items = [
+  {
+    image: require("../assets/images/deals.png"),
+    text: "Groceries",
+    category: "Groceries",
+  },
+  {
+    image: require("../assets/images/fast-food.png"),
+    text: "Fast Food",
+    category: "African",
+  },
+  {
+    image: require("../assets/images/soft-drink.png"),
+    text: "Drinks",
+    category: "American",
+  },
+  {
+    image: require("../assets/images/coffee.png"),
+    text: "Coffee",
+    category: "African",
+  },
+  {
+    image: require("../assets/images/bread.png"),
+    text: "Bread",
+    category: "Groceries",
+  },
+  {
+    image: require("../assets/images/desserts.png"),
+    text: "Cake",
+    category: "Groceries",
+  },
+];
 const HEADER_HEIGHT = 200;
 
 const AnimatedHeader = (props) => {
@@ -55,17 +93,57 @@ const RestaurantImage = (props) => (
       // style={{ width: "100%", height: 180 }}
       style={{ width: "100%", height: "100%" }}
     />
-    <Badge
-      containerStyle={{
-        color: "white",
+    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      {items.map((item, index) => (
+        <View
+          onPress={() => console.log("here")}
+          key={index}
+          style={{ alignItems: "center", marginRight: 30 }}
+        >
+          <TouchableOpacity
+            style={{
+              // marginTop: 20,
+              // background: "#D9D9D9",
+              backgroundColor: "black",
+              alignItems: "center",
+              // padding: 13,
+              // borderRadius: 30,
+              // width: 300,
+              // position: "relative",
+            }}
+            onPress={() => search(item.category)}
+          >
+   
+            <Text style={{ fontSize: 12 }}>{item.text}</Text>
+          </TouchableOpacity>
+        </View>
+      ))}
+    </ScrollView>
+    {/* <View
+      style={{
+        flexDirection: "row",
+        borderWidth: 1,
+        borderRadius: 30,
+        padding: 5,
         position: "absolute",
-        top: 50,
-        right: 60,
+        bottom: 5,
+        backgroundColor: "#000",
+        width: "25%",
+        justifyContent: "space-around",
       }}
-      value={
-        <Text style={{ flex: 1, backgroundColor: "white" }}>Category</Text>
-      }
-    />
+    >
+      <Text
+        style={{
+          // marginTop: 10,
+          // marginHorizontal: 15,
+          fontWeight: "700",
+          fontSize: 14,
+          color: "#fff",
+        }}
+      >
+        4.3
+      </Text>
+    </View> */}
   </View>
 );
 const RestaurantTitle = (props) => (

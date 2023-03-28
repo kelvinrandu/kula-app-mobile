@@ -15,38 +15,78 @@ import Firebase, { Firestore } from "../config/firebase";
 import { collection, addDoc } from "firebase/firestore"; 
 import "firebase/compat/firestore";
 import firebase from "firebase/compat/app";
+import FeesItem from './FeesItem';
+import CartDetailsItem2 from './CartDetailsItem2';
 
 import { getFirestore, doc, Timestamp } from "firebase/firestore";
 // import "firebase/firestore";
 // import firebase from "firebase";
 
+// const details = [
+//   {
+//     title: "Add your Address",
+//     description: "With butter lettuce, tomato and sauce bechamel",
+
+//   },
+//   {
+//     title: "Add delivery note",
+//     description:
+//       "Amazing Indian dish with tenderloin chicken off the sizzles 🔥",
+
+//   },
+//   {
+//     title: "Deliver option",
+//     description:
+//       "Chilaquiles with cheese and sauce. A delicious mexican dish 🇲🇽",
+
+//   },
+//   {
+//     title: "Paymement option",
+//     description:
+//       "One can never go wrong with a chicken caesar salad. Healthy option with greens and proteins!",
+//   },
+//   {
+//     title: "Order overview",
+//     description: "With butter lettuce, tomato and sauce bechamel",
+
+//   },
+
+// ];
 const details = [
   {
     title: "Add your Address",
     description: "With butter lettuce, tomato and sauce bechamel",
+  },
 
-  },
+];
+const details2 = [
   {
-    title: "Add delivery note",
-    description:
-      "Amazing Indian dish with tenderloin chicken off the sizzles 🔥",
+    title: "Standard",
+    description: "30-60 Min",
+  },
 
-  },
+];
+const details3= [
   {
-    title: "Deliver option",
-    description:
-      "Chilaquiles with cheese and sauce. A delicious mexican dish 🇲🇽",
-
-  },
-  {
-    title: "Paymement option",
-    description:
-      "One can never go wrong with a chicken caesar salad. Healthy option with greens and proteins!",
-  },
-  {
-    title: "Order overview",
+    title: "Add your Payment option",
     description: "With butter lettuce, tomato and sauce bechamel",
+  },
+];
+const fees = [
+  {
+    title: "packages",
+    price: "$12",
+  },
 
+  {
+    title: "Delivery",
+    price: "$1",
+  },
+];
+const delivery = [
+  {
+    title: "placo",
+    price: "$12",
   },
 
 ];
@@ -133,6 +173,28 @@ export default function ViewCart() {
             ))}
             {details.map((item, index) => (
               <CartDetailsItem key={index} item={item} />
+            ))}
+            <View
+              style={{
+                padding: 20,
+              }}
+            >
+              <Text style={{ fontWeight: "600", fontSize: 16 }}>
+                Delivery option
+              </Text>
+            </View>
+            {details2.map((item, index) => (
+              <CartDetailsItem2 key={index} item={item} />
+            ))}
+            <Text style={{ fontWeight: "600", fontSize: 16 }}>
+              Payment option 
+            </Text>
+            {details3.map((item, index) => (
+              <CartDetailsItem key={index} item={item} />
+            ))}
+
+            {fees.map((item, index) => (
+              <FeesItem key={index} item={item} />
             ))}
           </ScrollView>
           <View style={styles.subtotalContainer}>

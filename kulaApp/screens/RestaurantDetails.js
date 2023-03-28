@@ -21,21 +21,7 @@ export default function RestaurantDetails({ route ,navigation}) {
    console.log('offset',offset)
 
     return (
-      // <View>
-      //   <About route={route} />
-      //   <Divider width={1.8} style={{ marginVertical: 20 }} />
 
-      //   <ScrollView
-      //     showsVerticalScrollIndicator={true}
-      //     stickyHeaderIndices={[0]}
-      //   >
-      //     <ViewCart
-      //       navigation={navigation}
-      //       restaurantName={route.params.name}
-      //     />
-      //     <MenuItems restaurantName={route.params.name} />
-      //   </ScrollView>
-      // </View>
       <SafeAreaProvider>
         <SafeAreaView
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
