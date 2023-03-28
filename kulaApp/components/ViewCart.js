@@ -62,7 +62,7 @@ const details = [
 const details2 = [
   {
     title: "Standard",
-    description: "30-60 Min",
+    price: "30-60 Min",
   },
 
 ];
@@ -176,7 +176,9 @@ export default function ViewCart() {
             ))}
             <View
               style={{
-                padding: 20,
+                // padding: 20,
+                paddingBottom: 20,
+                paddingTop: 20,
               }}
             >
               <Text style={{ fontWeight: "600", fontSize: 16 }}>
@@ -186,9 +188,17 @@ export default function ViewCart() {
             {details2.map((item, index) => (
               <CartDetailsItem2 key={index} item={item} />
             ))}
-            <Text style={{ fontWeight: "600", fontSize: 16 }}>
-              Payment option 
-            </Text>
+            <View
+              style={{
+                // padding: 20,
+                paddingBottom: 10,
+                paddingTop: 20,
+              }}
+            >
+              <Text style={{ fontWeight: "600", fontSize: 16 }}>
+                Payment option
+              </Text>
+            </View>
             {details3.map((item, index) => (
               <CartDetailsItem key={index} item={item} />
             ))}

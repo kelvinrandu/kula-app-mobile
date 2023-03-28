@@ -12,7 +12,7 @@ export default function FeesItem({ item }) {
             borderBottomColor:'999',
         
         }}>
-            <Text style={{ fontWeight:'600', fontSize: 16 }}>{title}</Text>
+            <Text style={{ fontWeight:'400', fontSize: 14 }}>{title}</Text>
             <Text style={{ opacity:0.7, fontSize: 16}}>67</Text>
         </View>
     )

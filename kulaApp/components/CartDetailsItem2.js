@@ -17,7 +17,7 @@ export default function CartDetailsItem({ item }) {
         }}
       >
         <Text style={{ fontWeight: "600", fontSize: 16 }}>{title}</Text>
-        <Text style={{ opacity: 0.7, fontSize: 16 }}>{price}</Text>
+        <Text style={{ opacity: 0.7, fontSize: 16,paddingLeft:10 }}>{price}</Text>
       </View>
     );
 }
