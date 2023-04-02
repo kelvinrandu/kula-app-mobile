@@ -33,12 +33,11 @@ const items = [
     category: "Groceries",
   },
 ];
-export default function Categories({search}) {
+export default function FoodCategories({search}) {
   return (
     <View
       style={{
         marginTop: 5,
-        
         backgroundColor: "#fff",
         paddingVertical: 10,
         paddingLeft: 20,
@@ -55,8 +54,8 @@ export default function Categories({search}) {
             <TouchableOpacity
               style={{
                 // marginTop: 20,
-                background: "#D9D9D9",
-                // backgroundColor: "black",
+                // background: "#D9D9D9",
+                backgroundColor: "black",
                 alignItems: "center",
                 // padding: 13,
                 // borderRadius: 30,
@@ -65,10 +64,10 @@ export default function Categories({search}) {
               }}
               onPress={() => search(item.category)}
             >
-              <Image
+              {/* <Image
                 source={item.image}
                 style={{ width: 50, height: 40, resizeMode: "contain" }}
-              />
+              /> */}
               <Text style={{ fontSize: 12,  }}>
                 {item.text}
               </Text>

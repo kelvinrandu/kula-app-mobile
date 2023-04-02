@@ -1,5 +1,13 @@
 import React, { useRef } from "react";
-import { View, Text,Image,StyleSheet, Animated, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Animated,TouchableOpacity,
+} from "react-native";
+
 import { Divider } from 'react-native-elements'
 import About from '../components/About'
 import MenuItems from '../components/MenuItems'
@@ -7,6 +15,8 @@ import ViewCart from '../components/ViewCart'
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SafeAreaView from "react-native-safe-area-view";
 import AnimatedHeader from "../components/AnimatedHeader";
+import HeaderTabs from "../components/HeaderTabs";
+import FoodCategories from "../components/FoodCategories";
 
 
 
@@ -15,13 +25,43 @@ const H_MIN_HEIGHT = 52;
 const H_SCROLL_DISTANCE = H_MAX_HEIGHT - H_MIN_HEIGHT;
 console.log(H_SCROLL_DISTANCE);
 
-
+const items = [
+  {
+    image: require("../assets/images/deals.png"),
+    text: "Groceries",
+    category: "Groceries",
+  },
+  {
+    image: require("../assets/images/fast-food.png"),
+    text: "Fast Food",
+    category: "African",
+  },
+  {
+    image: require("../assets/images/soft-drink.png"),
+    text: "Drinks",
+    category: "American",
+  },
+  {
+    image: require("../assets/images/coffee.png"),
+    text: "Coffee",
+    category: "African",
+  },
+  {
+    image: require("../assets/images/bread.png"),
+    text: "Bread",
+    category: "Groceries",
+  },
+  {
+    image: require("../assets/images/desserts.png"),
+    text: "Cake",
+    category: "Groceries",
+  },
+];
 export default function RestaurantDetails({ route ,navigation}) {
    const offset = useRef(new Animated.Value(0)).current;
    console.log('offset',offset)
 
     return (
-
       <SafeAreaProvider>
         <SafeAreaView
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
@@ -48,7 +88,48 @@ export default function RestaurantDetails({ route ,navigation}) {
           >
             <RestaurantTitle name={route.params.name} />
             <RestaurantDescription />
-
+            <HeaderTabs />
+            <View
+              style={{
+                marginTop: 5,
+                marginBottom:2,
+                // backgroundColor: "#fff",
+                // paddingVertical: 10,
+                // paddingLeft: 20,
+              }}
+            >
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {items.map((item, index) => (
+                  <View
+                    onPress={() => console.log("here")}
+                    key={index}
+                    style={{ alignItems: "center", marginRight: 30 }}
+                  >
+                    <TouchableOpacity
+                      style={{
+                        // marginTop: 20,
+                        // background: "#D9D9D9",
+                        
+                        backgroundColor: "green",
+                        alignItems: "center",
+                        color:"white",
+                        padding: 13,
+                        borderRadius: 30,
+                        width: 300,
+                        // position: "relative",
+                      }}
+                      onPress={() => search(item.category)}
+                    >
+                      {/* <Image
+                source={item.image}
+                style={{ width: 50, height: 40, resizeMode: "contain" }}
+              /> */}
+                      <Text style={{ fontSize: 12 }}>{item.text}</Text>
+                    </TouchableOpacity>
+                  </View>
+                ))}
+              </ScrollView>
+            </View>
             <MenuItems restaurantName={route.params.name} />
           </ScrollView>
           <View style={styles.action}>
