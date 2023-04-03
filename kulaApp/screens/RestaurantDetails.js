@@ -183,7 +183,10 @@ export default function RestaurantDetails({ route ,navigation}) {
                 >
                   <TouchableOpacity
                     style= {active==item.id ? styles.activeCategory:styles.category}
-                    onPress={() => search(item.category)}
+                    onPress={() => {
+                      // search(item.category)
+                      setActive(item.id);
+                    }}
                   >
                     {/* <Image
                 source={item.image}
