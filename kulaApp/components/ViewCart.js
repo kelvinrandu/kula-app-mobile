@@ -141,10 +141,11 @@ export default function ViewCart() {
     modalCheckoutContainer: {
       backgroundColor: "white",
       padding: 16,
-      height: 500,
+      // height: 500,
+      height: "100%",
       borderWidth: 1,
     },
-    restaurantName : {
+    restaurantName: {
       textAlign: "center",
       fontWeight: "600",
       fontSize: 18,

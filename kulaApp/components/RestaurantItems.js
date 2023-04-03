@@ -55,7 +55,9 @@ export const localRestaurants = [
 ];
 
 export default function RestaurantItem({navigation, ...props}) {
+  //  const [restaurants, setRestaurants] = useState();
    const [restaurants, setRestaurants] = useState(props.restaurantData);
+    const [rests, setRests] = useState();
      useEffect(() => {
        console.log("reached",restaurants);
      }, [props.restaurantData]);
@@ -72,14 +74,16 @@ try {
     docsSnap.forEach((doc) => {
       //  setCompany({ ...docSnap.data() });
      
-      // setRestaurants({ ...doc.data()});
+      // setRests({ ...doc.data()});
     });
+    // console.log('restaurants',rests)
+ 
 
 } catch (e) {
   console.log("Error getting cached document:", e);
 }
   })();
-  // console.log('restaurants-->',restaurants)
+  console.log('restaurants-->',restaurants)
   useEffect(() => {
     console.log('hereerr')
   }, [restaurants]);
@@ -87,7 +91,7 @@ try {
   return (
     <>
       {props.restaurantData.map((restaurant, index) => (
-
+      // {rests.map((restaurant, index) => (
         <TouchableOpacity
           key={index}
           activeOpacity={1}

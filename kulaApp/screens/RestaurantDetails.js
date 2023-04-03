@@ -133,7 +133,8 @@ export default function RestaurantDetails({ route ,navigation}) {
          type: "ADD_TO_CART",
          payload: {
            item,
-           restaurantName: restaurantName,
+          //  restaurantName: restaurantName,
+           restaurantName: route.params.name,
            checkboxValue: checkboxValue,
          },
        });
@@ -162,7 +163,7 @@ export default function RestaurantDetails({ route ,navigation}) {
               alignItems: "flex-start",
               paddingTop: 200,
               zIndex: 1,
-              // paddingHorizontal: 20,
+              // paddingHorizontal: 10,
             }}
             showsVerticalScrollIndicator={false}
             scrollEventThrottle={16}
@@ -173,16 +174,36 @@ export default function RestaurantDetails({ route ,navigation}) {
           >
             <RestaurantTitle name={route.params.name} />
             <RestaurantDescription />
-            <HeaderTabs />
+            <View
+              style={{
+          
+                marginHorizontal: 10,
+                width:"100%"
+            
+                // marginBottom: 5,
+              }}
+            >
+              <HeaderTabs color={"green"} />
+            </View>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               {items.map((item, index) => (
                 <View
                   onPress={() => console.log("here")}
                   key={index}
-                  style={{ alignItems: "center", marginRight: 30 }}
+                  style={{
+                    alignItems: "center",
+                    marginRight: 30,
+                    marginHorizontal: 10,
+                    marginTop: 20,
+                    // marginBottom: 5,
+                  }}
                 >
                   <TouchableOpacity
-                    style= {active==item.id ? styles.activeCategory:styles.category}
+                    style={
+                      active == item.id
+                        ? styles.activeCategory
+                        : styles.category
+                    }
                     onPress={() => {
                       // search(item.category)
                       setActive(item.id);
@@ -192,11 +213,35 @@ export default function RestaurantDetails({ route ,navigation}) {
                 source={item.image}
                 style={{ width: 50, height: 40, resizeMode: "contain" }}
               /> */}
-                    <Text style={ active==item.id?styles.activeTextCategory:styles.textCategory}>{item.text}</Text>
+                    <Text
+                      style={
+                        active == item.id
+                          ? styles.activeTextCategory
+                          : styles.textCategory
+                      }
+                    >
+                      {item.text}
+                    </Text>
                   </TouchableOpacity>
                 </View>
               ))}
             </ScrollView>
+            <View
+              style={{ alignItems: "center", marginRight: 30, marginTop: 10 }}
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  zIndex: 10,
+                  fontWeight: "600",
+                  marginTop: 0,
+                  marginBottom: 0,
+                  marginHorizontal: 10,
+                }}
+              >
+                {items[active].text}
+              </Text>
+            </View>
 
             {foods.map((food, index) => (
               <View key={index}>
@@ -254,6 +299,7 @@ const RestaurantDescription = (props) => (
         marginHorizontal: 15,
         fontWeight: "400",
         fontSize: 15.5,
+        marginBottom:20
       }}
     >
       Click to get more information about the restaurant
@@ -300,15 +346,17 @@ const styles = StyleSheet.create({
   activeCategory: {
     backgroundColor: "green",
     alignItems: "center",
-    padding: 13,
+    padding: 10,
     borderRadius: 30,
   },
   textCategory: {
-    fontSize: 12,
+    fontSize: 15,
+    fontWeight: "600",
     color: "black",
   },
   activeTextCategory: {
     fontSize: 12,
+    fontWeight: "600",
     color: "white",
   },
   category: {
@@ -341,7 +389,7 @@ const styles = StyleSheet.create({
 
 const FoodInfo = (props) => {
   return (
-    <View style={{ width: 220, justifyContent: "space-evenly" }}>
+    <View style={{ width:350, justifyContent: "space-evenly" }}>
       <Text style={styles.titleStyle}>{props.food.title}</Text>
       <Text>{props.food.description}</Text>
       <Text style={styles.priceStyle}>{props.food.price}</Text>
