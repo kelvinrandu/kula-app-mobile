@@ -62,6 +62,7 @@ const AnimatedHeader = (props) => {
       outputRange: [HEADER_HEIGHT + insets.top, insets.top + 100],
       extrapolate: "clamp",
     });
+    console.log("header height", headerHeight, animatedValue);
 
   return (
     <>
@@ -93,32 +94,7 @@ const RestaurantImage = (props) => (
       // style={{ width: "100%", height: 180 }}
       style={{ width: "100%", height: "100%" }}
     />
-    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-      {items.map((item, index) => (
-        <View
-          onPress={() => console.log("here")}
-          key={index}
-          style={{ alignItems: "center", marginRight: 30 }}
-        >
-          <TouchableOpacity
-            style={{
-              // marginTop: 20,
-              // background: "#D9D9D9",
-              backgroundColor: "black",
-              alignItems: "center",
-              // padding: 13,
-              // borderRadius: 30,
-              // width: 300,
-              // position: "relative",
-            }}
-            onPress={() => search(item.category)}
-          >
-   
-            <Text style={{ fontSize: 12 }}>{item.text}</Text>
-          </TouchableOpacity>
-        </View>
-      ))}
-    </ScrollView>
+
     {/* <View
       style={{
         flexDirection: "row",

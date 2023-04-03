@@ -107,7 +107,7 @@ export default function MenuItems({ restaurantName}) {
   
   return (
     <View>
-      <ScrollView style={styles.listWrapper}>
+      {/* <ScrollView style={styles.listWrapper}> */}
         {foods.map((food, index) => (
           <View key={index}>
             <View style={styles.menuItemStyle}>
@@ -129,7 +129,7 @@ export default function MenuItems({ restaurantName}) {
             /> */}
           </View>
         ))}
-      </ScrollView>
+      {/* </ScrollView> */}
     </View>
   );
 }
