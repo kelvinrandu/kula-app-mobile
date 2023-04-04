@@ -99,11 +99,18 @@ export default function ViewCart() {
   console.log(items);
   // console.log(user.email)
   const total = items
-    .map((item) => Number(item.item.price.replace("$", "")))
+    .map((item) => Number(item.item.price.replace("ksh", "")))
     .reduce((prev, curr) => prev + curr, 0);
+ 
+  const totalFinal = total +100;
+    const totalKES = totalFinal.toLocaleString("en", {
+      style: "currency",
+      currency: "KES",
+    });
+  
   const totalUSD = total.toLocaleString("en", {
     style: "currency",
-    currency: "USD",
+    currency: "KES",
   });
   const addOrderToFirebase =()=>{
     (async () => {
@@ -210,7 +217,7 @@ export default function ViewCart() {
           </ScrollView>
           <View style={styles.subtotalContainer}>
             <Text style={styles.subtotalText}> subtotal</Text>
-            <Text>{totalUSD}</Text>
+            <Text>{totalKES}</Text>
           </View>
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
             <TouchableOpacity
@@ -278,7 +285,7 @@ export default function ViewCart() {
                 onPress={() => setModalVisible(true)}
               >
                 <Text style={{ color: "white", fontSize: 20, marginRight: 30 }}>
-                  Basket( ${totalUSD})
+                  Basket( {totalUSD} ksh )
                 </Text>
                 <Text style={{ color: "white", fontSize: 20, marginRight: 30 }}>
                   {/* ${totalUSD} */}

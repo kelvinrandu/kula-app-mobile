@@ -10,48 +10,13 @@ export const localRestaurants = [
   {
     name: "Tribeearth  VEGAN ",
     image_url:
-      "https://www.google.com/maps/uv?pb=!1s0x184048ba74acb361%3A0xf9e71858980d8906!3m1!7e115!4shttps%3A%2F%2Flh5.googleusercontent.com%2Fp%2FAF1QipOH8btX3xQCR3_sgZb0f-9f-fx4W45i5seaDD3l%3Dw213-h160-k-no!5stikibar%20-%20Google%20Search!15sCgIgAQ&imagekey=!1e10!2sAF1QipNOgs8PFA3tYxJpYfWKQtxXls0nZKUWYJszUM0D&hl=en&sa=X&ved=2ahUKEwiqhJX8p67zAhW4BGMBHcjiB9kQoip6BAh-EAM#",
+      "https://firebasestorage.googleapis.com/v0/b/linkedin-ba98a.appspot.com/o/tribearth.jpeg?alt=media&token=b00c8cb9-6a47-4377-81e1-be7cabd30efb",
     categories: [{ title: "American" }, { title: "Comfort Food" }],
     price: "$$",
     reviews: 1244,
     rating: 4.5,
   },
-  {
-    name: "Tiki bar",
-    image_url:
-      "https://www.google.com/maps/uv?pb=!1s0x184048ba74acb361%3A0xf9e71858980d8906!3m1!7e115!4shttps%3A%2F%2Flh5.googleusercontent.com%2Fp%2FAF1QipOH8btX3xQCR3_sgZb0f-9f-fx4W45i5seaDD3l%3Dw213-h160-k-no!5stikibar%20-%20Google%20Search!15sCgIgAQ&imagekey=!1e10!2sAF1QipNOgs8PFA3tYxJpYfWKQtxXls0nZKUWYJszUM0D&hl=en&sa=X&ved=2ahUKEwiqhJX8p67zAhW4BGMBHcjiB9kQoip6BAh-EAM#",
-    categories: [{ title: "African" }, { title: "Comfort Food" }],
-    price: "$$",
-    reviews: 1244,
-    rating: 4.5,
-  },
-  {
-    name: "Amigos Bar",
-    image_url:
-      "https://www.google.com/maps/uv?pb=!1s0x184048ba74acb361%3A0xf9e71858980d8906!3m1!7e115!4shttps%3A%2F%2Flh5.googleusercontent.com%2Fp%2FAF1QipOH8btX3xQCR3_sgZb0f-9f-fx4W45i5seaDD3l%3Dw213-h160-k-no!5stikibar%20-%20Google%20Search!15sCgIgAQ&imagekey=!1e10!2sAF1QipNOgs8PFA3tYxJpYfWKQtxXls0nZKUWYJszUM0D&hl=en&sa=X&ved=2ahUKEwiqhJX8p67zAhW4BGMBHcjiB9kQoip6BAh-EAM#",
-    categories: [{ title: "African" }, { title: "Comfort Food" }],
-    price: "$$",
-    reviews: 1244,
-    rating: 4.5,
-  },
-  {
-    name: "Soul food",
-    image_url:
-      "https://www.google.com/maps/uv?pb=!1s0x184048ba74acb361%3A0xf9e71858980d8906!3m1!7e115!4shttps%3A%2F%2Flh5.googleusercontent.com%2Fp%2FAF1QipOH8btX3xQCR3_sgZb0f-9f-fx4W45i5seaDD3l%3Dw213-h160-k-no!5stikibar%20-%20Google%20Search!15sCgIgAQ&imagekey=!1e10!2sAF1QipNOgs8PFA3tYxJpYfWKQtxXls0nZKUWYJszUM0D&hl=en&sa=X&ved=2ahUKEwiqhJX8p67zAhW4BGMBHcjiB9kQoip6BAh-EAM#",
-    categories: [{ title: "American" }, { title: "Comfort Food" }],
-    price: "$$",
-    reviews: 1244,
-    rating: 4.5,
-  },
-  {
-    name: "Chillspot Bar",
-    image_url:
-      "https://www.google.com/maps/uv?pb=!1s0x184048ba74acb361%3A0xf9e71858980d8906!3m1!7e115!4shttps%3A%2F%2Flh5.googleusercontent.com%2Fp%2FAF1QipOH8btX3xQCR3_sgZb0f-9f-fx4W45i5seaDD3l%3Dw213-h160-k-no!5stikibar%20-%20Google%20Search!15sCgIgAQ&imagekey=!1e10!2sAF1QipNOgs8PFA3tYxJpYfWKQtxXls0nZKUWYJszUM0D&hl=en&sa=X&ved=2ahUKEwiqhJX8p67zAhW4BGMBHcjiB9kQoip6BAh-EAM#",
-    categories: [{ title: "African" }, { title: "Comfort Food" }],
-    price: "$$",
-    reviews: 1244,
-    rating: 4.5,
-  },
+
 ];
 
 export default function RestaurantItem({navigation, ...props}) {
