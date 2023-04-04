@@ -61,7 +61,7 @@ const HomeScreen = ({navigation}) => {
           color="#fff"
           onPress={handleSignOut}
         />
-        <HeaderTabs color={'black'}/>
+        <HeaderTabs color={''}/>
         {/* <SearchBar search={search} /> */}
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
