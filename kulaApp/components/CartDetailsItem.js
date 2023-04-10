@@ -1,10 +1,16 @@
-import React ,{useState}from 'react'
+import React ,{useState,useEffect}from 'react'
 import { View, Text, TouchableOpacity, Modal, StyleSheet } from "react-native";
 import MapComponent from './MapComponent';
+import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import * as Location from "expo-location";
 
 export default function CartDetailsItem({ item }) {
   const { title, price } = item;
    const [mapModalVisible, setMapModalVisible] = useState(false);
+      const [location, setLocation] = useState(null);
+            const [region, setRegion] = useState({
+     
+      });
      const styles = StyleSheet.create({
        modalContainer: {
          flex: 1,
@@ -44,11 +50,43 @@ export default function CartDetailsItem({ item }) {
        },
      });
        const MapModalContent = () => {
+               useEffect(() => {
+                 (async () => {
+                   let { status } =
+                     await Location.requestForegroundPermissionsAsync();
+                   if (status !== "granted") {
+                     setErrorMsg("Permission to access location was denied");
+                     return;
+                   }
+
+                   let location = await Location.getCurrentPositionAsync({});
+           
+                   let _region = {
+                     latitude: parseFloat(location?.coords?.latitude),
+                     longitude: parseFloat(location?.coords?.longitude),
+                     latitudeDelta: 0.01,
+                     longitudeDelta: 0.01,
+                   };
+                   let _location = {
+                     latitude: parseFloat(location?.coords?.latitude),
+                     longitude: parseFloat(location?.coords?.longitude),
+                   };
+
+                   setRegion(_region);
+                   setLocation(_location);
+                 })();
+               }, []);
+               console.log('region',region)
          return (
            <View style={styles.modalContainer}>
              <View style={styles.modalMapCheckoutContainer}>
                <Text style={styles.restaurantName}>here</Text>
-               <MapComponent />
+               <MapComponent
+                 setLocation={setLocation}
+                 location={location}
+                 setRegion={setRegion}
+                 region={region}
+               />
 
                <View style={{ flexDirection: "row", justifyContent: "center" }}>
                  <TouchableOpacity
@@ -61,12 +99,9 @@ export default function CartDetailsItem({ item }) {
                      width: 300,
                      position: "relative",
                    }}
-                   onPress={() => console.log("set map")}
+                   onPress={() => setMapModalVisible(false)}
                  >
-                   <Text style={{ color: "white", fontSize: 20 }}>
-                     {" "}
-                     Checkout
-                   </Text>
+                   <Text style={{ color: "white", fontSize: 20 }}> Done</Text>
                    {/* <Text style ={{ position:'absolute',color:"white",right:20 ,fontSize:15,top:17}}>{total ? totalUSD : ""}</Text> */}
                  </TouchableOpacity>
                </View>

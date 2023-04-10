@@ -1,25 +1,73 @@
-import React from 'react'
+import React ,{useState,useEffect}from 'react'
 
 import {View ,Text,StyleSheet} from 'react-native'
-import MapView,{ PROVIDER_GOOGLE}from 'react-native-maps'
+import MapView,{ PROVIDER_GOOGLE,Marker}from 'react-native-maps'
 import { StatusBar } from 'expo-status-bar'
+import * as Location from "expo-location";
 
-export default function MapComponent() {
+export default function MapComponent({region,setRegion,setLocation,location}) {
+    // const [location, setLocation] = useState(null);
+    const [errorMsg, setErrorMsg] = useState(null);
+    const userCoords = {
+      latitude: parseFloat(region?.coords?.latitude),
+      longitude: parseFloat(region?.coords?.longitude),
+    };
+    // const [region, setRegion]=useState({})
+      // const [region, setRegion] = useState({
+      //   latitude: 33.8220918,
+      //   longitude: -117.9199742,
+      //   latitudeDelta: 0.05,
+      //   longitudeDelta: 0.05,
+      // });
+      // const tokyoRegion = {
+      //   latitude: 35.6762,
+      //   longitude: 139.6503,
+      //   latitudeDelta: 0.01,
+      //   longitudeDelta: 0.01,
+      // };
+      useEffect(() => {
+        (async () => {
+          let { status } = await Location.requestForegroundPermissionsAsync();
+          if (status !== "granted") {
+            setErrorMsg("Permission to access location was denied");
+            return;
+          }
+
+          let location = await Location.getCurrentPositionAsync({});
+          
+
+        })();
+      }, []);
+        let text = "Waiting..";
+        if (errorMsg) {
+          text = errorMsg;
+        } else if (location) {
+          text = JSON.stringify(location);
+        }
+
+      
   return (
     <View style={styles.container}>
-      <Text></Text>
+      <Text>{text}</Text>
       <MapView
         style={styles.map}
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
+        initialRegion={region}
         style={{ height: "100%", width: "100%" }}
         showsUserLocation={true}
         PROVIDER={PROVIDER_GOOGLE}
-      />
+        // onRegionChangeComplete={(region) => console.log("route", region)}
+      >
+        <Marker
+          pinColor="green"
+          draggable
+          coordinate={location}
+          title="Home"
+          onDragEnd={(e) => {
+            setLocation(e.nativeEvent.coordinate);
+            console.log("dragEnd", e.nativeEvent.coordinate);
+          }}
+        />
+      </MapView>
       <StatusBar />
     </View>
   );
