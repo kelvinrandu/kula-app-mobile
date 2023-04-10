@@ -17,41 +17,10 @@ import "firebase/compat/firestore";
 import firebase from "firebase/compat/app";
 import FeesItem from './FeesItem';
 import CartDetailsItem2 from './CartDetailsItem2';
+import MapComponent from './MapComponent';
 
 import { getFirestore, doc, Timestamp } from "firebase/firestore";
-// import "firebase/firestore";
-// import firebase from "firebase";
 
-// const details = [
-//   {
-//     title: "Add your Address",
-//     description: "With butter lettuce, tomato and sauce bechamel",
-
-//   },
-//   {
-//     title: "Add delivery note",
-//     description:
-//       "Amazing Indian dish with tenderloin chicken off the sizzles 🔥",
-
-//   },
-//   {
-//     title: "Deliver option",
-//     description:
-//       "Chilaquiles with cheese and sauce. A delicious mexican dish 🇲🇽",
-
-//   },
-//   {
-//     title: "Paymement option",
-//     description:
-//       "One can never go wrong with a chicken caesar salad. Healthy option with greens and proteins!",
-//   },
-//   {
-//     title: "Order overview",
-//     description: "With butter lettuce, tomato and sauce bechamel",
-
-//   },
-
-// ];
 const details = [
   {
     title: "Add your Address",
@@ -94,6 +63,7 @@ const delivery = [
 
 export default function ViewCart() {
   const [modalVisible,setModalVisible] = useState(false);
+    const [mapModalVisible, setMapModalVisible] = useState(false);
   const {items, restaurantName} = useSelector((state)=> state.cartReducer.selectedItems);  
   const { user } = useContext(AuthenticatedUserContext);
   console.log(items);
@@ -152,6 +122,13 @@ export default function ViewCart() {
       height: "100%",
       borderWidth: 1,
     },
+    modalMapCheckoutContainer: {
+      backgroundColor: "white",
+      padding: 16,
+      // height: 500,
+      height: "100%",
+      borderWidth: 1,
+    },
     restaurantName: {
       textAlign: "center",
       fontWeight: "600",
@@ -170,6 +147,34 @@ export default function ViewCart() {
       marginBottom: 10,
     },
   });
+    const MapModalContent = () => {
+      return (
+        <View style={styles.modalContainer}>
+          <View style={styles.modalMapCheckoutContainer}>
+            <Text style={styles.restaurantName}>here</Text>
+            <Map />
+
+            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+              <TouchableOpacity
+                style={{
+                  marginTop: 20,
+                  backgroundColor: "black",
+                  alignItems: "center",
+                  padding: 13,
+                  borderRadius: 8,
+                  width: 300,
+                  position: "relative",
+                }}
+                onPress={() => console.log("set map")}
+              >
+                <Text style={{ color: "white", fontSize: 20 }}> Checkout</Text>
+                {/* <Text style ={{ position:'absolute',color:"white",right:20 ,fontSize:15,top:17}}>{total ? totalUSD : ""}</Text> */}
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      );
+    };
   const checkoutModalContent =() =>{
     return (
       <View style={styles.modalContainer}>
@@ -180,7 +185,11 @@ export default function ViewCart() {
               <OrderItem key={index} item={item} />
             ))}
             {details.map((item, index) => (
-              <CartDetailsItem key={index} item={item} />
+              <CartDetailsItem
+                setMapModalVisible={setMapModalVisible}
+                key={index}
+                item={item}
+              />
             ))}
             <View
               style={{
@@ -245,6 +254,14 @@ export default function ViewCart() {
       <>
         <Modal
           animationType="slide"
+          visible={mapModalVisible}
+          transparent={true}
+          onRequestClose={() => setMapModalVisible(false)}
+        >
+          {MapModalContent()}
+        </Modal>
+        <Modal
+          animationType="slide"
           visible={modalVisible}
           transparent={true}
           onRequestClose={() => setModalVisible(false)}
@@ -275,7 +292,6 @@ export default function ViewCart() {
                   backgroundColor: "#282828",
                   flexDirection: "row",
                   justifyContent: "flex-end",
-                  // alignItems: "center",
                   padding: 15,
                   borderRadius: 8,
                   width: 300,
@@ -287,9 +303,9 @@ export default function ViewCart() {
                 <Text style={{ color: "white", fontSize: 20, marginRight: 30 }}>
                   Basket( {totalUSD} ksh )
                 </Text>
-                <Text style={{ color: "white", fontSize: 20, marginRight: 30 }}>
-                  {/* ${totalUSD} */}
-                </Text>
+                <Text
+                  style={{ color: "white", fontSize: 20, marginRight: 30 }}
+                ></Text>
               </TouchableOpacity>
             </View>
           </View>

@@ -18,6 +18,10 @@ export default {
     ios: {
       supportsTablet: true,
       bundleIdentifier: "com.meko.kulaapp",
+      config: {
+googleMapsApiKey: "AIzaSyBEEGhDViP0-DC6KGIqx5H59qEFY2vQBWA"
+}
+      
     },
     android: {
       package: "com.meko.kulaapp",
