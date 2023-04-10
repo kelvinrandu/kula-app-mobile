@@ -63,6 +63,8 @@ const delivery = [
 
 export default function ViewCart() {
   const [modalVisible,setModalVisible] = useState(false);
+  const [location, setLocation] = useState(null);
+  const [phone, setPhone] = useState(null);
     const [mapModalVisible, setMapModalVisible] = useState(false);
   const {items, restaurantName} = useSelector((state)=> state.cartReducer.selectedItems);  
   const { user } = useContext(AuthenticatedUserContext);
@@ -93,6 +95,7 @@ export default function ViewCart() {
         restaurantName: restaurantName,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         // user: user.email,
+        location:location,
         user:{},
         checked: false,
       });
@@ -187,8 +190,11 @@ export default function ViewCart() {
             {details.map((item, index) => (
               <CartDetailsItem
                 setMapModalVisible={setMapModalVisible}
+                location={location}
+                setLocation={setLocation}
                 key={index}
                 item={item}
+                type={'map'}
               />
             ))}
             <View
@@ -217,7 +223,7 @@ export default function ViewCart() {
               </Text>
             </View>
             {details3.map((item, index) => (
-              <CartDetailsItem key={index} item={item} />
+              <CartDetailsItem key={index} item={item} type={'payment'} />
             ))}
 
             {fees.map((item, index) => (
@@ -232,7 +238,7 @@ export default function ViewCart() {
             <TouchableOpacity
               style={{
                 marginTop: 20,
-                backgroundColor: "black",
+                backgroundColor: "green",
                 alignItems: "center",
                 padding: 13,
                 borderRadius: 8,
@@ -289,7 +295,7 @@ export default function ViewCart() {
               <TouchableOpacity
                 style={{
                   marginTop: 20,
-                  backgroundColor: "#282828",
+                  backgroundColor: "green",
                   flexDirection: "row",
                   justifyContent: "flex-end",
                   padding: 15,

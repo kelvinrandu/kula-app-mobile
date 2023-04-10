@@ -53,21 +53,14 @@ export default function FoodCategories({search}) {
           >
             <TouchableOpacity
               style={{
-                // marginTop: 20,
-                // background: "#D9D9D9",
+     
                 backgroundColor: "black",
                 alignItems: "center",
-                // padding: 13,
-                // borderRadius: 30,
-                // width: 300,
-                // position: "relative",
+         
               }}
               onPress={() => search(item.category)}
             >
-              {/* <Image
-                source={item.image}
-                style={{ width: 50, height: 40, resizeMode: "contain" }}
-              /> */}
+           
               <Text style={{ fontSize: 12,  }}>
                 {item.text}
               </Text>
