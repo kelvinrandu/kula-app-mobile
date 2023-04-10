@@ -48,7 +48,7 @@ export default function CartDetailsItem({ item }) {
            <View style={styles.modalContainer}>
              <View style={styles.modalMapCheckoutContainer}>
                <Text style={styles.restaurantName}>here</Text>
-               {/* <MapComponent /> */}
+               <MapComponent />
 
                <View style={{ flexDirection: "row", justifyContent: "center" }}>
                  <TouchableOpacity
