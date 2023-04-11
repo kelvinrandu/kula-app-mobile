@@ -91,12 +91,13 @@ export default function ViewCart() {
 
     	Firestore.collection("orders").add({
         items: items,
-        total: totalUSD,
+        total: totalKES,
         restaurantName: restaurantName,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         // user: user.email,
-        location:location,
-        user:{},
+        location: location,
+        phone: phone,
+        user: {},
         checked: false,
       });
     
@@ -192,9 +193,11 @@ export default function ViewCart() {
                 setMapModalVisible={setMapModalVisible}
                 location={location}
                 setLocation={setLocation}
+                phone={phone}
+                setPhone={setPhone}
                 key={index}
                 item={item}
-                type={'map'}
+                type={"map"}
               />
             ))}
             <View
@@ -223,7 +226,13 @@ export default function ViewCart() {
               </Text>
             </View>
             {details3.map((item, index) => (
-              <CartDetailsItem key={index} item={item} type={'payment'} />
+              <CartDetailsItem
+                phone={phone}
+                setPhone={setPhone}
+                key={index}
+                item={item}
+                type={"payment"}
+              />
             ))}
 
             {fees.map((item, index) => (
@@ -232,7 +241,9 @@ export default function ViewCart() {
           </ScrollView>
           <View style={styles.subtotalContainer}>
             <Text style={styles.subtotalText}> subtotal</Text>
-            <Text>{totalKES}</Text>
+            <Text>
+              {totalKES} {"ksh"}
+            </Text>
           </View>
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
             <TouchableOpacity

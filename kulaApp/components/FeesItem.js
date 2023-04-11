@@ -13,7 +13,7 @@ export default function FeesItem({ item }) {
         
         }}>
             <Text style={{ fontWeight:'400', fontSize: 14 }}>{title}</Text>
-            <Text style={{ opacity:0.7, fontSize: 16}}>50</Text>
+            <Text style={{ opacity:0.7, fontSize: 16}}>50{'ksh'}</Text>
         </View>
     )
 }

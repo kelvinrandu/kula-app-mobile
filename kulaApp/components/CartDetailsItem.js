@@ -1,10 +1,19 @@
 import React ,{useState,useEffect}from 'react'
-import { View, Text, TouchableOpacity, Modal, StyleSheet ,Checkbox} from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Modal,
+  StyleSheet,
+  TextInput,
+} from "react-native";
+import { CheckBox } from "@rneui/themed";
 import MapComponent from './MapComponent';
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import * as Location from "expo-location";
 
-export default function CartDetailsItem({ item,type,location,setLocation }) {
+
+export default function CartDetailsItem({ item,type,location,setLocation,phone,setPhone }) {
   const { title, price } = item;
    const [mapModalVisible, setMapModalVisible] = useState(false);
       // const [location, setLocation] = useState(null);
@@ -28,7 +37,7 @@ export default function CartDetailsItem({ item,type,location,setLocation }) {
          backgroundColor: "white",
          padding: 16,
          height: 500,
-     
+
          borderWidth: 1,
        },
        modalMapCheckoutContainer: {
@@ -39,6 +48,12 @@ export default function CartDetailsItem({ item,type,location,setLocation }) {
          borderWidth: 1,
        },
        restaurantName: {
+         textAlign: "center",
+         fontWeight: "600",
+         fontSize: 18,
+         marginBottom: 10,
+       },
+       inputText: {
          textAlign: "center",
          fontWeight: "600",
          fontSize: 18,
@@ -116,90 +131,150 @@ export default function CartDetailsItem({ item,type,location,setLocation }) {
            </View>
          );
        };
+
         const PaymentModalContent = () => {
-          const [active, setActive] = useState(0);
-            const [checkboxes, setCheckboxes] = useState([
-              {
-                id: 1,
-                title: "Mpsea",
-                checked: false,
-              },
-              {
-                id: 2,
-                title: "Paypal",
-                checked: false,
-              },
-              {
-                id: 3,
-                title: "visa",
-                checked: false,
-              },
-            ]);
-              const onButtonPress = () => {
-                const selectedCheckBoxes = checkboxes.find(
-                  (cb) => cb.checked === true
-                );
-                // selectedCheckBoxes will have checboxes which are selected
-              };
-           const toggleCheckbox = (id, index) => {
-             const checkboxData = [...checkboxes];
-             checkboxData[index].checked = !checkboxData[index].checked;
-             setCheckboxes(checkboxData);
-                 const checBoxesView = checkboxes.map((cb, index) => {
-                   return (
-                     <View style={{ flexDirection: "row" }}>
-                       <Checkbox
-                         key={cb.id}
-                         checked={cb.checked}
-                         //  onPress={() => toggleCheckbox(cb.id, index)}
-                         onPress={() => {
-                          toggleCheckbox(cb.id, index)
-                          setActive(cb.id)
-                         }
-                        }
-                       />
-                       <Text>{cb.title}</Text>
-                     </View>
-                   );
-                 });
+          const [active, setActive] = useState(false);
+          const [isSelected, setIsSelected] = useState(false);
+          const [check, setCheck] = useState(false);
 
-           };
-                console.log("region", region);
-                return (
-                  <View style={styles.modalContainer}>
-                    <View style={styles.modalPaymentCheckoutContainer}>
-                      <Text style={styles.restaurantName}>here</Text>
+          const [checkbox, setCheckbox] = useState(0);
 
-                      {checBoxesView}
-                      <View
+          const [checkboxes, setCheckboxes] = useState([
+            {
+              id: 1,
+              title: "Mpsea",
+              checked: false,
+            },
+            {
+              id: 2,
+              title: "Paypal",
+              checked: false,
+            },
+            {
+              id: 3,
+              title: "visa",
+              checked: false,
+            },
+          ]);
+          const setSelection = () => {};
+
+          const onButtonPress = (e, value) => {
+            console.log("here", e.target.checked, value);
+            setCheckbox(value);
+            setCheck(true);
+            // const selectedCheckBoxes = checkboxes.find(
+            //   (cb) => cb.checked === true
+            // );
+            // selectedCheckBoxes will have checboxes which are selected
+          };
+          // const checBoxesView = checkboxes.map((cb, index) => {
+          return (
+            <>
+              <Modal
+                animationType="slide"
+                visible={check}
+                transparent={true}
+                onRequestClose={() => setCheck(false)}
+              >
+                <View style={styles.modalContainer}>
+                  <View style={styles.modalPaymentCheckoutContainer}>
+                    <Text style={styles.restaurantName}>
+                      Input Mpesa Number
+                    </Text>
+                    <View
+                      style={{ flexDirection: "row", justifyContent: "center" }}
+                    >
+                      <TextInput
                         style={{
-                          flexDirection: "row",
-                          justifyContent: "center",
+                          height: 40,
+                          width: 300,
+
+                          textAlign: "center",
+                          borderColor: "gray",
+                          borderWidth: 1,
+                          position: "relative",
+
+                          placeholderTextColor: "gray",
                         }}
+                        onChangeText={(text) => setPhone(text)}
+                        value={phone}
+                        type="text"
+                        placeholder="Enter phone "
+                      />
+                    </View>
+
+                    <View
+                      style={{ flexDirection: "row", justifyContent: "center" }}
+                    >
+                      <TouchableOpacity
+                        style={{
+                          marginTop: 20,
+                          backgroundColor: "black",
+                          alignItems: "center",
+                          padding: 13,
+                          borderRadius: 8,
+                          width: 300,
+                          position: "relative",
+                        }}
+                        onPress={() => setMapModalVisible(false)}
                       >
-                        <TouchableOpacity
-                          style={{
-                            marginTop: 20,
-                            backgroundColor: "green",
-                            alignItems: "center",
-                            padding: 13,
-                            borderRadius: 8,
-                            width: 300,
-                            position: "relative",
-                          }}
-                          onPress={() => setMapModalVisible(false)}
-                        >
-                          <Text style={{ color: "white", fontSize: 20 }}>
-                            {" "}
-                            Done
-                          </Text>
-                          {/* <Text style ={{ position:'absolute',color:"white",right:20 ,fontSize:15,top:17}}>{total ? totalUSD : ""}</Text> */}
-                        </TouchableOpacity>
-                      </View>
+                        <Text style={{ color: "white", fontSize: 20 }}>
+                          {" "}
+                          Done
+                        </Text>
+                        {/* <Text style ={{ position:'absolute',color:"white",right:20 ,fontSize:15,top:17}}>{total ? totalUSD : ""}</Text> */}
+                      </TouchableOpacity>
                     </View>
                   </View>
-                );
-              };
+                </View>
+              </Modal>
+              <View style={styles.modalContainer}>
+                <View style={styles.modalMapCheckoutContainer}>
+                  <Text style={styles.restaurantName}>Payment Options</Text>
+                  {checkboxes.map((item, index) => (
+                    <View>
+                      {/* <CheckBox
+              value={isSelected}
+              onValueChange={setSelection}
+              style={styles.checkbox}
+            /> */}
+                      <CheckBox
+                        key={index}
+                        index={index}
+                        value={isSelected}
+                        checked={checkbox == item.id ? true : false}
+                        onPress={(e) => onButtonPress(e, item.id)}
+                        // checked
+                        title={item.title}
+                      />
+                    </View>
+                  ))}
+
+                  {/* 
+          <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <TouchableOpacity
+              style={{
+                marginTop: 20,
+                backgroundColor: "black",
+                alignItems: "center",
+                padding: 13,
+                borderRadius: 8,
+                width: 300,
+                position: "relative",
+              }}
+              onPress={() => setMapModalVisible(false)}
+            >
+              <Text style={{ color: "white", fontSize: 20 }}> Done</Text>
+             
+            </TouchableOpacity>
+          </View> */}
+                </View>
+              </View>
+            </>
+          );
+          // });
+        };
+       
   return (
     <>
       <Modal
@@ -208,7 +283,7 @@ export default function CartDetailsItem({ item,type,location,setLocation }) {
         transparent={true}
         onRequestClose={() => setMapModalVisible(false)}
       >
-        {type == "map" ? MapModalContent() : PaymentModalContent()}
+        {type == "map" ? MapModalContent() : PaymentModalContent(phone,setPhone)}
       </Modal>
       <View
         style={{
