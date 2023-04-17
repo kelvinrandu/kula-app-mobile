@@ -1,4 +1,4 @@
-import React,{ useState,useContext} from 'react'
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -7,35 +7,35 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
-import { useSelector } from 'react-redux';
-import OrderItem from './OrderItem';
-import CartDetailsItem from './CartDetailsItem';
+import { useSelector } from "react-redux";
+import OrderItem from "./OrderItem";
+import CartDetailsItem from "./CartDetailsItem";
 import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
 import Firebase, { Firestore } from "../config/firebase";
-import { collection, addDoc } from "firebase/firestore"; 
+import { collection, addDoc } from "firebase/firestore";
 import "firebase/compat/firestore";
 import firebase from "firebase/compat/app";
-import FeesItem from './FeesItem';
-import CartDetailsItem2 from './CartDetailsItem2';
-import MapComponent from './MapComponent';
-
-import { getFirestore, doc, Timestamp } from "firebase/firestore";
+import FeesItem from "./FeesItem";
+import CartDetailsItem2 from "./CartDetailsItem2";
+import MapComponent from "./MapComponent";
+import { Button } from "@react-native-material/core";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import { Stack, IconButton } from "@react-native-material/core";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 
 const details = [
   {
     title: "Add your Address",
     description: "With butter lettuce, tomato and sauce bechamel",
   },
-
 ];
 const details2 = [
   {
     title: "Standard",
     price: "30-60 Min",
   },
-
 ];
-const details3= [
+const details3 = [
   {
     title: "Add your Payment option",
     description: "With butter lettuce, tomato and sauce bechamel",
@@ -57,62 +57,57 @@ const delivery = [
     title: "placo",
     price: "$12",
   },
-
 ];
 
-
 export default function ViewCart() {
-  const [modalVisible,setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible1, setModalVisible1] = useState(false);
   const [location, setLocation] = useState(null);
   const [phone, setPhone] = useState(null);
-    const [mapModalVisible, setMapModalVisible] = useState(false);
-  const {items, restaurantName} = useSelector((state)=> state.cartReducer.selectedItems);  
+  const [mapModalVisible, setMapModalVisible] = useState(false);
+  const { items, restaurantName } = useSelector(
+    (state) => state.cartReducer.selectedItems
+  );
   const { user } = useContext(AuthenticatedUserContext);
   console.log(items);
   // console.log(user.email)
   const total = items
     .map((item) => Number(item.item.price.replace("ksh", "")))
     .reduce((prev, curr) => prev + curr, 0);
- 
-  const totalFinal = total +100;
-    const totalKES = totalFinal.toLocaleString("en", {
-      style: "currency",
-      currency: "KES",
-    });
-  
+
+  const totalFinal = total + 100;
+  const totalKES = totalFinal.toLocaleString("en", {
+    style: "currency",
+    currency: "KES",
+  });
+
   const totalUSD = total.toLocaleString("en", {
     style: "currency",
     currency: "KES",
   });
-  const addOrderToFirebase =()=>{
+  const addOrderToFirebase = () => {
     (async () => {
-  
-  try {
+      try {
+        Firestore.collection("orders").add({
+          items: items,
+          total: totalKES,
+          restaurantName: restaurantName,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          // user: user.email,
+          location: location,
+          phone: phone,
+          user: {},
+          checked: false,
+        });
 
-    	Firestore.collection("orders").add({
-        items: items,
-        total: totalKES,
-        restaurantName: restaurantName,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        // user: user.email,
-        location: location,
-        phone: phone,
-        user: {},
-        checked: false,
-      });
-    
+        console.log("Document written with ID: ");
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+    })();
 
-
-    console.log("Document written with ID: ");
-  } catch (e) {
-    console.error("Error adding document: ", e);
-  }
-})();
-
-    setModalVisible(false)
-
-
-  }
+    setModalVisible1(false);
+  };
   const styles = StyleSheet.create({
     modalContainer: {
       flex: 1,
@@ -133,6 +128,13 @@ export default function ViewCart() {
       height: "100%",
       borderWidth: 1,
     },
+    modalCheckout2Container: {
+      backgroundColor: "white",
+      padding: 16,
+      // height: 500,
+      height: 400,
+      borderWidth: 1,
+    },
     restaurantName: {
       textAlign: "center",
       fontWeight: "600",
@@ -144,6 +146,22 @@ export default function ViewCart() {
       justifyContent: "space-between",
       marginTop: 15,
     },
+    activeCategory: {
+      backgroundColor: "#DADADA",
+      alignItems: "center",
+      padding: 10,
+      borderRadius: 10,
+    },
+    textCategory: {
+      fontSize: 15,
+      fontWeight: "600",
+      color: "black",
+    },
+    activeTextCategory: {
+      fontSize: 12,
+      fontWeight: "600",
+      color: "black",
+    },
     subtotalText: {
       textAlign: "left",
       fontWeight: "600",
@@ -151,35 +169,35 @@ export default function ViewCart() {
       marginBottom: 10,
     },
   });
-    const MapModalContent = () => {
-      return (
-        <View style={styles.modalContainer}>
-          <View style={styles.modalMapCheckoutContainer}>
-            <Text style={styles.restaurantName}>here</Text>
-            <Map />
+  const MapModalContent = () => {
+    return (
+      <View style={styles.modalContainer}>
+        <View style={styles.modalMapCheckoutContainer}>
+          <Text style={styles.restaurantName}>here</Text>
+          <Map />
 
-            <View style={{ flexDirection: "row", justifyContent: "center" }}>
-              <TouchableOpacity
-                style={{
-                  marginTop: 20,
-                  backgroundColor: "black",
-                  alignItems: "center",
-                  padding: 13,
-                  borderRadius: 8,
-                  width: 300,
-                  position: "relative",
-                }}
-                onPress={() => console.log("set map")}
-              >
-                <Text style={{ color: "white", fontSize: 20 }}> Checkout</Text>
-                {/* <Text style ={{ position:'absolute',color:"white",right:20 ,fontSize:15,top:17}}>{total ? totalUSD : ""}</Text> */}
-              </TouchableOpacity>
-            </View>
+          <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <TouchableOpacity
+              style={{
+                marginTop: 20,
+                backgroundColor: "black",
+                alignItems: "center",
+                padding: 13,
+                borderRadius: 8,
+                width: 300,
+                position: "relative",
+              }}
+              onPress={() => console.log("set map")}
+            >
+              <Text style={{ color: "white", fontSize: 20 }}> Checkout</Text>
+              {/* <Text style ={{ position:'absolute',color:"white",right:20 ,fontSize:15,top:17}}>{total ? totalUSD : ""}</Text> */}
+            </TouchableOpacity>
           </View>
         </View>
-      );
-    };
-  const checkoutModalContent =() =>{
+      </View>
+    );
+  };
+  const checkoutModalContent = () => {
     return (
       <View style={styles.modalContainer}>
         <View style={styles.modalCheckoutContainer}>
@@ -265,70 +283,283 @@ export default function ViewCart() {
         </View>
       </View>
     );
-  }
-
+  };
+  const checkoutModal2Content = () => {
+    const food_category = [
+      {
+        id: 0,
+        image: require("../assets/images/deals.png"),
+        text: "Vegan",
+        category: "Groceries",
+      },
+      {
+        id: 1,
+        image: require("../assets/images/fast-food.png"),
+        text: "Vegetable",
+        category: "African",
+      },
+      {
+        id: 2,
+        image: require("../assets/images/soft-drink.png"),
+        text: "Lentice",
+        category: "American",
+      },
+      {
+        id: 3,
+        image: require("../assets/images/coffee.png"),
+        text: "Serves two",
+        category: "African",
+      },
+    ];
     return (
-      <>
-        <Modal
-          animationType="slide"
-          visible={mapModalVisible}
-          transparent={true}
-          onRequestClose={() => setMapModalVisible(false)}
-        >
-          {MapModalContent()}
-        </Modal>
-        <Modal
-          animationType="slide"
-          visible={modalVisible}
-          transparent={true}
-          onRequestClose={() => setModalVisible(false)}
-        >
-          {checkoutModalContent()}
-        </Modal>
-        {total ? (
-          <View
-            style={{
-              flex: 2,
-              alignItems: "center",
-              flexDirection: "column",
-              postion: "absolute",
-              bottom: 0,
-              zIndex: -100,
-            }}
-          >
+      <View style={styles.modalContainer}>
+        <View style={styles.modalCheckout2Container}>
+          <ScrollView>
+            {items.map((item, index) => (
+              <View
+                index={index}
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  // padding: 20,
+                  paddingBottom: 20,
+                  paddingTop: 20,
+                  // borderBottomWidth: 1,
+                  borderBottomColor: "999",
+                }}
+              >
+                <></>
+                <Text style={{ fontWeight: "600", fontSize: 16 }}>
+                  {item?.item?.title}
+                </Text>
+                <Text style={{ fontWeight: "600", fontSize: 16 }}>
+                  {item?.item?.price}
+                </Text>
+              </View>
+            ))}
             <View
               style={{
                 flexDirection: "row",
-                justifyContent: "center",
-                width: "100%",
+                justifyContent: "space-between",
+                // padding: 20,
+                paddingBottom: 20,
+                // borderBottomWidth: 1,
+                borderBottomColor: "999",
               }}
             >
-              <TouchableOpacity
-                style={{
-                  marginTop: 20,
-                  backgroundColor: "green",
-                  flexDirection: "row",
-                  justifyContent: "flex-end",
-                  padding: 15,
-                  borderRadius: 8,
-                  width: 300,
-                  height: 60,
-                  position: "relative",
-                }}
-                onPress={() => setModalVisible(true)}
-              >
-                <Text style={{ color: "white", fontSize: 20, marginRight: 30 }}>
-                  Basket( {totalUSD} ksh )
-                </Text>
-                <Text
-                  style={{ color: "white", fontSize: 20, marginRight: 30 }}
-                ></Text>
-              </TouchableOpacity>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {food_category.map((item, index) => (
+                  <View
+                    onPress={() => console.log("here")}
+                    key={index}
+                    style={{
+                      // alignItems: "center",
+                      // marginRight: 30,
+                      marginHorizontal: 0,
+                      // marginTop: 20,
+                      paddingHorizontal: 2,
+                      marginBottom: 5,
+                    }}
+                  >
+                    <TouchableOpacity
+                      style={styles.activeCategory}
+                      onPress={() => {
+                        setActive(item.id);
+                        search(item.text);
+                      }}
+                    >
+                      <Text style={styles.activeTextCategory}>{item.text}</Text>
+                    </TouchableOpacity>
+                  </View>
+                ))}
+              </ScrollView>
             </View>
+            <View>
+              <Text style={{ opacity: 0.7, fontSize: 16 }}>
+                Ethiopian platter is a very healthy vegan platter with lentils,
+                vegetables, and fermented flatbread Injera. The platter is rich
+                in fiber, gluten-free, and a combination of complex flavors.
+                Moreover, this recipe has 7 different side dishes with different
+                vegetables and lentils. Some recipes call for an Ethiopian spice
+                blend called Berbere or with simple spices.
+              </Text>
+            </View>
+
+            <View
+              style={{
+                // padding: 20,
+                paddingBottom: 20,
+                paddingTop: 20,
+              }}
+            ></View>
+          </ScrollView>
+ 
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              paddingHorizontal: 10,
+              padding: 3,
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                marginTop: 20,
+
+                backgroundColor: "white",
+                borderColor: "gray",
+                border: "1px solid gray",
+                alignItems: "center",
+                padding: 13,
+                borderRadius: 8,
+                width: 180,
+                borderWidth: 1,
+                marginRight: 15,
+                // borderBottomWidth:{(title=="Deliver option") ? 0: 1}
+                // borderBottomWidth: 1,
+                borderColor: "#616161",
+
+                position: "relative",
+              }}
+            >
+
+              <View
+                spacing={6}
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  paddingHorizontal: 10,
+                }}
+              >
+                <Ionicons
+                  style={{
+                    paddingRight: 10,
+                  }}
+                  name="add"
+                  size={30}
+                  color="black"
+                />
+
+                <Text
+                  style={{
+                    fontWeight: "600",
+                    fontSize: 20,
+                    paddingRight: 20,
+                    paddingLeft: 20,
+                  }}
+                >
+                  1
+                </Text>
+                <AntDesign
+                  style={{
+                    paddingLeft: 10,
+                  }}
+                  name="minus"
+                  size={30}
+                  color="black"
+                />
+              </View>
+
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                marginTop: 20,
+                backgroundColor: "green",
+                alignItems: "center",
+                padding: 15,
+                paddingLeft: 10,
+                borderRadius: 8,
+                width: 200,
+                position: "relative",
+              }}
+              onPress={() => {
+                setModalVisible1(true);
+                setModalVisible(false);
+                console.log("here",modalVisible,modalVisible1);
+              }}
+            >
+              {/* <Text style={{ color: "white", fontSize: 20 }}> Checkout</Text> */}
+              <Text style={{ color: "white", fontSize: 20 }}>
+                {total ? "Add ( " + totalUSD + "ksh )" : ""}
+              </Text>
+            </TouchableOpacity>
           </View>
-        ) : (
-          <></>
-        )}
-      </>
+        </View>
+      </View>
     );
+  };
+
+  return (
+    <>
+      <Modal
+        animationType="slide"
+        visible={mapModalVisible}
+        transparent={true}
+        onRequestClose={() => setMapModalVisible(false)}
+      >
+        {MapModalContent()}
+      </Modal>
+      <Modal
+        animationType="slide"
+        visible={modalVisible}
+        transparent={true}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        {checkoutModal2Content()}
+      </Modal>
+      <Modal
+        animationType="slide"
+        visible={modalVisible1}
+        transparent={true}
+        onRequestClose={() => setModalVisible1(false)}
+      >
+        {checkoutModalContent()}
+      </Modal>
+
+      {total ? (
+        <View
+          style={{
+            flex: 2,
+            alignItems: "center",
+            flexDirection: "column",
+            postion: "absolute",
+            bottom: 0,
+            zIndex: -100,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                marginTop: 20,
+                backgroundColor: "green",
+                flexDirection: "row",
+                justifyContent: "flex-end",
+                padding: 15,
+                borderRadius: 8,
+                width: 300,
+                height: 60,
+                position: "relative",
+              }}
+              onPress={() => setModalVisible(true)}
+            >
+              <Text style={{ color: "white", fontSize: 20, marginRight: 30 }}>
+                Basket( {totalUSD} ksh )
+              </Text>
+              <Text
+                style={{ color: "white", fontSize: 20, marginRight: 30 }}
+              ></Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      ) : (
+        <></>
+      )}
+    </>
+  );
 }

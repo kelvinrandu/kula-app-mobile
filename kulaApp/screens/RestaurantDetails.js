@@ -1,28 +1,26 @@
-import React, { useState,useRef,useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
   Image,
   ScrollView,
   StyleSheet,
-  Animated,TouchableOpacity,
-  
+  Animated,
+  TouchableOpacity,
 } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
-import { Divider } from 'react-native-elements'
-import About from '../components/About'
-import MenuItems from '../components/MenuItems'
-import ViewCart from '../components/ViewCart'
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Divider } from "react-native-elements";
+import About from "../components/About";
+import MenuItems from "../components/MenuItems";
+import ViewCart from "../components/ViewCart";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import SafeAreaView from "react-native-safe-area-view";
 import AnimatedHeader from "../components/AnimatedHeader";
 import HeaderTabs from "../components/HeaderTabs";
 import FoodCategories from "../components/FoodCategories";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-
-
 
 const H_MAX_HEIGHT = 150;
 const H_MIN_HEIGHT = 52;
@@ -118,7 +116,7 @@ const items = [
   {
     id: 2,
     image: require("../assets/images/soft-drink.png"),
-    text: "Smoothie Bowls" ,
+    text: "Smoothie Bowls",
     category: "American",
   },
   {
@@ -127,172 +125,187 @@ const items = [
     text: "Drinks",
     category: "African",
   },
-
 ];
 
-export default function RestaurantDetails({ route ,navigation}) {
+export default function RestaurantDetails({ route, navigation }) {
+  const [active, setActive] = useState(0);
+  const [foods, setfoods] = useState(food_array);
+  const [query, setQuery] = useState("Main Dishes");
+  useEffect(() => {
+    search(query);
+  }, [query]);
 
-  const [active, setActive] = useState(0)
-   const [foods, setfoods] = useState(food_array);
-   const [query, setQuery] = useState('Main Dishes');
-useEffect(() => {
-  search(query);
-}, [query]);
+  const search = (query) => {
+    console.log(query);
+    let resti = food_array.filter((food) => food.category === query);
+    let result = resti;
+    setQuery(query);
+    setfoods(result);
+  };
 
-     const search = (query) => {
-       console.log(query);
-       let resti = food_array.filter((food) =>
-         food.category === query
-       );
-       let result = resti;
-       setQuery(query);
-       setfoods(result);
-     };
-     
-   const offset = useRef(new Animated.Value(0)).current;
-   console.log('offset',offset)
-     const dispatch = useDispatch();
-     const selectItem = (item, checkboxValue) =>
-       dispatch({
-         type: "ADD_TO_CART",
-         payload: {
-           item,
-          //  restaurantName: restaurantName,
-           restaurantName: route.params.name,
-           checkboxValue: checkboxValue,
-         },
-       });
-     const cartItems = useSelector(
-       (state) => state.cartReducer.selectedItems.items
-     );
+  const offset = useRef(new Animated.Value(0)).current;
 
-     const isFoodInCart = (food, cartItems) => {
-       return Boolean(cartItems.find((item) => item.item.title === food.title));
-     };
+  const dispatch = useDispatch();
+  const selectItem = (item, checkboxValue) => {
+    console.log("check--.", item, checkboxValue);
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: {
+        item,
+        //  restaurantName: restaurantName,
+        restaurantName: route.params.name,
+        checkboxValue: checkboxValue,
+      },
+    });
+  };
+  const cartItems = useSelector(
+    (state) => state.cartReducer.selectedItems.items
+  );
 
-    return (
-      <SafeAreaProvider>
-        <SafeAreaView
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-          forceInset={{ top: "always" }}
+  const isFoodInCart = (food, cartItems) => {
+    return Boolean(cartItems.find((item) => item.item.title === food.title));
+  };
+
+  return (
+    <SafeAreaProvider>
+      <SafeAreaView
+        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        forceInset={{ top: "always" }}
+      >
+        <AnimatedHeader route={route} animatedValue={offset} />
+
+        <Divider width={1.8} style={{ marginVertical: 10 }} />
+        <ScrollView
+          nestedScrollEnabled={true}
+          style={{ flex: 1, backgroundColor: "white" }}
+          contentContainerStyle={{
+            // alignItems: "center",
+            alignItems: "flex-start",
+            paddingTop: 200,
+            zIndex: 1,
+            // paddingHorizontal: 10,
+          }}
+          showsVerticalScrollIndicator={false}
+          scrollEventThrottle={16}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: offset } } }],
+            { useNativeDriver: false }
+          )}
         >
-          <AnimatedHeader route={route} animatedValue={offset} />
+          <RestaurantTitle name={route.params.name} />
+          <RestaurantDescription />
+          <View
+            style={{
+              marginHorizontal: 10,
+              width: "100%",
 
-          <Divider width={1.8} style={{ marginVertical: 10 }} />
-          <ScrollView
-            nestedScrollEnabled={true}
-            style={{ flex: 1, backgroundColor: "white" }}
-            contentContainerStyle={{
-              // alignItems: "center",
-              alignItems: "flex-start",
-              paddingTop: 200,
-              zIndex: 1,
-              // paddingHorizontal: 10,
+              // marginBottom: 5,
             }}
-            showsVerticalScrollIndicator={false}
-            scrollEventThrottle={16}
-            onScroll={Animated.event(
-              [{ nativeEvent: { contentOffset: { y: offset } } }],
-              { useNativeDriver: false }
-            )}
           >
-            <RestaurantTitle name={route.params.name} />
-            <RestaurantDescription />
-            <View
-              style={{
-          
-                marginHorizontal: 10,
-                width:"100%"
-            
-                // marginBottom: 5,
-              }}
-            >
-              <HeaderTabs color={"green"} />
-            </View>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {items.map((item, index) => (
-                <View
-                  onPress={() => console.log("here")}
-                  key={index}
-                  style={{
-                    alignItems: "center",
-                    marginRight: 30,
-                    marginHorizontal: 10,
-                    marginTop: 20,
-                    // marginBottom: 5,
+            <HeaderTabs color={"green"} />
+          </View>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {items.map((item, index) => (
+              <View
+                onPress={() => console.log("here")}
+                key={index}
+                style={{
+                  alignItems: "center",
+                  marginRight: 30,
+                  marginHorizontal: 10,
+                  marginTop: 20,
+                  // marginBottom: 5,
+                }}
+              >
+                <TouchableOpacity
+                  style={
+                    active == item.id ? styles.activeCategory : styles.category
+                  }
+                  onPress={() => {
+                    setActive(item.id);
+                    search(item.text);
                   }}
                 >
-                  <TouchableOpacity
-                    style={
-                      active == item.id
-                        ? styles.activeCategory
-                        : styles.category
-                    }
-                    onPress={() => {                     
-                      setActive(item.id);
-                      search(item.text);
-                    }}
-                  >
-                    {/* <Image
+                  {/* <Image
                 source={item.image}
                 style={{ width: 50, height: 40, resizeMode: "contain" }}
               /> */}
-                    <Text
-                      style={
-                        active == item.id
-                          ? styles.activeTextCategory
-                          : styles.textCategory
-                      }
-                    >
-                      {item.text}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              ))}
-            </ScrollView>
-            <View
-              style={{ alignItems: "center", marginRight: 30, marginTop: 10 }}
-            >
-              <Text
-                style={{
-                  fontSize: 20,
-                  zIndex: 10,
-                  fontWeight: "600",
-                  marginTop: 0,
-                  marginBottom: 0,
-                  marginHorizontal: 10,
-                }}
-              >
-                {items[active].text}
-              </Text>
-            </View>
-
-            {foods.map((food, index) => (
-              <View key={index}>
-                <View style={styles.menuItemStyle}>
-                  <BouncyCheckbox
-                    iconStyle={{ borderColor: "lightgray", borderRadius: 0 }}
-                    fillColor="green"
-                    onPress={(checkboxValue) => selectItem(food, checkboxValue)}
-                    isChecked={isFoodInCart(food, cartItems)}
-                    // onPress={isFoodInCart(food, cartItems)}
-                  />
-
-                  <FoodInfo food={food} />
-                  {/* <FoodImage food={food} /> */}
-                </View>
+                  <Text
+                    style={
+                      active == item.id
+                        ? styles.activeTextCategory
+                        : styles.textCategory
+                    }
+                  >
+                    {item.text}
+                  </Text>
+                </TouchableOpacity>
               </View>
             ))}
           </ScrollView>
-          <View style={styles.action}>
-            <ViewCart
-              navigation={navigation}
-              restaurantName={route.params.name}
-            />
+          <View
+            style={{ alignItems: "center", marginRight: 30, marginTop: 10 }}
+          >
+            <Text
+              style={{
+                fontSize: 20,
+                zIndex: 10,
+                fontWeight: "600",
+                marginTop: 0,
+                marginBottom: 0,
+                marginHorizontal: 10,
+              }}
+            >
+              {items[active].text}
+            </Text>
           </View>
-        </SafeAreaView>
-      </SafeAreaProvider>
-    );
+
+          {foods.map((food, index) => (
+            <View key={index}>
+              <View style={styles.menuItemStyle}>
+                <TouchableOpacity
+                  // style={{
+                  //   marginTop: 20,
+                  //   backgroundColor: "green",
+                  //   flexDirection: "row",
+                  //   justifyContent: "flex-end",
+                  //   padding: 15,
+                  //   borderRadius: 8,
+                  //   width: 300,
+                  //   height: 60,
+                  //   position: "relative",
+                  // }}
+                  onPress={(index) => {
+                    isFoodInCart(food, cartItems)
+                      ? console.log("here")
+                      : selectItem(food, index);
+                  }}
+                >
+                  {/* <BouncyCheckbox
+                      iconStyle={{ borderColor: "lightgray", borderRadius: 0 }}
+                      fillColor="green"
+                      onPress={(checkboxValue) =>
+                        selectItem(food, checkboxValue)
+                      }
+                      isChecked={isFoodInCart(food, cartItems)}
+                    /> */}
+
+                  <FoodInfo food={food} />
+                  {/* <FoodImage food={food} /> */}
+                </TouchableOpacity>
+              </View>
+            </View>
+          ))}
+        </ScrollView>
+        <View style={styles.action}>
+          <ViewCart
+            navigation={navigation}
+            restaurantName={route.params.name}
+          />
+        </View>
+      </SafeAreaView>
+    </SafeAreaProvider>
+  );
 }
 const RestaurantDescription = (props) => (
   <>
@@ -323,14 +336,13 @@ const RestaurantDescription = (props) => (
         marginHorizontal: 15,
         fontWeight: "400",
         fontSize: 15.5,
-        marginBottom:20
+        marginBottom: 20,
       }}
     >
       Click to get more information about the restaurant
     </Text>
-    
-    </>
-)
+  </>
+);
 const RestaurantTitle = (props) => (
   <Text
     style={{
@@ -413,7 +425,7 @@ const styles = StyleSheet.create({
 
 const FoodInfo = (props) => {
   return (
-    <View style={{ width:350, justifyContent: "space-evenly" }}>
+    <View style={{ width: 350, justifyContent: "space-evenly" }}>
       <Text style={styles.titleStyle}>{props.food.title}</Text>
       <Text>{props.food.description}</Text>
       <Text style={styles.priceStyle}>{props.food.price}</Text>
