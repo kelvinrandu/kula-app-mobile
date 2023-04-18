@@ -22,6 +22,8 @@ import { Button } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Stack, IconButton } from "@react-native-material/core";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
+import axios from "axios";
+
 
 const details = [
   {
@@ -93,6 +95,44 @@ export default function ViewCart({
     style: "currency",
     currency: "KES",
   });
+  const payment=(phone,amount)=>{
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: "Bearer 3MyNRoaH76k24uQEeNGMHmg7FXUM",
+    };
+    const data = {
+      BusinessShortCode: "174379",
+      Password:
+        "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMTYwMjE2MTY1NjI3",
+      Timestamp: "20160216165627",
+      TransactionType: "CustomerPayBillOnline",
+      Amount: totalKES,
+      PartyA: phone,
+      PartyB: "174379",
+      PhoneNumber: phone,
+      CallBackURL: "https://mydomain.com/pat",
+      AccountReference: "Test",
+      TransactionDesc: "Test",
+    };
+    let url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
+
+    axios
+      .post(url, data, {
+        headers: headers,
+      })
+      .then((response) => {
+        dispatch({
+          type: FOUND_USER,
+          data: response.data[0],
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: ERROR_FINDING_USER,
+        });
+      });
+
+  }
   const addOrderToFirebase = () => {
     (async () => {
       try {
@@ -255,6 +295,7 @@ export default function ViewCart({
               <CartDetailsItem
                 phone={phone}
                 setPhone={setPhone}
+                payment={payment}
                 key={index}
                 item={item}
                 type={"payment"}

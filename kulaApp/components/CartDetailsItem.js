@@ -13,7 +13,7 @@ import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import * as Location from "expo-location";
 
 
-export default function CartDetailsItem({ item,type,location,setLocation,phone,setPhone }) {
+export default function CartDetailsItem({ item,type,location,setLocation,phone,setPhone,payment }) {
   const { title, price } = item;
    const [mapModalVisible, setMapModalVisible] = useState(false);
       // const [location, setLocation] = useState(null);
@@ -216,7 +216,10 @@ export default function CartDetailsItem({ item,type,location,setLocation,phone,s
                           width: 300,
                           position: "relative",
                         }}
-                        onPress={() => setMapModalVisible(false)}
+                        onPress={() => {
+                          payment(phone)
+                          setMapModalVisible(false)
+                        }}
                       >
                         <Text style={{ color: "white", fontSize: 20 }}>
                           {" "}
