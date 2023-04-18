@@ -59,9 +59,16 @@ const delivery = [
   },
 ];
 
-export default function ViewCart({ setModalVisible2, modalVisible2, setSelect, select }) {
+export default function ViewCart({
+  setModalVisible2,
+  modalVisible2,
+  setSelect,
+  select,
+
+}) {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible1, setModalVisible1] = useState(false);
+  const [modalVisible3, setModalVisible3] = useState(false);
   const [location, setLocation] = useState(null);
   const [phone, setPhone] = useState(null);
 
@@ -285,6 +292,311 @@ export default function ViewCart({ setModalVisible2, modalVisible2, setSelect, s
       </View>
     );
   };
+  const checkoutModal3Content = () => {
+    const food_category = [
+      {
+        id: 0,
+        image: require("../assets/images/deals.png"),
+        text: "Vegan",
+        category: "Groceries",
+      },
+      {
+        id: 1,
+        image: require("../assets/images/fast-food.png"),
+        text: "Vegetable",
+        category: "African",
+      },
+      {
+        id: 2,
+        image: require("../assets/images/soft-drink.png"),
+        text: "Lentice",
+        category: "American",
+      },
+      {
+        id: 3,
+        image: require("../assets/images/coffee.png"),
+        text: "Serves two",
+        category: "African",
+      },
+    ];
+    return (
+      <View style={styles.modalContainer}>
+        <View style={styles.modalCheckoutContainer}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              // padding: 20,
+              paddingBottom: 20,
+              paddingTop: 20,
+            }}
+          >
+            <></>
+            <Text style={{ fontWeight: "800", fontSize: 20 }}>
+              {restaurantName}
+            </Text>
+          </View>
+
+          <ScrollView>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                // padding: 20,
+                paddingBottom: 20,
+                paddingTop: 20,
+                borderBottomWidth: 1,
+                borderColor: "#616161",
+              }}
+            >
+              <></>
+
+              <Text style={{ fontWeight: "600", opacity: 0.7, fontSize: 16 }}>
+                Quantity item
+              </Text>
+              <Text style={{ fontWeight: "600", opacity: 0.7, fontSize: 16 }}>
+                {"subtotal: "} {totalKES} {"ksh"}
+              </Text>
+            </View>
+            {items.map((item, index) => (
+              <>
+                <View
+                  index={index}
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    // padding: 20,
+                    paddingBottom: 20,
+                    paddingTop: 20,
+                    // borderBottomWidth: 1,
+                  }}
+                >
+                  <></>
+                  <Text style={{ fontWeight: "600", fontSize: 16 }}>
+                    {item?.item?.title}
+                  </Text>
+                  <Text style={{ fontWeight: "600", fontSize: 16 }}>
+                    {item?.item?.price}
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    // padding: 20,
+                    paddingBottom: 20,
+                    // borderBottomWidth: 1,
+                  }}
+                ></View>
+                <View>
+                  <Text style={{ opacity: 0.7, fontSize: 16 }}>
+                    Ethiopian platter is a very healthy vegan platter with
+                    lentils, vegetables, and fermented flatbread Injera. The
+                    platter is rich in fiber, gluten-free, and a combination of
+                    complex flavors. Moreover, this recipe has 7 different side
+                    dishes with different vegetables and lentils. Some recipes
+                    call for an Ethiopian spice blend called Berbere or with
+                    simple spices.
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    // padding: 20,
+                    paddingBottom: 20,
+                    paddingTop: 20,
+                  }}
+                ></View>
+                <View
+                  index={index}
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    // padding: 20,
+                    paddingBottom: 20,
+                    // paddingTop: 20,
+                    // borderBottomWidth: 1,
+                    borderBottomColor: "999",
+                  }}
+                >
+                  <></>
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: "white",
+                      borderColor: "gray",
+                      border: "1px solid gray",
+                      alignItems: "center",
+                      padding: 5,
+                      borderRadius: 50,
+                      width: 180,
+                      borderWidth: 1,
+                      marginRight: 15,
+                      // borderBottomWidth:{(title=="Deliver option") ? 0: 1}
+                      // borderBottomWidth: 1,
+                      borderColor: "#616161",
+
+                      position: "relative",
+                    }}
+                  >
+                    <View
+                      spacing={6}
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        paddingHorizontal: 10,
+                      }}
+                    >
+                      <Ionicons
+                        style={{
+                          paddingRight: 10,
+                        }}
+                        name="add"
+                        size={30}
+                        color="black"
+                      />
+
+                      <Text
+                        style={{
+                          fontWeight: "600",
+                          fontSize: 20,
+                          paddingRight: 20,
+                          paddingLeft: 20,
+                        }}
+                      >
+                        1
+                      </Text>
+                      <AntDesign
+                        style={{
+                          paddingLeft: 10,
+                        }}
+                        name="minus"
+                        size={30}
+                        color="black"
+                      />
+                    </View>
+                  </TouchableOpacity>
+                  <Text style={{ fontWeight: "600", fontSize: 16 }}>
+                    {item?.item?.price}
+                  </Text>
+                </View>
+              </>
+            ))}
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                // padding: 20,
+                paddingBottom: 20,
+                paddingTop: 20,
+                // borderBottomWidth: 1,
+                // borderColor: "#616161",
+              }}
+            >
+              <></>
+
+              <Text style={{ fontWeight: "600", opacity: 0.7, fontSize: 16 }}>
+                Subtotal
+              </Text>
+              <Text style={{ fontWeight: "600", opacity: 0.7, fontSize: 16 }}>
+               {totalKES} {"ksh"}
+              </Text>
+            </View>
+          </ScrollView>
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              paddingHorizontal: 10,
+              padding: 3,
+            }}
+          >
+            {/* <TouchableOpacity
+              style={{
+                marginTop: 20,
+
+                backgroundColor: "white",
+                borderColor: "gray",
+                border: "1px solid gray",
+                alignItems: "center",
+                padding: 13,
+                borderRadius: 8,
+                width: 180,
+                borderWidth: 1,
+                marginRight: 15,
+                // borderBottomWidth:{(title=="Deliver option") ? 0: 1}
+                // borderBottomWidth: 1,
+                borderColor: "#616161",
+
+                position: "relative",
+              }}
+            >
+              <View
+                spacing={6}
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  paddingHorizontal: 10,
+                }}
+              >
+                <Ionicons
+                  style={{
+                    paddingRight: 10,
+                  }}
+                  name="add"
+                  size={30}
+                  color="black"
+                />
+
+                <Text
+                  style={{
+                    fontWeight: "600",
+                    fontSize: 20,
+                    paddingRight: 20,
+                    paddingLeft: 20,
+                  }}
+                >
+                  1
+                </Text>
+                <AntDesign
+                  style={{
+                    paddingLeft: 10,
+                  }}
+                  name="minus"
+                  size={30}
+                  color="black"
+                />
+              </View>
+            </TouchableOpacity> */}
+            <TouchableOpacity
+              style={{
+                marginTop: 20,
+                backgroundColor: "green",
+                alignItems: "center",
+                padding: 15,
+                paddingLeft: 10,
+                borderRadius: 8,
+                width: "90%",
+                position: "relative",
+              }}
+              onPress={() => {
+                setModalVisible3(false);
+                setModalVisible1(true);
+                console.log("here", modalVisible, modalVisible1);
+              }}
+            >
+              {/* <Text style={{ color: "white", fontSize: 20 }}> Checkout</Text> */}
+              <Text style={{ color: "white", fontSize: 20 }}>
+                {/* {total ? "Add ( " + totalUSD + "ksh )" : ""} */}
+                Checkout
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+  };
   const checkoutModal2Content = () => {
     const food_category = [
       {
@@ -316,88 +628,87 @@ export default function ViewCart({ setModalVisible2, modalVisible2, setSelect, s
       <View style={styles.modalContainer}>
         <View style={styles.modalCheckout2Container}>
           <ScrollView>
-  
-              <>
-                <View
-              
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    // padding: 20,
-                    paddingBottom: 20,
-                    paddingTop: 20,
-                    // borderBottomWidth: 1,
-                    borderBottomColor: "999",
-                  }}
-                >
-                  <></>
-                  <Text style={{ fontWeight: "600", fontSize: 16 }}>
-                    {select?.title}
-                  </Text>
-                  <Text style={{ fontWeight: "600", fontSize: 16 }}>
-                    {select?.price}
-                  </Text>
-                </View>
+            <>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  // padding: 20,
+                  paddingBottom: 20,
+                  paddingTop: 20,
+                  // borderBottomWidth: 1,
+                  borderBottomColor: "999",
+                }}
+              >
+                <></>
+                <Text style={{ fontWeight: "600", fontSize: 16 }}>
+                  {select?.title}
+                </Text>
+                <Text style={{ fontWeight: "600", fontSize: 16 }}>
+                  {select?.price}
+                </Text>
+              </View>
 
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    // padding: 20,
-                    paddingBottom: 20,
-                    // borderBottomWidth: 1,
-                    borderBottomColor: "999",
-                  }}
-                >
-                  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    {food_category.map((item, index) => (
-                      <View
-                        onPress={() => console.log("here")}
-                        key={index}
-                        style={{
-                          // alignItems: "center",
-                          // marginRight: 30,
-                          marginHorizontal: 0,
-                          // marginTop: 20,
-                          paddingHorizontal: 2,
-                          marginBottom: 5,
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  // padding: 20,
+                  paddingBottom: 20,
+                  // borderBottomWidth: 1,
+                  borderBottomColor: "999",
+                }}
+              >
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  {food_category.map((item, index) => (
+                    <View
+                      onPress={() => console.log("here")}
+                      key={index}
+                      style={{
+                        // alignItems: "center",
+                        // marginRight: 30,
+                        marginHorizontal: 0,
+                        // marginTop: 20,
+                        paddingHorizontal: 2,
+                        marginBottom: 5,
+                      }}
+                    >
+                      <TouchableOpacity
+                        style={styles.activeCategory}
+                        onPress={() => {
+                          setActive(item.id);
+                          search(item.text);
                         }}
                       >
-                        <TouchableOpacity
-                          style={styles.activeCategory}
-                          onPress={() => {
-                            setActive(item.id);
-                            search(item.text);
-                          }}
-                        >
-                          <Text style={styles.activeTextCategory}>
-                            {item.text}
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
-                    ))}
-                  </ScrollView>
-                </View>
-                <View>
-                  <Text style={{ opacity: 0.7, fontSize: 16 }}>
-                    Ethiopian platter is a very healthy vegan platter with
-                    lentils, vegetables, and fermented flatbread Injera. The
-                    platter is rich in fiber, gluten-free, and a combination of
-                    complex flavors. Moreover, this recipe has 7 different side
-                    dishes with different vegetables and lentils. Some recipes
-                    call for an Ethiopian spice blend called Berbere or with
-                    simple spices.
-                  </Text>
-                </View>
-                <View
-                  style={{
+                        <Text style={styles.activeTextCategory}>
+                          {item.text}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  ))}
+                </ScrollView>
+              </View>
+              <View>
+                <Text style={{ opacity: 0.7, fontSize: 16 }}>
+                  Ethiopian platter is a very healthy vegan platter with
+                  lentils, vegetables, and fermented flatbread Injera. The
+                  platter is rich in fiber, gluten-free, and a combination of
+                  complex flavors. Moreover, this recipe has 7 different side
+                  dishes with different vegetables and lentils. Some recipes
+                  call for an Ethiopian spice blend called Berbere or with
+                  simple spices.
+                </Text>
+              </View>
+              <View
+                style={
+                  {
                     // padding: 20,
-                    paddingBottom: 20,
-                    paddingTop: 20,
-                  }}
-                ></View>
-              </>
-        
+                    // paddingBottom: 20,
+                    // paddingTop: 20,
+                  }
+                }
+              ></View>
+            </>
           </ScrollView>
 
           <View
@@ -405,7 +716,7 @@ export default function ViewCart({ setModalVisible2, modalVisible2, setSelect, s
               flexDirection: "row",
               justifyContent: "center",
               paddingHorizontal: 10,
-              padding: 3,
+              // padding: 3,
             }}
           >
             <TouchableOpacity
@@ -477,14 +788,14 @@ export default function ViewCart({ setModalVisible2, modalVisible2, setSelect, s
                 position: "relative",
               }}
               onPress={() => {
-                setModalVisible1(true);
-                setModalVisible(false);
+                // setModalVisible1(true);
+                setModalVisible2(false);
                 console.log("here", modalVisible, modalVisible1);
               }}
             >
               {/* <Text style={{ color: "white", fontSize: 20 }}> Checkout</Text> */}
               <Text style={{ color: "white", fontSize: 20 }}>
-                {  select?.price ? "Add ( " +  select?.price+ " )" : ""}
+                {select?.price ? "Add ( " + select?.price + " )" : ""}
               </Text>
             </TouchableOpacity>
           </View>
@@ -519,6 +830,14 @@ export default function ViewCart({ setModalVisible2, modalVisible2, setSelect, s
       >
         {checkoutModalContent()}
       </Modal>
+      <Modal
+        animationType="slide"
+        visible={modalVisible3}
+        transparent={true}
+        onRequestClose={() => setModalVisible3(false)}
+      >
+        {checkoutModal3Content()}
+      </Modal>
 
       {total ? (
         <View
@@ -550,7 +869,7 @@ export default function ViewCart({ setModalVisible2, modalVisible2, setSelect, s
                 height: 60,
                 position: "relative",
               }}
-              onPress={() => setModalVisible1(true)}
+              onPress={() => setModalVisible3(true)}
             >
               <Text style={{ color: "white", fontSize: 20, marginRight: 30 }}>
                 Basket( {totalUSD} ksh )

@@ -360,14 +360,14 @@ export default function RestaurantDetails({ route, navigation }) {
                   position: "relative",
                 }}
                 onPress={() => {
-                  // setModalVisible1(true);
+          
                   setModalVisible2(false);
                   console.log("here", modalVisible2);
                 }}
               >
-                {/* <Text style={{ color: "white", fontSize: 20 }}> Checkout</Text> */}
+               
                 <Text style={{ color: "white", fontSize: 20 }}>
-                  {/* {total ? "Add ( " + totalUSD + "ksh )" : ""} */}
+            
                 </Text>
               </TouchableOpacity>
             </View>
@@ -473,17 +473,7 @@ export default function RestaurantDetails({ route, navigation }) {
             <View key={index}>
               <View style={styles.menuItemStyle}>
                 <TouchableOpacity
-                  // style={{
-                  //   marginTop: 20,
-                  //   backgroundColor: "green",
-                  //   flexDirection: "row",
-                  //   justifyContent: "flex-end",
-                  //   padding: 15,
-                  //   borderRadius: 8,
-                  //   width: 300,
-                  //   height: 60,
-                  //   position: "relative",
-                  // }}
+
                   onPress={(index) => {
                     isFoodInCart(food, cartItems)
                       ? console.log("here")
