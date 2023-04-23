@@ -131,6 +131,7 @@ const items = [
 
 export default function RestaurantDetails({ route, navigation }) {
   const [active, setActive] = useState(0);
+   const [ind, setInd] = useState(0);
   const [foods, setfoods] = useState(food_array);
   const [select, setSelect] = useState([]);
    const [modalVisible2, setModalVisible2] = useState(false);
@@ -473,23 +474,16 @@ export default function RestaurantDetails({ route, navigation }) {
             <View key={index}>
               <View style={styles.menuItemStyle}>
                 <TouchableOpacity
-
                   onPress={(index) => {
-                    isFoodInCart(food, cartItems)
-                      ? console.log("here")
-                      : selectItem(food, index);
+                    // isFoodInCart(food, cartItems)
+                    //   ? console.log("here")
+                    //   : selectItem(food, index);
                     setModalVisible2(true);
+                    setInd(index);
                     setSelect(food);
                   }}
                 >
-                  {/* <BouncyCheckbox
-                      iconStyle={{ borderColor: "lightgray", borderRadius: 0 }}
-                      fillColor="green"
-                      onPress={(checkboxValue) =>
-                        selectItem(food, checkboxValue)
-                      }
-                      isChecked={isFoodInCart(food, cartItems)}
-                    /> */}
+ 
 
                   <FoodInfo food={food} />
                   {/* <FoodImage food={food} /> */}
@@ -500,7 +494,11 @@ export default function RestaurantDetails({ route, navigation }) {
         </ScrollView>
         <View style={styles.action}>
           <ViewCart
+          ind={ind}
             setModalVisible2={setModalVisible2}
+            isFoodInCart={isFoodInCart}
+            selectItem={selectItem}
+            cartItems={cartItems}
             modalVisible2={modalVisible2}
             setSelect={setSelect}
             select={select}

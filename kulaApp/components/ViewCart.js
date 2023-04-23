@@ -64,7 +64,11 @@ const delivery = [
 export default function ViewCart({
   setModalVisible2,
   modalVisible2,
+  selectItem,
   setSelect,
+  ind,
+  cartItems,
+  isFoodInCart,
   select,
 
 }) {
@@ -830,6 +834,9 @@ export default function ViewCart({
               }}
               onPress={() => {
                 // setModalVisible1(true);
+                isFoodInCart(select, cartItems)
+                  ? console.log("here")
+                  : selectItem(select, ind);
                 setModalVisible2(false);
                 console.log("here", modalVisible, modalVisible1);
               }}
