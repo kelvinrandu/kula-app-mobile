@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext,useEffect } from "react";
 import {
   View,
   Text,
@@ -23,6 +23,7 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Stack, IconButton } from "@react-native-material/core";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 
 
 const details = [
@@ -76,22 +77,45 @@ export default function ViewCart({
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible3, setModalVisible3] = useState(false);
   const [location, setLocation] = useState(null);
-  const [phone, setPhone] = useState(null);
+   const [price, setPrice] = useState(select?.price);
+  useEffect(() => {
+    setPrice(select?.price);
 
+  }, [select?.price, price]);
+    // useEffect(() => {
+     
+    //   setItemPrice(select?.price * itemPrice);
+    // }, [itemPrice]);
+  
+  const [phone, setPhone] = useState(null);
+    const [itemPrice, setItemPrice] = useState(1);
+    const dispatch = useDispatch();
+ 
+  const updateItem = (item) => {
+
+
+    dispatch({
+      type: "UPDATE_CART",
+      payload: {
+        item,
+        // quantity
+      },
+    });
+  };
   const [mapModalVisible, setMapModalVisible] = useState(false);
   const { items, restaurantName } = useSelector(
     (state) => state.cartReducer.selectedItems
   );
 
-  items.map((item)=>{
-    console.log("items", item.item);
+  // items.map((item)=>{
+  //   console.log("items cart", item.item,item.quantity);
 
-  })
+  // })
   const { user } = useContext(AuthenticatedUserContext);
 
   // console.log(user.email)
   const total = items
-    .map((item) => Number(item.item.price.replace("ksh", "")))
+    .map((item) =>  Number(item?.item?.price?.replace("ksh", "")*item?.item?.quantity))
     .reduce((prev, curr) => prev + curr, 0);
 
   const totalFinal = total + 100;
@@ -104,6 +128,22 @@ export default function ViewCart({
     style: "currency",
     currency: "KES",
   });
+  const decreasePrice=()=>{
+    if (itemPrice > 1) {
+   let price_update = itemPrice - 1;
+    setItemPrice(price_update); 
+      setPrice(select?.price *itemPrice);
+
+  }
+    else{
+
+    }
+  }
+    const increasePrice = () => {
+      let price_update = itemPrice + 1;
+      setItemPrice(price_update);
+       setPrice(select?.price * price_update);
+    };
   const payment=(phone,amount)=>{
     const headers = {
       "Content-Type": "application/json",
@@ -472,6 +512,7 @@ export default function ViewCart({
                 >
                   <></>
                   <TouchableOpacity
+                  index={index}
                     style={{
                       backgroundColor: "white",
                       borderColor: "gray",
@@ -514,7 +555,7 @@ export default function ViewCart({
                           paddingLeft: 20,
                         }}
                       >
-                        1
+                        {itemPrice}
                       </Text>
                       <AntDesign
                         style={{
@@ -635,10 +676,10 @@ export default function ViewCart({
               >
                 <></>
                 <Text style={{ fontWeight: "600", fontSize: 16 }}>
-                  {/* {select?.title} */}
+                  {select?.title}
                 </Text>
                 <Text style={{ fontWeight: "600", fontSize: 16 }}>
-                  {/* {select?.price} */}
+                  {select?.price}
                 </Text>
               </View>
 
@@ -740,15 +781,15 @@ export default function ViewCart({
                   paddingHorizontal: 10,
                 }}
               >
-                <Ionicons
+                <AntDesign
                   style={{
-                    paddingRight: 10,
+                    paddingLeft: 10,
                   }}
-                  name="add"
+                  name="minus"
+                  onPress={() => decreasePrice()}
                   size={30}
                   color="black"
                 />
-
                 <Text
                   style={{
                     fontWeight: "600",
@@ -757,13 +798,19 @@ export default function ViewCart({
                     paddingLeft: 20,
                   }}
                 >
-                  1
+                  {itemPrice}
                 </Text>
-                <AntDesign
+
+                <Ionicons
                   style={{
-                    paddingLeft: 10,
+                    paddingRight: 10,
                   }}
-                  name="minus"
+                  // onPress={() => updateItem(select)}
+                  onPress={() => {
+                    // updateItem(select);
+                    increasePrice()
+                  }}
+                  name="add"
                   size={30}
                   color="black"
                 />
@@ -791,7 +838,7 @@ export default function ViewCart({
             >
               {/* <Text style={{ color: "white", fontSize: 20 }}> Checkout</Text> */}
               <Text style={{ color: "white", fontSize: 20 }}>
-                {select?.price ? "Add ( " + select?.price + " )" : ""}
+                {select?.price ? "Add ( " + price + " )" : ""}
               </Text>
             </TouchableOpacity>
           </View>

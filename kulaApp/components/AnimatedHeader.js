@@ -62,7 +62,7 @@ const AnimatedHeader = (props) => {
       outputRange: [HEADER_HEIGHT + insets.top, insets.top + 100],
       extrapolate: "clamp",
     });
-    console.log("header height", headerHeight, animatedValue);
+
 
   return (
     <>

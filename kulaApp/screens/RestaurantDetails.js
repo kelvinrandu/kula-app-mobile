@@ -35,6 +35,7 @@ const food_array = [
       "Vegan Ethiopian Platter is a colorful and flavorful dish that features a variety of traditional Ethiopian vegan dishes served on a large platter.This dish typicaly includes...",
     price: "950 ksh",
     category: "Main Dishes",
+    quantity: 1,
     image:
       "https://www.modernhoney.com/wp-content/uploads/2019/08/Classic-Lasagna-14-scaled.jpg",
   },
@@ -44,6 +45,7 @@ const food_array = [
       "Roasted Herbed Potatoes are a delicous ans savory dish that will elevate any meal.Made from fresh potatoes that are roasted...",
     price: "450 ksh",
     category: "Main Dishes",
+    quantity: 1,
     image: "https://i.ytimg.com/vi/BKxGodX9NGg/maxresdefault.jpg",
   },
   {
@@ -51,6 +53,7 @@ const food_array = [
     description:
       "Pea & Potato Samosas are a mouth-watering Inndian snack that combines the sweetness of peas and earthiness of potatoes wrapped in a crispy,golden brown pastry",
     price: "200 ksh",
+    quantity: 1,
     category: "Main Dishes",
     image:
       "https://i2.wp.com/chilipeppermadness.com/wp-content/uploads/2020/11/Chilaquales-Recipe-Chilaquiles-Rojos-1.jpg",
@@ -61,6 +64,7 @@ const food_array = [
       "One can never go wrong with a chicken caesar salad. Healthy option with greens and proteins!",
     price: "200 ksh",
     category: "Main Dishes",
+    quantity: 1,
     image:
       "https://images.themodernproper.com/billowy-turkey/production/posts/2019/Easy-italian-salad-recipe-10.jpg?w=1200&h=1200&q=82&fm=jpg&fit=crop&fp-x=0.5&fp-y=0.5&dm=1614096227&s=c0f63a30cef3334d97f9ecad14be51da",
   },
@@ -70,6 +74,7 @@ const food_array = [
       "Chapati Wrap with Avocado & Tomato is a fresh and favourful lunch option that combines the soft and chewy texture of a traditional Indian flatbread with the...",
     price: "400 ksh",
     category: "Chapati Wraps",
+    quantity: 1,
     image:
       "https://thestayathomechef.com/wp-content/uploads/2017/08/Most-Amazing-Lasagna-2-e1574792735811.jpg",
   },
@@ -79,6 +84,7 @@ const food_array = [
       "Vegan Beef Shawarma is a plant-based take on the classic Middle Eastern dish that is traditionally made with meat.This vegan version uses a meat substitute that...",
     price: "700 ksh",
     category: "Chapati Wraps",
+    quantity: 1,
     image:
       "https://images.themodernproper.com/billowy-turkey/production/posts/2019/Easy-italian-salad-recipe-10.jpg?w=1200&h=1200&q=82&fm=jpg&fit=crop&fp-x=0.5&fp-y=0.5&dm=1614096227&s=c0f63a30cef3334d97f9ecad14be51da",
   },
@@ -88,6 +94,7 @@ const food_array = [
       "Chapati Wrap with Banana,Peanut Butter & Cinamon is a delicious and indulgent breakfast or snack option that combines the sweatness of bananas with the rich and...",
     price: "700 ksh",
     category: "Chapati Wraps",
+    quantity: 1,
     image:
       "https://thestayathomechef.com/wp-content/uploads/2017/08/Most-Amazing-Lasagna-2-e1574792735811.jpg",
   },
@@ -96,6 +103,7 @@ const food_array = [
     description:
       "Smoothie Bowl Cacao Tribe is a delicious and healthy breakfast or snack option that is packed with nutrients and flavour .This smoothie bowl features a blend of ripe...",
     price: "600 ksh",
+    quantity: 1,
     category: "Smoothie Bowls",
     image:
       "https://thestayathomechef.com/wp-content/uploads/2017/08/Most-Amazing-Lasagna-2-e1574792735811.jpg",
@@ -134,7 +142,7 @@ export default function RestaurantDetails({ route, navigation }) {
   const [foods, setfoods] = useState(food_array);
   const [select, setSelect] = useState([]);
    const [modalVisible2, setModalVisible2] = useState(false);
-   console.log('modal-->',modalVisible2)
+
   const [query, setQuery] = useState("Main Dishes");
   useEffect(() => {
     search(query);
@@ -152,15 +160,15 @@ export default function RestaurantDetails({ route, navigation }) {
 
   const dispatch = useDispatch();
   const selectItem = (item, checkboxValue) => {
-    console.log("check--.", select);
+
     dispatch({
       type: "ADD_TO_CART",
       payload: {
         item,
         //  restaurantName: restaurantName,
         restaurantName: route.params.name,
-        checkboxValue: checkboxValue,
-        quantity:2
+        // checkboxValue: checkboxValue,
+        quantity:1,
       },
     });
   };
@@ -271,10 +279,13 @@ export default function RestaurantDetails({ route, navigation }) {
               <View style={styles.menuItemStyle}>
                 <TouchableOpacity
                   onPress={(index) => {
-                    console.log('clicked')
-          
+                  
+                         isFoodInCart(food, cartItems)
+                           ? console.log("here")
+                           : selectItem(food, index);
                     setModalVisible2(true);
-                    // setInd(index);
+                    setInd(index);
+                    setSelect(food);
                   
                   }}
                 >
