@@ -135,6 +135,7 @@ export default function RestaurantDetails({ route, navigation }) {
   const [foods, setfoods] = useState(food_array);
   const [select, setSelect] = useState([]);
    const [modalVisible2, setModalVisible2] = useState(false);
+   console.log('modal-->',modalVisible2)
   const [query, setQuery] = useState("Main Dishes");
   useEffect(() => {
     search(query);
@@ -160,6 +161,7 @@ export default function RestaurantDetails({ route, navigation }) {
         //  restaurantName: restaurantName,
         restaurantName: route.params.name,
         checkboxValue: checkboxValue,
+        quantity:2
       },
     });
   };
@@ -171,211 +173,6 @@ export default function RestaurantDetails({ route, navigation }) {
     return Boolean(cartItems.find((item) => item.item.title === food.title));
   };
 
-    const checkoutModal2Content = () => {
-      const food_category = [
-        {
-          id: 0,
-          image: require("../assets/images/deals.png"),
-          text: "Vegan",
-          category: "Groceries",
-        },
-        {
-          id: 1,
-          image: require("../assets/images/fast-food.png"),
-          text: "Vegetable",
-          category: "African",
-        },
-        {
-          id: 2,
-          image: require("../assets/images/soft-drink.png"),
-          text: "Lentice",
-          category: "American",
-        },
-        {
-          id: 3,
-          image: require("../assets/images/coffee.png"),
-          text: "Serves two",
-          category: "African",
-        },
-      ];
-      return (
-        <View style={styles.modalContainer}>
-          <View style={styles.modalCheckout2Container}>
-            <ScrollView>
-              {select.map((item, index) => (
-                <View
-                  index={index}
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    // padding: 20,
-                    paddingBottom: 20,
-                    paddingTop: 20,
-                    // borderBottomWidth: 1,
-                    borderBottomColor: "999",
-                  }}
-                >
-                  <></>
-                  <Text style={{ fontWeight: "600", fontSize: 16 }}>
-                    {item?.item?.title}
-                  </Text>
-                  <Text style={{ fontWeight: "600", fontSize: 16 }}>
-                    {item?.item?.price}
-                  </Text>
-                </View>
-              ))}
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  // padding: 20,
-                  paddingBottom: 20,
-                  // borderBottomWidth: 1,
-                  borderBottomColor: "999",
-                }}
-              >
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                  {food_category.map((item, index) => (
-                    <View
-                      onPress={() => console.log("here")}
-                      key={index}
-                      style={{
-                        // alignItems: "center",
-                        // marginRight: 30,
-                        marginHorizontal: 0,
-                        // marginTop: 20,
-                        paddingHorizontal: 2,
-                        marginBottom: 5,
-                      }}
-                    >
-                      <TouchableOpacity
-                        style={styles.activeCategory}
-                        // onPress={() => {
-                        //   setActive(item.id);
-                        //   search(item.text);
-                        // }}
-                      >
-                        <Text style={styles.activeTextCategory}>
-                          {item.text}
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  ))}
-                </ScrollView>
-              </View>
-              <View>
-                <Text style={{ opacity: 0.7, fontSize: 16 }}>
-                  Ethiopian platter is a very healthy vegan platter with
-                  lentils, vegetables, and fermented flatbread Injera. The
-                  platter is rich in fiber, gluten-free, and a combination of
-                  complex flavors. Moreover, this recipe has 7 different side
-                  dishes with different vegetables and lentils. Some recipes
-                  call for an Ethiopian spice blend called Berbere or with
-                  simple spices.
-                </Text>
-              </View>
-
-              <View
-                style={{
-                  // padding: 20,
-                  paddingBottom: 20,
-                  paddingTop: 20,
-                }}
-              ></View>
-            </ScrollView>
-
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                paddingHorizontal: 10,
-                padding: 3,
-              }}
-            >
-              <TouchableOpacity
-                style={{
-                  marginTop: 20,
-
-                  backgroundColor: "white",
-                  borderColor: "gray",
-                  border: "1px solid gray",
-                  alignItems: "center",
-                  padding: 13,
-                  borderRadius: 8,
-                  width: 180,
-                  borderWidth: 1,
-                  marginRight: 15,
-                  // borderBottomWidth:{(title=="Deliver option") ? 0: 1}
-                  // borderBottomWidth: 1,
-                  borderColor: "#616161",
-
-                  position: "relative",
-                }}
-              >
-                <View
-                  spacing={6}
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    paddingHorizontal: 10,
-                  }}
-                >
-                  <Ionicons
-                    style={{
-                      paddingRight: 10,
-                    }}
-                    name="add"
-                    size={30}
-                    color="black"
-                  />
-
-                  <Text
-                    style={{
-                      fontWeight: "600",
-                      fontSize: 20,
-                      paddingRight: 20,
-                      paddingLeft: 20,
-                    }}
-                  >
-                    1
-                  </Text>
-                  <AntDesign
-                    style={{
-                      paddingLeft: 10,
-                    }}
-                    name="minus"
-                    size={30}
-                    color="black"
-                  />
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  marginTop: 20,
-                  backgroundColor: "green",
-                  alignItems: "center",
-                  padding: 15,
-                  paddingLeft: 10,
-                  borderRadius: 8,
-                  width: 200,
-                  position: "relative",
-                }}
-                onPress={() => {
-          
-                  setModalVisible2(false);
-                  console.log("here", modalVisible2);
-                }}
-              >
-               
-                <Text style={{ color: "white", fontSize: 20 }}>
-            
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      );
-    };
   return (
     <SafeAreaProvider>
       <SafeAreaView
@@ -475,11 +272,10 @@ export default function RestaurantDetails({ route, navigation }) {
               <View style={styles.menuItemStyle}>
                 <TouchableOpacity
                   onPress={(index) => {
-                    // isFoodInCart(food, cartItems)
-                    //   ? console.log("here")
-                    //   : selectItem(food, index);
+                    console.log('clicked')
+          
                     setModalVisible2(true);
-                    setInd(index);
+                    // setInd(index);
                     setSelect(food);
                   }}
                 >

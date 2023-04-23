@@ -82,6 +82,11 @@ export default function ViewCart({
   const { items, restaurantName } = useSelector(
     (state) => state.cartReducer.selectedItems
   );
+
+  items.map((item)=>{
+    console.log("items", item.item);
+
+  })
   const { user } = useContext(AuthenticatedUserContext);
 
   // console.log(user.email)
@@ -557,63 +562,6 @@ export default function ViewCart({
               padding: 3,
             }}
           >
-            {/* <TouchableOpacity
-              style={{
-                marginTop: 20,
-
-                backgroundColor: "white",
-                borderColor: "gray",
-                border: "1px solid gray",
-                alignItems: "center",
-                padding: 13,
-                borderRadius: 8,
-                width: 180,
-                borderWidth: 1,
-                marginRight: 15,
-                // borderBottomWidth:{(title=="Deliver option") ? 0: 1}
-                // borderBottomWidth: 1,
-                borderColor: "#616161",
-
-                position: "relative",
-              }}
-            >
-              <View
-                spacing={6}
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  paddingHorizontal: 10,
-                }}
-              >
-                <Ionicons
-                  style={{
-                    paddingRight: 10,
-                  }}
-                  name="add"
-                  size={30}
-                  color="black"
-                />
-
-                <Text
-                  style={{
-                    fontWeight: "600",
-                    fontSize: 20,
-                    paddingRight: 20,
-                    paddingLeft: 20,
-                  }}
-                >
-                  1
-                </Text>
-                <AntDesign
-                  style={{
-                    paddingLeft: 10,
-                  }}
-                  name="minus"
-                  size={30}
-                  color="black"
-                />
-              </View>
-            </TouchableOpacity> */}
             <TouchableOpacity
               style={{
                 marginTop: 20,
