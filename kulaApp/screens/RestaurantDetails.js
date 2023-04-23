@@ -9,12 +9,11 @@ import {
   Animated,
   TouchableOpacity,
 } from "react-native";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
+
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 
 import { Divider } from "react-native-elements";
-import About from "../components/About";
-import MenuItems from "../components/MenuItems";
+
 import ViewCart from "../components/ViewCart";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import SafeAreaView from "react-native-safe-area-view";
@@ -276,7 +275,7 @@ export default function RestaurantDetails({ route, navigation }) {
           
                     setModalVisible2(true);
                     // setInd(index);
-                    setSelect(food);
+                  
                   }}
                 >
  
@@ -290,7 +289,7 @@ export default function RestaurantDetails({ route, navigation }) {
         </ScrollView>
         <View style={styles.action}>
           <ViewCart
-          ind={ind}
+            ind={ind}
             setModalVisible2={setModalVisible2}
             isFoodInCart={isFoodInCart}
             selectItem={selectItem}

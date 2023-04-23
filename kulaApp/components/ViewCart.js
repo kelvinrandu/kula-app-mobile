@@ -635,10 +635,10 @@ export default function ViewCart({
               >
                 <></>
                 <Text style={{ fontWeight: "600", fontSize: 16 }}>
-                  {select?.title}
+                  {/* {select?.title} */}
                 </Text>
                 <Text style={{ fontWeight: "600", fontSize: 16 }}>
-                  {select?.price}
+                  {/* {select?.price} */}
                 </Text>
               </View>
 
