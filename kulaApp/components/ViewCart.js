@@ -361,7 +361,11 @@ export default function ViewCart({
               }}
               onPress={() => setModalVisible2(true)}
             >
-              <Text style={styles.subtotalText}> Fees (How our fees work)</Text>
+              <Text style={styles.subtotalText}>
+                {" "}
+                Fees{" "}
+                <Text style={{ color: "#6EBE76" }}>(How our fees work)</Text>
+              </Text>
             </TouchableOpacity>
 
             {fees.map((item, index) => (
