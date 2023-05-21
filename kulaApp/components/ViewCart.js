@@ -229,7 +229,7 @@ export default function ViewCart({
       backgroundColor: "white",
       padding: 16,
       // height: 500,
-      height: 400,
+      height: 500,
       borderWidth: 1,
     },
     restaurantName: {
@@ -350,6 +350,19 @@ export default function ViewCart({
                 type={"payment"}
               />
             ))}
+            <TouchableOpacity
+              style={{
+                marginTop: 20,
+
+                padding: 5,
+                borderRadius: 8,
+                width: 300,
+                position: "relative",
+              }}
+              onPress={() => setModalVisible2(true)}
+            >
+              <Text style={styles.subtotalText}> Fees (How our fees work)</Text>
+            </TouchableOpacity>
 
             {fees.map((item, index) => (
               <FeesItem key={index} item={item} />
@@ -676,11 +689,9 @@ export default function ViewCart({
               >
                 <></>
                 <Text style={{ fontWeight: "600", fontSize: 16 }}>
-                  {select?.title}
+                 How our fees work
                 </Text>
-                <Text style={{ fontWeight: "600", fontSize: 16 }}>
-                  {select?.price}
-                </Text>
+   
               </View>
 
               <View
@@ -688,49 +699,30 @@ export default function ViewCart({
                   flexDirection: "row",
                   justifyContent: "space-between",
                   // padding: 20,
-                  paddingBottom: 20,
+                  paddingBottom: 10,
                   // borderBottomWidth: 1,
                   borderBottomColor: "999",
                 }}
               >
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                  {food_category.map((item, index) => (
-                    <View
-                      onPress={() => console.log("here")}
-                      key={index}
-                      style={{
-                        // alignItems: "center",
-                        // marginRight: 30,
-                        marginHorizontal: 0,
-                        // marginTop: 20,
-                        paddingHorizontal: 2,
-                        marginBottom: 5,
-                      }}
-                    >
-                      <TouchableOpacity
-                        style={styles.activeCategory}
-                        onPress={() => {
-                          setActive(item.id);
-                          search(item.text);
-                        }}
-                      >
-                        <Text style={styles.activeTextCategory}>
-                          {item.text}
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  ))}
-                </ScrollView>
+       
               </View>
               <View>
-                <Text style={{ opacity: 0.7, fontSize: 16 }}>
-                  Ethiopian platter is a very healthy vegan platter with
-                  lentils, vegetables, and fermented flatbread Injera. The
-                  platter is rich in fiber, gluten-free, and a combination of
-                  complex flavors. Moreover, this recipe has 7 different side
-                  dishes with different vegetables and lentils. Some recipes
-                  call for an Ethiopian spice blend called Berbere or with
-                  simple spices.
+                <Text style={{ opacity: 0.7, fontSize: 14 }}>
+                  Every order you place, every meal you savored, echoes our
+                  mission: to deliver top-quality food, right to your doorstep.
+                  Service fees, though they might seem small, serve as stepping
+                  stones to this mission. They fund the training for our
+                  delivery heroes, ensuring your meals arrive just as you'd
+                  expect: hot, fresh, and handled with utmost care. They also
+                  maintain our app's accessibility, ensuring that everyone can
+                  savor the joy of a delivered meal. Service fees help us
+                  promise you not just food, but a taste of safety, quality, and
+                  commitment. By contributing to our environmental initiatives,
+                  they also let us all give back to the community and the world
+                  we share. Simply put, these fees are not just about sustaining
+                  service, but about nurturing joy, spreading love, and making
+                  every meal a celebration. Thank you for being a part of this
+                  beautiful journey.
                 </Text>
               </View>
               <View
@@ -753,69 +745,7 @@ export default function ViewCart({
               // padding: 3,
             }}
           >
-            <TouchableOpacity
-              style={{
-                marginTop: 20,
-
-                backgroundColor: "white",
-                borderColor: "gray",
-                border: "1px solid gray",
-                alignItems: "center",
-                padding: 13,
-                borderRadius: 8,
-                width: 180,
-                borderWidth: 1,
-                marginRight: 15,
-                // borderBottomWidth:{(title=="Deliver option") ? 0: 1}
-                // borderBottomWidth: 1,
-                borderColor: "#616161",
-
-                position: "relative",
-              }}
-            >
-              <View
-                spacing={6}
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  paddingHorizontal: 10,
-                }}
-              >
-                <AntDesign
-                  style={{
-                    paddingLeft: 10,
-                  }}
-                  name="minus"
-                  onPress={() => decreasePrice()}
-                  size={30}
-                  color="black"
-                />
-                <Text
-                  style={{
-                    fontWeight: "600",
-                    fontSize: 20,
-                    paddingRight: 20,
-                    paddingLeft: 20,
-                  }}
-                >
-                  {itemPrice}
-                </Text>
-
-                <Ionicons
-                  style={{
-                    paddingRight: 10,
-                  }}
-                  // onPress={() => updateItem(select)}
-                  onPress={() => {
-                    // updateItem(select);
-                    increasePrice()
-                  }}
-                  name="add"
-                  size={30}
-                  color="black"
-                />
-              </View>
-            </TouchableOpacity>
+  
             <TouchableOpacity
               style={{
                 marginTop: 20,
@@ -824,21 +754,18 @@ export default function ViewCart({
                 padding: 15,
                 paddingLeft: 10,
                 borderRadius: 8,
-                width: 200,
+                width: 300,
                 position: "relative",
               }}
               onPress={() => {
-                // setModalVisible1(true);
-                isFoodInCart(select, cartItems)
-                  ? console.log("here")
-                  : selectItem(select, ind);
+             
                 setModalVisible2(false);
-                console.log("here", modalVisible, modalVisible1);
+             
               }}
             >
               {/* <Text style={{ color: "white", fontSize: 20 }}> Checkout</Text> */}
               <Text style={{ color: "white", fontSize: 20 }}>
-                {select?.price ? "Add ( " + price + " )" : ""}
+                close
               </Text>
             </TouchableOpacity>
           </View>

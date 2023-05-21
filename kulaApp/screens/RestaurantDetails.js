@@ -166,6 +166,7 @@ export default function RestaurantDetails({ route, navigation }) {
     } else {
     }
   };
+  
   const increasePrice = () => {
     let price_update = quantity + 1;
     let total_price = Number(select?.price.replace("ksh", ""));
