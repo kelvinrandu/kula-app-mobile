@@ -1,30 +1,45 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
-export default function SearchText() {
+export default function SearchText({text,navigation}) {
   const [activeTab, setActiveTab] = useState("Delivery");
   return (
     <View style={{ flexDirection: "row", alignSelf: "flex-start" }}>
-      <View
-        style={{
-          fontSize: 16,
-          marginHorizontal:12,
-          fontStyle: "normalize",
-          fontWeight: 900,
-          color: "#616161",
-          // fontSize: 16px;
-          lineHeight: "24px",
-          // /* identical to box height, or 150% */
-
-          // letter-spacing: -0.408px
-
-          color: "#616161",
-        }}
+      <TouchableOpacity
+        style={
+          {
+            // // backgroundColor: props.activeTab === props.text ? "black" : "white",
+            // color: props.activeTab === props.text ? "black" : "white",
+            paddingVertical: 6,
+            paddingHorizontal: 16,
+            borderRadius: 30,
+          }
+        }
+        onPress={() =>
+          navigation.navigate("HomeScreenCategory", {
+            text,
+          })
+        }
       >
-        <Text> Restaurants next to you</Text>
+        <View
+          style={{
+            fontSize: 16,
+            marginHorizontal: 12,
+            fontStyle: "normalize",
+            fontWeight: 900,
+            color: "#616161",
+            // fontSize: 16px;
+            lineHeight: "24px",
+            // /* identical to box height, or 150% */
 
-    
-      </View>
+            // letter-spacing: -0.408px
+
+            color: "#616161",
+          }}
+        >
+          <Text>{text}</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 }

@@ -1,6 +1,16 @@
 import React, { useState, useContext, useEffect,useRef } from "react";
 import { StatusBar } from "expo-status-bar";
-import { View, StyleSheet, Text, SafeAreaView, ScrollView,Image } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  Image,
+  TouchableOpacity
+} from "react-native";
+// import { View, Text, Image } from "react-native";
+import { Card, ListItem, Button, Icon } from "react-native-elements";
 import Categories from "../components/Categories";
 import HeaderTabs from "../components/HeaderTabs";
 import BottomTabs from "../components/BottomTabs";
@@ -12,13 +22,12 @@ import { IconButton } from "../components";
 import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
 import SearchText from "../components/SearchText";
 import LottieView from "lottie-react-native";
-import BoxShadow from "../components/BoxShadow";
 
 
 
 const auth = Firebase.auth();
 
-const HomeScreen = ({navigation}) => {
+const HomeScreenCategory = ({navigation}) => {
   // const [restaurantData, setRestaurantData] = useState(localRestaurants)
    const [restaurantData, setRestaurantData] = useState(localRestaurants);
    const [query, setQuery] = useState('');
@@ -27,7 +36,7 @@ const HomeScreen = ({navigation}) => {
 
     useEffect(() => {
       // setRestaurantData(restaurantData);
-      console.log("changed");
+      console.log("changed", restaurantData[0].image_url);
       // setRestaurantData(restaurantData);
     }, [restaurantData]);
         // useEffect(() => {
@@ -72,11 +81,31 @@ const HomeScreen = ({navigation}) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <SearchText text={"Choose a Category"} />
         <Categories search={search} />
-        <SearchText
-          navigation={navigation}
-          restaurantData={restaurantData}
-          text={"Choose a Category"}
-        />
+        {/* <SearchText text={"The best restaurants"} /> */}
+        <TouchableOpacity
+          style={{
+            // backgroundColor: props.activeTab === props.text ? "black" : "white",
+            // color: props.activeTab === props.text ? "black" : "white",
+            paddingVertical: 6,
+            paddingHorizontal: 16,
+            borderRadius: 30,
+          }}
+          onPress={() =>
+            navigation.navigate("HomeScreenCategoryList", {
+              name: "The best restaurants",
+            })
+          }
+        >
+          <Text
+            style={{
+              // color: props.activeTab === props.text ? "white" : "black",
+              fontSize: 15,
+              fontWeight: "500",
+            }}
+          >
+            The best restaurants
+          </Text>
+        </TouchableOpacity>
         <View style={styles.shadow}>
           <RestaurantItems
             navigation={navigation}
@@ -91,6 +120,48 @@ const HomeScreen = ({navigation}) => {
             restaurantData={restaurantData}
           />
         </View>
+        <TouchableOpacity
+          style={{
+            // backgroundColor: props.activeTab === props.text ? "black" : "white",
+            // color: props.activeTab === props.text ? "black" : "white",
+            paddingVertical: 10,
+            paddingHorizontal: 16,
+            borderRadius: 30,
+          }}
+          onPress={() =>
+            navigation.navigate("HomeScreenCategoryList", {
+              name: "Restaurants next to you",
+            })
+          }
+        >
+          <Text
+            style={{
+              // color: props.activeTab === props.text ? "white" : "black",
+              fontSize: 15,
+              fontWeight: "500",
+            }}
+          >
+            Restaurants next to you
+          </Text>
+        </TouchableOpacity>
+        <View style={styles.shadow}>
+          <RestaurantItems
+            navigation={navigation}
+            restaurantData={restaurantData}
+          />
+          <RestaurantItems
+            navigation={navigation}
+            restaurantData={restaurantData}
+          />
+          <RestaurantItems
+            navigation={navigation}
+            restaurantData={restaurantData}
+          />
+        </View>
+        {/* <RestaurantItems
+          navigation={navigation}
+          restaurantData={restaurantData}
+        /> */}
 
         {/* <LottieView
           autoPlay
@@ -120,23 +191,8 @@ const styles = StyleSheet.create({
     // backgroundColor: "#eee",
     backgroundColor: "white",
   },
-  shadow: {
-    // borderColor: "black",
-    // borderWidth: 5,
-    // bordrerStyle: "dashed",
-    padding:-2,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.23,
-    shadowRadius: 2.62,
-
-    elevation: 4,
-  },
 });
-export default HomeScreen;
+export default HomeScreenCategory;
 
 
 //  const data2= {"prompt": form.prompt}

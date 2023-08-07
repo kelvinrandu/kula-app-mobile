@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect,useRef } from "react";
 import { StatusBar } from "expo-status-bar";
-import { View, StyleSheet, Text, SafeAreaView, ScrollView,Image } from "react-native";
+import { View, StyleSheet, Text, SafeAreaView, ScrollView,Image,TouchableOpacity } from "react-native";
 import Categories from "../components/Categories";
 import HeaderTabs from "../components/HeaderTabs";
 import BottomTabs from "../components/BottomTabs";
@@ -18,46 +18,44 @@ import BoxShadow from "../components/BoxShadow";
 
 const auth = Firebase.auth();
 
-const HomeScreen = ({navigation}) => {
+const HomeScreenCategoryList = ({ route,navigation }) => {
   // const [restaurantData, setRestaurantData] = useState(localRestaurants)
-   const [restaurantData, setRestaurantData] = useState(localRestaurants);
-   const [query, setQuery] = useState('');
-    const animation = useRef(null);
-    const { user } = useContext(AuthenticatedUserContext);
+  const [restaurantData, setRestaurantData] = useState(localRestaurants);
+  const [query, setQuery] = useState("");
+  const animation = useRef(null);
+  const { user } = useContext(AuthenticatedUserContext);
 
-    useEffect(() => {
-      // setRestaurantData(restaurantData);
-      console.log("changed");
-      // setRestaurantData(restaurantData);
-    }, [restaurantData]);
-        // useEffect(() => {
-        //   setRestaurantData(localRestaurants);
-        //   console.log(" query changed");
-        //   // setRestaurantData(restaurantData);
-        // }, [query]);
-  const search=(query) =>{
-    console.log(query)
+  useEffect(() => {
+    // setRestaurantData(restaurantData);
+    console.log("changed");
+    // setRestaurantData(restaurantData);
+  }, [restaurantData]);
+  // useEffect(() => {
+  //   setRestaurantData(localRestaurants);
+  //   console.log(" query changed");
+  //   // setRestaurantData(restaurantData);
+  // }, [query]);
+  const search = (query) => {
+    console.log(query);
     let resti = localRestaurants.filter((price) =>
       price.categories.find((o) => o.title === query)
     );
-      let result = resti;
-      setQuery(query);
-      setRestaurantData(result);
-     
-
+    let result = resti;
+    setQuery(query);
+    setRestaurantData(result);
+  };
+  const handleSignOut = async () => {
+    try {
+      await auth.signOut();
+    } catch (error) {
+      console.log(error);
     }
-    const handleSignOut = async () => {
-      try {
-        await auth.signOut();
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    // console.log("res->", restaurantData);
+  };
+  // console.log("res->", restaurantData);
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ backgroundColor: "white", padding: 15 }}>
+      {/* <View style={{ backgroundColor: "white", padding: 15 }}>
         <StatusBar style="dark-content" />
         <IconButton
           name="logout"
@@ -67,16 +65,30 @@ const HomeScreen = ({navigation}) => {
         />
         <HeaderTabs color={""} />
 
-        {/* <SearchBar search={search} /> */}
-      </View>
+    
+      </View> */}
       <ScrollView showsVerticalScrollIndicator={false}>
-        <SearchText text={"Choose a Category"} />
-        <Categories search={search} />
-        <SearchText
-          navigation={navigation}
-          restaurantData={restaurantData}
-          text={"Choose a Category"}
-        />
+        {/* <SearchText text={"Choose a Category"} />
+        <Categories search={search} /> */}
+        <TouchableOpacity
+          style={{
+            // backgroundColor: props.activeTab === props.text ? "black" : "white",
+            // color: props.activeTab === props.text ? "black" : "white",
+            paddingVertical: 20,
+            paddingHorizontal: 16,
+            borderRadius: 30,
+          }}
+        >
+          <Text
+            style={{
+              // color: props.activeTab === props.text ? "white" : "black",
+              fontSize: 20,
+              fontWeight: "900",
+            }}
+          >
+            {route.params.name}
+          </Text>
+        </TouchableOpacity>
         <View style={styles.shadow}>
           <RestaurantItems
             navigation={navigation}
@@ -121,22 +133,15 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   shadow: {
-    // borderColor: "black",
-    // borderWidth: 5,
-    // bordrerStyle: "dashed",
-    padding:-2,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.23,
-    shadowRadius: 2.62,
-
-    elevation: 4,
+    shadowOffset: { width: 10, height: 10 },
+    shadowColor: "black",
+    shadowOpacity: 1,
+    elevation: 3,
+    // background color must be set
+    backgroundColor: "#0000", // invisible color
   },
 });
-export default HomeScreen;
+export default HomeScreenCategoryList;
 
 
 //  const data2= {"prompt": form.prompt}
