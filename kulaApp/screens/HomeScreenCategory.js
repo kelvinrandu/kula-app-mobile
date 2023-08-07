@@ -96,15 +96,58 @@ const HomeScreenCategory = ({navigation}) => {
             })
           }
         >
-          <Text
+          <View
             style={{
-              // color: props.activeTab === props.text ? "white" : "black",
-              fontSize: 15,
-              fontWeight: "500",
+              borderColor: "black",
+              // borderWidth:  1,  borderStyle:  'dashed',
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: 10,
+              // padding: 10,
             }}
           >
-            The best restaurants
-          </Text>
+            <View
+              style={{
+                fontSize: 16,
+                fontStyle: "normalize",
+                fontWeight: 900,
+                color: "#616161",
+                // fontSize: 16px;
+                lineHeight: "24px",
+                // /* identical to box height, or 150% */
+
+                // letter-spacing: -0.408px
+
+                color: "#616161",
+              }}
+            >
+              <Text
+                style={{
+                  // color: props.activeTab === props.text ? "white" : "black",
+                  fontSize: 15,
+                  fontWeight: "500",
+                }}
+              >
+                The best restaurants :
+              </Text>
+            </View>
+            <View
+              style={{
+                // backgroundColor: "#eee",
+                // height: 30,
+                // width: 30,
+                color:'green',
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 15,
+              }}
+            >
+              <Text style={{
+                color:'green'
+              }} > See All </Text>
+            </View>
+          </View>
         </TouchableOpacity>
         <View style={styles.shadow}>
           <RestaurantItems
@@ -134,15 +177,55 @@ const HomeScreenCategory = ({navigation}) => {
             })
           }
         >
-          <Text
+          <View
             style={{
-              // color: props.activeTab === props.text ? "white" : "black",
-              fontSize: 15,
-              fontWeight: "500",
+              borderColor: "black",
+              // borderWidth:  1,  borderStyle:  'dashed',
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: 10,
+              // padding: 10,
             }}
           >
-            Restaurants next to you
-          </Text>
+            <View
+              style={{
+                fontSize: 16,
+                fontStyle: "normalize",
+                fontWeight: 900,
+                color: "#616161",
+                // fontSize: 16px;
+                lineHeight: "24px",
+                // /* identical to box height, or 150% */
+
+                // letter-spacing: -0.408px
+
+                color: "#616161",
+              }}
+            >
+              <Text
+                style={{
+                  // color: props.activeTab === props.text ? "white" : "black",
+                  fontSize: 15,
+                  fontWeight: "500",
+                }}
+              >
+                Restaurants next to you :
+              </Text>
+            </View>
+            <View
+              style={{
+                // backgroundColor: "#eee",
+                // height: 30,
+                // width: 30,
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 15,
+              }}
+            >
+              <Text> See All </Text>
+            </View>
+          </View>
         </TouchableOpacity>
         <View style={styles.shadow}>
           <RestaurantItems

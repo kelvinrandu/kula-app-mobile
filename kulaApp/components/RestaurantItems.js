@@ -1,6 +1,8 @@
 import React ,{useState,useContext,useEffect}from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Octicons from "react-native-vector-icons/Octicons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { doc, getDoc,getDocs } from "firebase/firestore";
 import Firebase, { Firestore } from "../config/firebase";
 import "firebase/compat/firestore";
@@ -139,7 +141,7 @@ const RestaurantInfo = (props) => (
       justifyContent: "space-between",
       alignItems: "center",
       marginTop: 10,
-      padding:10,
+      padding: 10,
     }}
   >
     <View
@@ -161,9 +163,16 @@ const RestaurantInfo = (props) => (
 
       <Text style={{ fontSize: 13, color: "gray" }}>
         {" "}
+        <Octicons
+          style={{ marginRight: 13 }}
+          name="stopwatch"
+          size={20}
+          color="black"
+        />{" "}
         Open till 8pm{" "}
-        <MaterialCommunityIcons name="heart-outline" size={25} color="#fff" />•
-        250 ksh • vegan{" "}
+        <MaterialCommunityIcons name="motorbike" size={25} color="black" /> 250
+        ksh {" "}<MaterialIcons name="restaurant-menu" size={20} color="black" />
+        {" "}vegan
       </Text>
     </View>
     <View
