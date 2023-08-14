@@ -5,9 +5,10 @@ import {
   StyleSheet,
   Text,
   SafeAreaView,
+  Modal,
   ScrollView,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 // import { View, Text, Image } from "react-native";
 import { Card, ListItem, Button, Icon } from "react-native-elements";
@@ -26,24 +27,116 @@ import LottieView from "lottie-react-native";
 
 
 const auth = Firebase.auth();
+  const checkoutModal2Content = (
+    setModalVisible,
+    navigation,
+    restaurantData,title
+  ) => {
+    const food_category = [
+      {
+        id: 0,
+        image: require("../assets/images/deals.png"),
+        text: "Vegan",
+        category: "Groceries",
+      },
+      {
+        id: 1,
+        image: require("../assets/images/fast-food.png"),
+        text: "Vegetable",
+        category: "African",
+      },
+      {
+        id: 2,
+        image: require("../assets/images/soft-drink.png"),
+        text: "Lentice",
+        category: "American",
+      },
+      {
+        id: 3,
+        image: require("../assets/images/coffee.png"),
+        text: "Serves two",
+        category: "African",
+      },
+    ];
+    return (
+      <View style={styles.modalContainer}>
+        <View style={styles.modalCheckout2Container}>
+          <ScrollView>
+            <>
+              <SafeAreaView style={styles.container}>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                  {/* <SearchText text={"Choose a Category"} />
+        <Categories search={search} /> */}
+                  <TouchableOpacity
+                    style={{
+                      // backgroundColor: props.activeTab === props.text ? "black" : "white",
+                      // color: props.activeTab === props.text ? "black" : "white",
+                      paddingVertical: 20,
+                      paddingHorizontal: 16,
+                      borderRadius: 30,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        // color: props.activeTab === props.text ? "white" : "black",
+                        fontSize: 20,
+                        fontWeight: "900",
+                      }}
+                    >
+                      {title}
+                    </Text>
+                  </TouchableOpacity>
+                  <View style={styles.shadow}>
+                    <RestaurantItems
+                      navigation={navigation}
+                      restaurantData={restaurantData}
+                    />
+                    <RestaurantItems
+                      navigation={navigation}
+                      restaurantData={restaurantData}
+                    />
+                    <RestaurantItems
+                      navigation={navigation}
+                      restaurantData={restaurantData}
+                    />
+                  </View>
 
+                  {/* <LottieView
+          autoPlay
+          ref={animation}
+          style={{
+            width: 200,
+            height: 200,
+            backgroundColor: "#eee",
+          }}
+          // Find more Lottie files at https://lottiefiles.com/featured
+          source={
+            "https://assets5.lottiefiles.com/packages/lf20_cAsTAnQtxv.json"
+          }
+        /> */}
+                </ScrollView>
+                {/* <Divider width={1} />
+      <BottomTabs /> */}
+              </SafeAreaView>
+            </>
+          </ScrollView>
+        </View>
+      </View>
+    );
+  };
 const HomeScreenCategory = ({navigation}) => {
   // const [restaurantData, setRestaurantData] = useState(localRestaurants)
    const [restaurantData, setRestaurantData] = useState(localRestaurants);
    const [query, setQuery] = useState('');
+   const [title, setTitle] = useState("");
+     const [modalVisible, setModalVisible] = useState(false);
     const animation = useRef(null);
     const { user } = useContext(AuthenticatedUserContext);
 
     useEffect(() => {
-      // setRestaurantData(restaurantData);
-      console.log("changed", restaurantData[0].image_url);
-      // setRestaurantData(restaurantData);
+
     }, [restaurantData]);
-        // useEffect(() => {
-        //   setRestaurantData(localRestaurants);
-        //   console.log(" query changed");
-        //   // setRestaurantData(restaurantData);
-        // }, [query]);
+
   const search=(query) =>{
     console.log(query)
     let resti = localRestaurants.filter((price) =>
@@ -91,9 +184,13 @@ const HomeScreenCategory = ({navigation}) => {
             borderRadius: 30,
           }}
           onPress={() =>
-            navigation.navigate("HomeScreenCategoryList", {
-              name: "The best restaurants",
-            })
+            // navigation.navigate("HomeScreenCategoryList", {
+            //   name: "The best restaurants",
+            // })
+            {
+              setTitle('The best restaurants') 
+              setModalVisible(true)}
+       
           }
         >
           <View
@@ -137,15 +234,20 @@ const HomeScreenCategory = ({navigation}) => {
                 // backgroundColor: "#eee",
                 // height: 30,
                 // width: 30,
-                color:'green',
+                color: "green",
                 alignItems: "center",
                 justifyContent: "center",
                 borderRadius: 15,
               }}
             >
-              <Text style={{
-                color:'green'
-              }} > See All </Text>
+              <Text
+                style={{
+                  color: "green",
+                }}
+              >
+                {" "}
+                See All{" "}
+              </Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -171,11 +273,14 @@ const HomeScreenCategory = ({navigation}) => {
             paddingHorizontal: 16,
             borderRadius: 30,
           }}
-          onPress={() =>
-            navigation.navigate("HomeScreenCategoryList", {
-              name: "Restaurants next to you",
-            })
-          }
+          onPress={
+            () => {
+                 setTitle("Restaurants next to you"); 
+              setModalVisible(true)
+            // navigation.navigate("HomeScreenCategoryList", {
+            //   name: "Restaurants next to you",
+            // })
+          }}
         >
           <View
             style={{
@@ -223,7 +328,14 @@ const HomeScreenCategory = ({navigation}) => {
                 borderRadius: 15,
               }}
             >
-              <Text> See All </Text>
+              <Text
+                style={{
+                  color: "green",
+                }}
+              >
+                {" "}
+                See All{" "}
+              </Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -241,6 +353,14 @@ const HomeScreenCategory = ({navigation}) => {
             restaurantData={restaurantData}
           />
         </View>
+        <Modal
+          animationType="slide"
+          visible={modalVisible}
+          transparent={true}
+          onRequestClose={() => setModalVisible(false)}
+        >
+          {checkoutModal2Content(setModalVisible, navigation, restaurantData,title)}
+        </Modal>
         {/* <RestaurantItems
           navigation={navigation}
           restaurantData={restaurantData}
@@ -265,14 +385,28 @@ const HomeScreenCategory = ({navigation}) => {
     </SafeAreaView>
   );
 };
+
 const styles = StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    backgroundColor: "white",
+    // backgroundColor: "rgba(0,0,0,0.7)",
+  },
   container: {
     flex: 1,
     justifyContent: "flex-start",
     paddingHorizontal: 10,
-    marginTop: 30,
+
     // backgroundColor: "#eee",
     backgroundColor: "white",
+  },
+  modalCheckout2Container: {
+    backgroundColor: "white",
+
+    // height: 500,
+    height: "100%",
+    borderWidth: 1,
   },
 });
 export default HomeScreenCategory;
