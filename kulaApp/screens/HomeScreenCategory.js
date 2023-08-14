@@ -23,7 +23,9 @@ import { IconButton } from "../components";
 import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
 import SearchText from "../components/SearchText";
 import LottieView from "lottie-react-native";
-
+import AntDesign from "react-native-vector-icons/AntDesign";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+// import { createDrawerNavigator } from "@react-navigation/drawer";
 
 
 const auth = Firebase.auth();
@@ -65,8 +67,17 @@ const auth = Firebase.auth();
             <>
               <SafeAreaView style={styles.container}>
                 <ScrollView showsVerticalScrollIndicator={false}>
-                  {/* <SearchText text={"Choose a Category"} />
-        <Categories search={search} /> */}
+                  <TouchableOpacity
+                    // key={index}
+                    // activeOpacity={1}
+                    style={{
+                      marginTop: 10,
+                      marginBottom: 10,
+                    }}
+                    onPress={() => setModalVisible(false)}
+                  >
+                    <AntDesign name="left" size={25} color="black" />
+                  </TouchableOpacity>
                   <TouchableOpacity
                     style={{
                       // backgroundColor: props.activeTab === props.text ? "black" : "white",
@@ -100,23 +111,7 @@ const auth = Firebase.auth();
                       restaurantData={restaurantData}
                     />
                   </View>
-
-                  {/* <LottieView
-          autoPlay
-          ref={animation}
-          style={{
-            width: 200,
-            height: 200,
-            backgroundColor: "#eee",
-          }}
-          // Find more Lottie files at https://lottiefiles.com/featured
-          source={
-            "https://assets5.lottiefiles.com/packages/lf20_cAsTAnQtxv.json"
-          }
-        /> */}
                 </ScrollView>
-                {/* <Divider width={1} />
-      <BottomTabs /> */}
               </SafeAreaView>
             </>
           </ScrollView>
