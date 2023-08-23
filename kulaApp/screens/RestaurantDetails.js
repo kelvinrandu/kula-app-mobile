@@ -4,15 +4,24 @@ import {
   Text,
   Image,
   ScrollView,
+  // FlatGrid,
+  FlatList,
   Modal,
   StyleSheet,
   Animated,
   TouchableOpacity,
 } from "react-native";
 
-import { Ionicons, AntDesign } from "@expo/vector-icons";
+import {
+  Ionicons,
+  AntDesign,
+  EvilIcons,
+  Octicons,
+  Entypo,
+} from "@expo/vector-icons";
 
 import { Divider } from "react-native-elements";
+import { FlatGrid } from "react-native-super-grid";
 
 import ViewCart from "../components/ViewCart";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -27,7 +36,34 @@ const H_MAX_HEIGHT = 150;
 const H_MIN_HEIGHT = 52;
 const H_SCROLL_DISTANCE = H_MAX_HEIGHT - H_MIN_HEIGHT;
 console.log(H_SCROLL_DISTANCE);
+const im = [
+  "https://source.unsplash.com/1024x768/?nature",
+  "https://source.unsplash.com/1024x768/?water",
+  "https://source.unsplash.com/1024x768/?tree",
+];
 
+const images1 = [
+  { name: "TURQUOISE", code: "#1abc9c" },
+  { name: "EMERALD", code: "#2ecc71" },
+  { name: "PETER RIVER", code: "#3498db" },
+  { name: "AMETHYST", code: "#9b59b6" },
+  { name: "WET ASPHALT", code: "#34495e" },
+  { name: "GREEN SEA", code: "#16a085" },
+  { name: "NEPHRITIS", code: "#27ae60" },
+  { name: "BELIZE HOLE", code: "#2980b9" },
+  { name: "WISTERIA", code: "#8e44ad" },
+  { name: "MIDNIGHT BLUE", code: "#2c3e50" },
+  { name: "SUN FLOWER", code: "#f1c40f" },
+  { name: "CARROT", code: "#e67e22" },
+  { name: "ALIZARIN", code: "#e74c3c" },
+  { name: "CLOUDS", code: "#ecf0f1" },
+  { name: "CONCRETE", code: "#95a5a6" },
+  { name: "ORANGE", code: "#f39c12" },
+  { name: "PUMPKIN", code: "#d35400" },
+  { name: "POMEGRANATE", code: "#c0392b" },
+  { name: "SILVER", code: "#bdc3c7" },
+  { name: "ASBESTOS", code: "#7f8c8d" },
+];
 const food_array = [
   {
     title: "Ethiopian Platter",
@@ -135,7 +171,10 @@ const items = [
     category: "African",
   },
 ];
-
+const picsumImages = new Array(11).fill("http://placeimg.com/640/360/any");
+function renderItem({ item }) {
+  return <Image source={{ uri: item }} style={{ height: 100 }} />;
+}
 export default function RestaurantDetails({ route, navigation }) {
   const [active, setActive] = useState(0);
   const [ind, setInd] = useState(0);
@@ -146,34 +185,43 @@ export default function RestaurantDetails({ route, navigation }) {
   const [itemPrice, setItemPrice] = useState(1);
   const [price, setPrice] = useState(1);
   const [quantity, setQuantity] = useState(1);
+    const [images, setImages] = React.useState(picsumImages);
 
   const [modalVisible2, setModalVisible2] = useState(false);
 
   const [query, setQuery] = useState("Main Dishes");
+
+  useEffect(() => {
+    let items = Array.apply(null, Array(60)).map((v, i) => {
+      return {
+        id: i,
+        src: "https://unsplash.it/400/400?image=" + (i + 1),
+      };
+    });
+    // setDataSource(items);
+  }, []);
   useEffect(() => {
     search(query);
   }, [query]);
-    useEffect(() => {
-      
-    }, [quantity]);
+  useEffect(() => {}, [quantity]);
   const decreasePrice = () => {
     if (quantity > 1) {
       let price_update = quantity - 1;
       let total_price = Number(select?.price.replace("ksh", ""));
       setQuantity(price_update);
-      let _total_price = total_price * price_update +" ksh"
-       setPrice(_total_price);
+      let _total_price = total_price * price_update + " ksh";
+      setPrice(_total_price);
       // setPrice(select?.price * price_update);
     } else {
     }
   };
-  
+
   const increasePrice = () => {
     let price_update = quantity + 1;
     let total_price = Number(select?.price.replace("ksh", ""));
     console.log("total", total_price);
     setQuantity(price_update);
-     let _total_price = total_price * price_update + " ksh";
+    let _total_price = total_price * price_update + " ksh";
     setPrice(_total_price);
   };
   const search = (query) => {
@@ -382,7 +430,6 @@ export default function RestaurantDetails({ route, navigation }) {
                   style={{
                     paddingRight: 10,
                   }}
-               
                   onPress={() => {
                     // updateItem(select);
                     increasePrice();
@@ -422,7 +469,7 @@ export default function RestaurantDetails({ route, navigation }) {
       </View>
     );
   };
-    const ModalContent2 = () => {
+  const ModalContent2 = () => {
     const food_category = [
       {
         id: 0,
@@ -473,7 +520,9 @@ export default function RestaurantDetails({ route, navigation }) {
             )}
           >
             <RestaurantTitle name={route.params.name} />
-            <RestaurantDescription
+            <RestaurantDescription2
+              images={images}
+              // dataSource={dataSource}
               modalVisible1={modalVisible1}
               setModalVisible1={setModalVisible1}
             />
@@ -485,92 +534,130 @@ export default function RestaurantDetails({ route, navigation }) {
                 // marginBottom: 5,
               }}
             >
-              <HeaderTabs color={"green"} />
+              <Text
+                style={{
+                  // fontWeight: "600",
+                  fontSize: 20,
+                  // paddingRight: 20,
+                  // paddingLeft: 20,
+                }}
+              >
+                Imprint
+              </Text>
+              <Text
+                style={{
+                  // fontWeight: "600",
+                  fontSize: 20,
+                  // paddingRight: 20,
+                  // paddingLeft: 20,
+                }}
+              >
+                Tribeearth Vegan Restaurant
+              </Text>
+              <Text
+                style={{
+                  // fontWeight: "600",
+                  fontSize: 20,
+                  // paddingRight: 20,
+                  // paddingLeft: 20,
+                }}
+              >
+                Diani Beach Road 
+              </Text>
+              <Text
+                style={{
+                  // fontWeight: "600",
+                  fontSize: 20,
+                  // paddingRight: 20,
+                  // paddingLeft: 20,
+                }}
+              >
+                Ukunda
+              </Text>
+              <Text
+                style={{
+                  // fontWeight: "600",
+                  fontSize: 20,
+                  // paddingRight: 20,
+                  // paddingLeft: 20,
+                }}
+              >
+                Kenia
+              </Text>
+              <Text
+                style={{
+                  // fontWeight: "600",
+                  fontSize: 20,
+                  // paddingRight: 20,
+                  // paddingLeft: 20,
+                }}
+              >
+                Libosso Müller
+              </Text>
+              <Text
+                style={{
+                  // fontWeight: "600",
+                  fontSize: 20,
+                  // paddingRight: 20,
+                  // paddingLeft: 20,
+                }}
+              >
+                restaurant@tribeearth.com
+              </Text>
+              <Text
+                style={{
+                  // fontWeight: "600",
+                  fontSize: 20,
+                  // paddingRight: 20,
+                  // paddingLeft: 20,
+                }}
+              >
+                +1 123 456 798
+              </Text>
+              <Text
+                style={{
+                  // fontWeight: "600",
+                  fontSize: 20,
+                  marginBottom: 20,
+                  // paddingRight: 20,
+                  // paddingLeft: 20,
+                }}
+              >
+                Tax-ID
+              </Text>
+
+              <Text
+                style={{
+                  // fontWeight: "600",
+                  fontSize: 20,
+                  // paddingRight: 20,
+                  // paddingLeft: 20,
+                }}
+              >
+                We are neither willing nor obliged to participate in a dispute
+                resolution procedure before a consumer arbitration board
+              </Text>
             </View>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {items.map((item, index) => (
-                <View
-                  onPress={() => console.log("here")}
-                  key={index}
-                  style={{
-                    alignItems: "center",
-                    marginRight: 30,
-                    marginHorizontal: 10,
-                    marginTop: 20,
-                    // marginBottom: 5,
-                  }}
-                >
-                  <TouchableOpacity
-                    style={
-                      active == item.id
-                        ? styles.activeCategory
-                        : styles.category
-                    }
-                    onPress={() => {
-                      setActive(item.id);
-                      search(item.text);
-                    }}
-                  >
-                    {/* <Image
-                source={item.image}
-                style={{ width: 50, height: 40, resizeMode: "contain" }}
-              /> */}
-                    <Text
-                      style={
-                        active == item.id
-                          ? styles.activeTextCategory
-                          : styles.textCategory
-                      }
-                    >
-                      {item.text}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              ))}
-            </ScrollView>
+
             <View
               style={{ alignItems: "center", marginRight: 30, marginTop: 10 }}
             >
               <Text
                 style={{
-                  fontSize: 20,
+                  // fontSize: 20,
                   zIndex: 10,
-                  fontWeight: "600",
+                  // fontWeight: "600",
                   marginTop: 0,
                   marginBottom: 0,
                   marginHorizontal: 10,
                 }}
-              >
-                {items[active].text}
-              </Text>
+              ></Text>
             </View>
-
-            {foods.map((food, index) => (
-              <View key={index}>
-                <View style={styles.menuItemStyle}>
-                  <TouchableOpacity
-                    onPress={(index) => {
-                      //      isFoodInCart(food, cartItems)
-                      //        ? console.log("here")
-                      //        : selectItem(food, index);
-                      setModalVisible(true);
-                      setSelect(food);
-                      setPrice(food?.price);
-                    }}
-                  >
-                    <FoodInfo food={food} />
-                    {/* <FoodImage food={food} /> */}
-                  </TouchableOpacity>
-                </View>
-              </View>
-            ))}
           </ScrollView>
-
         </View>
       </View>
     );
   };
-
 
   return (
     <SafeAreaProvider>
@@ -764,7 +851,6 @@ const RestaurantDescription = (props) => (
           fontWeight: "400",
           fontSize: 15.5,
           marginBottom: 20,
-        
         }}
       >
         Click to get more information about the restaurant
@@ -779,6 +865,7 @@ const RestaurantDescription2 = (props) => (
     <Text
       style={{
         marginTop: 3,
+        marginBottom: 20,
         marginHorizontal: 15,
         fontWeight: "700",
         fontSize: 15.5,
@@ -786,57 +873,157 @@ const RestaurantDescription2 = (props) => (
     >
       100% Vegan - Female-Leaded
     </Text>
-    <Text
+    <View
+      spacing={6}
       style={{
-        color: "gray",
-
-        marginHorizontal: 15,
-        fontWeight: "400",
-        fontSize: 15.5,
+        flexDirection: "row",
+        alignSelf: "stretch",
+        borderBottomColor: "gray",
+        borderBottomWidth: 1,
       }}
     >
-      Open till 8:00 pm
-    </Text>
-    {/* view to handle modal  start */}
-    <TouchableOpacity
-      activeOpacity={1}
-      // style={{
-      //   marginBottom: 10,
-      //   borderTopRightRadius: 20,
-      //   borderTopLeftRadius: 20,
-      // }}
-      onPress={() => props.setModalVisible1(true)}
-    >
-      <Text
+      <View
+        spacing={6}
         style={{
-          color: "gray",
+          flexDirection: "row",
+          // alignSelf: "stretch",
+
+          justifyContent: "space-between",
           marginHorizontal: 15,
-          fontWeight: "400",
-          fontSize: 15.5,
-          marginBottom: 20,
-          borderBottomColor: "red",
-          borderBottomWidth: 2,
+          // paddingHorizontal: 10,
+          paddingBottom: 15,
+          alignItems: "center",
+          // borderBottomColor: "gray",
+          // borderBottomWidth: 1,
         }}
       >
-        Click to get more information about the restaurant
-      </Text>
-    </TouchableOpacity>
-    <View>
-      <Text
-        style={{
-          color: "gray",
-          marginHorizontal: 15,
-          fontWeight: "400",
-          fontSize: 15.5,
-          marginBottom: 20,
-        }}
-      >
-        Click to get more information about the restaurant
-      </Text>
+        <Entypo
+          name="location-pin"
+          // onPress={() => decreasePrice()}
+          size={30}
+          color="black"
+        />
+        <Text
+          style={{
+            fontWeight: "600",
+            fontSize: 20,
+            paddingRight: 20,
+            paddingLeft: 20,
+          }}
+        >
+          Diani Beach Road
+        </Text>
+      </View>
     </View>
+    <View
+      spacing={6}
+      style={{
+        flexDirection: "row",
+        alignSelf: "stretch",
+        borderBottomColor: "gray",
+        borderBottomWidth: 1,
+      }}
+    >
+      <View
+        spacing={6}
+        style={{
+          flexDirection: "row",
+
+          justifyContent: "space-between",
+          marginHorizontal: 15,
+          // paddingHorizontal: 10,
+          paddingTop: 15,
+          paddingBottom: 15,
+          alignItems: "center",
+          // borderBottomColor: "gray",
+          // borderBottomWidth: 1,
+        }}
+      >
+        <Octicons name="stopwatch" size={30} color="black" />
+        <Text
+          style={{
+            fontWeight: "600",
+            fontSize: 20,
+            paddingRight: 20,
+            paddingLeft: 20,
+          }}
+        >
+          Open till 8:00 pm
+        </Text>
+      </View>
+    </View>
+    <View
+      style={{
+        flexDirection: "row",
+        alignSelf: "stretch",
+        borderBottomColor: "gray",
+        borderBottomWidth: 1,
+      }}
+    >
+      <View
+        spacing={6}
+        style={{
+          flexDirection: "row",
+
+          justifyContent: "space-between",
+          marginHorizontal: 15,
+          // paddingHorizontal: 10,
+          paddingBottom: 15,
+          paddingTop: 15,
+          alignItems: "center",
+          // borderBottomColor: "gray",
+          // borderBottomWidth: 1,
+        }}
+      >
+        <Entypo name="star-outlined" size={30} color="black" />
+        <Text
+          style={{
+            fontWeight: "600",
+            fontSize: 20,
+            paddingRight: 20,
+            paddingLeft: 20,
+          }}
+        >
+          4.6(32 Ratings)
+        </Text>
+      </View>
+    </View>
+    {/* view to handle modal  start */}
+    <ScrollView nestedScrollEnabled={true} style={{ width: "100%" }}>
+      <View>
+        <ScrollView horizontal={true} style={{ width: "100%" }}>
+          <FlatGrid
+            itemDimension={130}
+            data={[
+              "https://source.unsplash.com/1024x768/?nature",
+              "https://source.unsplash.com/1024x768/?nature",
+              "https://source.unsplash.com/1024x768/?nature",
+              "https://source.unsplash.com/1024x768/?nature",
+            ]}
+            renderItem={({ item }) => (
+              <Image source={{ uri: item }} style={{ height: 100 }} />
+            )}
+          />
+          <FlatGrid
+            itemDimension={130}
+            data={[
+              "https://source.unsplash.com/1024x768/?nature",
+              "https://source.unsplash.com/1024x768/?nature",
+              "https://source.unsplash.com/1024x768/?nature",
+              "https://source.unsplash.com/1024x768/?nature",
+            ]}
+            renderItem={({ item }) => (
+              <Image source={{ uri: item }} style={{ height: 100 }} />
+            )}
+          />
+        </ScrollView>
+      </View>
+    </ScrollView>
+
     {/* view to handle modal stop */}
   </>
 );
+
 const RestaurantTitle = (props) => (
   <Text
     style={{
