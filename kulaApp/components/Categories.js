@@ -33,12 +33,12 @@ const items = [
     category: "Groceries",
   },
 ];
-export default function Categories({search}) {
+export default function Categories({ setModalVisible, setTitle }) {
   return (
     <View
       style={{
         marginTop: 5,
-        
+
         backgroundColor: "#fff",
         paddingVertical: 10,
         paddingLeft: 20,
@@ -47,7 +47,6 @@ export default function Categories({search}) {
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {items.map((item, index) => (
           <View
-
             onPress={() => console.log("here")}
             key={index}
             style={{ alignItems: "center", marginRight: 30 }}
@@ -63,15 +62,17 @@ export default function Categories({search}) {
                 // width: 300,
                 // position: "relative",
               }}
-              onPress={() => search(item.category)}
+              // onPress={() => search(item.category)}
+              onPress={() => {
+                setTitle(item.text);
+                setModalVisible(true);
+              }}
             >
               <Image
                 source={item.image}
                 style={{ width: 50, height: 40, resizeMode: "contain" }}
               />
-              <Text style={{ fontSize: 12,  }}>
-                {item.text}
-              </Text>
+              <Text style={{ fontSize: 12 }}>{item.text}</Text>
             </TouchableOpacity>
           </View>
         ))}

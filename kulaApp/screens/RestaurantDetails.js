@@ -141,6 +141,7 @@ export default function RestaurantDetails({ route, navigation }) {
   const [ind, setInd] = useState(0);
   const [foods, setfoods] = useState(food_array);
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible1, setModalVisible1] = useState(false);
   const [select, setSelect] = useState([]);
   const [itemPrice, setItemPrice] = useState(1);
   const [price, setPrice] = useState(1);
@@ -421,6 +422,155 @@ export default function RestaurantDetails({ route, navigation }) {
       </View>
     );
   };
+    const ModalContent2 = () => {
+    const food_category = [
+      {
+        id: 0,
+        image: require("../assets/images/deals.png"),
+        text: "Vegan",
+        category: "Groceries",
+      },
+      {
+        id: 1,
+        image: require("../assets/images/fast-food.png"),
+        text: "Vegetable",
+        category: "African",
+      },
+      {
+        id: 2,
+        image: require("../assets/images/soft-drink.png"),
+        text: "Lentice",
+        category: "American",
+      },
+      {
+        id: 3,
+        image: require("../assets/images/coffee.png"),
+        text: "Serves two",
+        category: "African",
+      },
+    ];
+    return (
+      <View style={styles.modalContainer}>
+        <View style={styles.modalCheckoutContainer}>
+          <AnimatedHeader route={route} animatedValue={offset} />
+
+          <Divider width={1.8} style={{ marginVertical: 10 }} />
+          <ScrollView
+            nestedScrollEnabled={true}
+            style={{ flex: 1, backgroundColor: "white" }}
+            contentContainerStyle={{
+              // alignItems: "center",
+              alignItems: "flex-start",
+              paddingTop: 200,
+              zIndex: 1,
+              // paddingHorizontal: 10,
+            }}
+            showsVerticalScrollIndicator={false}
+            scrollEventThrottle={16}
+            onScroll={Animated.event(
+              [{ nativeEvent: { contentOffset: { y: offset } } }],
+              { useNativeDriver: false }
+            )}
+          >
+            <RestaurantTitle name={route.params.name} />
+            <RestaurantDescription
+              modalVisible1={modalVisible1}
+              setModalVisible1={setModalVisible1}
+            />
+            <View
+              style={{
+                marginHorizontal: 10,
+                width: "100%",
+
+                // marginBottom: 5,
+              }}
+            >
+              <HeaderTabs color={"green"} />
+            </View>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {items.map((item, index) => (
+                <View
+                  onPress={() => console.log("here")}
+                  key={index}
+                  style={{
+                    alignItems: "center",
+                    marginRight: 30,
+                    marginHorizontal: 10,
+                    marginTop: 20,
+                    // marginBottom: 5,
+                  }}
+                >
+                  <TouchableOpacity
+                    style={
+                      active == item.id
+                        ? styles.activeCategory
+                        : styles.category
+                    }
+                    onPress={() => {
+                      setActive(item.id);
+                      search(item.text);
+                    }}
+                  >
+                    {/* <Image
+                source={item.image}
+                style={{ width: 50, height: 40, resizeMode: "contain" }}
+              /> */}
+                    <Text
+                      style={
+                        active == item.id
+                          ? styles.activeTextCategory
+                          : styles.textCategory
+                      }
+                    >
+                      {item.text}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </ScrollView>
+            <View
+              style={{ alignItems: "center", marginRight: 30, marginTop: 10 }}
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  zIndex: 10,
+                  fontWeight: "600",
+                  marginTop: 0,
+                  marginBottom: 0,
+                  marginHorizontal: 10,
+                }}
+              >
+                {items[active].text}
+              </Text>
+            </View>
+
+            {foods.map((food, index) => (
+              <View key={index}>
+                <View style={styles.menuItemStyle}>
+                  <TouchableOpacity
+                    onPress={(index) => {
+                      //      isFoodInCart(food, cartItems)
+                      //        ? console.log("here")
+                      //        : selectItem(food, index);
+                      setModalVisible(true);
+                      setSelect(food);
+                      setPrice(food?.price);
+                    }}
+                  >
+                    <FoodInfo food={food} />
+                    {/* <FoodImage food={food} /> */}
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ))}
+          </ScrollView>
+
+        </View>
+      </View>
+    );
+  };
+
 
   return (
     <SafeAreaProvider>
@@ -449,7 +599,10 @@ export default function RestaurantDetails({ route, navigation }) {
           )}
         >
           <RestaurantTitle name={route.params.name} />
-          <RestaurantDescription />
+          <RestaurantDescription
+            modalVisible1={modalVisible1}
+            setModalVisible1={setModalVisible1}
+          />
           <View
             style={{
               marginHorizontal: 10,
@@ -544,6 +697,15 @@ export default function RestaurantDetails({ route, navigation }) {
         >
           {ModalContent()}
         </Modal>
+        <Modal
+          animationType="slide"
+          visible={modalVisible1}
+          transparent={true}
+          onRequestClose={() => setModalVisible1(false)}
+        >
+          {ModalContent2()}
+        </Modal>
+
         <View style={styles.action}>
           <ViewCart
             ind={ind}
@@ -585,17 +747,94 @@ const RestaurantDescription = (props) => (
     >
       Open till 8:00 pm
     </Text>
+    {/* view to handle modal  start */}
+    <TouchableOpacity
+      activeOpacity={1}
+      // style={{
+      //   marginBottom: 10,
+      //   borderTopRightRadius: 20,
+      //   borderTopLeftRadius: 20,
+      // }}
+      onPress={() => props.setModalVisible1(true)}
+    >
+      <Text
+        style={{
+          color: "gray",
+          marginHorizontal: 15,
+          fontWeight: "400",
+          fontSize: 15.5,
+          marginBottom: 20,
+        
+        }}
+      >
+        Click to get more information about the restaurant
+      </Text>
+    </TouchableOpacity>
+
+    {/* view to handle modal stop */}
+  </>
+);
+const RestaurantDescription2 = (props) => (
+  <>
+    <Text
+      style={{
+        marginTop: 3,
+        marginHorizontal: 15,
+        fontWeight: "700",
+        fontSize: 15.5,
+      }}
+    >
+      100% Vegan - Female-Leaded
+    </Text>
     <Text
       style={{
         color: "gray",
+
         marginHorizontal: 15,
         fontWeight: "400",
         fontSize: 15.5,
-        marginBottom: 20,
       }}
     >
-      Click to get more information about the restaurant
+      Open till 8:00 pm
     </Text>
+    {/* view to handle modal  start */}
+    <TouchableOpacity
+      activeOpacity={1}
+      // style={{
+      //   marginBottom: 10,
+      //   borderTopRightRadius: 20,
+      //   borderTopLeftRadius: 20,
+      // }}
+      onPress={() => props.setModalVisible1(true)}
+    >
+      <Text
+        style={{
+          color: "gray",
+          marginHorizontal: 15,
+          fontWeight: "400",
+          fontSize: 15.5,
+          marginBottom: 20,
+          borderBottomColor: "red",
+          borderBottomWidth: 2,
+        }}
+      >
+        Click to get more information about the restaurant
+      </Text>
+    </TouchableOpacity>
+    <View>
+      <Text
+        style={{
+          color: "gray",
+          marginHorizontal: 15,
+          fontWeight: "400",
+          fontSize: 15.5,
+          marginBottom: 20,
+        }}
+      >
+        Click to get more information about the restaurant
+      </Text>
+    </View>
+    {/* view to handle modal stop */}
   </>
 );
 const RestaurantTitle = (props) => (

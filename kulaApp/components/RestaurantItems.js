@@ -55,7 +55,221 @@ try {
   useEffect(() => {
     console.log('hereerr')
   }, [restaurants]);
-  
+    const ModalContent = () => {
+      const food_category = [
+        {
+          id: 0,
+          image: require("../assets/images/deals.png"),
+          text: "Vegan",
+          category: "Groceries",
+        },
+        {
+          id: 1,
+          image: require("../assets/images/fast-food.png"),
+          text: "Vegetable",
+          category: "African",
+        },
+        {
+          id: 2,
+          image: require("../assets/images/soft-drink.png"),
+          text: "Lentice",
+          category: "American",
+        },
+        {
+          id: 3,
+          image: require("../assets/images/coffee.png"),
+          text: "Serves two",
+          category: "African",
+        },
+      ];
+      return (
+        <View style={styles.modalContainer}>
+          <View style={styles.modalCheckout2Container}>
+            <ScrollView>
+              <>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    // padding: 20,
+                    paddingBottom: 20,
+                    paddingTop: 20,
+                    // borderBottomWidth: 1,
+                    borderBottomColor: "999",
+                  }}
+                >
+                  <></>
+                  <Text style={{ fontWeight: "600", fontSize: 16 }}>
+                    {select?.title}
+                  </Text>
+                  <Text style={{ fontWeight: "600", fontSize: 16 }}>
+                    {" "}
+                    {select?.price}
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    // padding: 20,
+                    paddingBottom: 20,
+                    // borderBottomWidth: 1,
+                    borderBottomColor: "999",
+                  }}
+                >
+                  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    {food_category.map((item, index) => (
+                      <View
+                        onPress={() => console.log("here")}
+                        key={index}
+                        style={{
+                          // alignItems: "center",
+                          // marginRight: 30,
+                          marginHorizontal: 0,
+                          // marginTop: 20,
+                          paddingHorizontal: 2,
+                          marginBottom: 5,
+                        }}
+                      >
+                        <TouchableOpacity
+                          style={styles.activeCategory}
+                          onPress={() => {
+                            setActive(item.id);
+                            search(item.text);
+                          }}
+                        >
+                          <Text style={styles.activeTextCategory}>
+                            {item.text}
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    ))}
+                  </ScrollView>
+                </View>
+                <View>
+                  <Text style={{ opacity: 0.7, fontSize: 16 }}>
+                    Ethiopian platter is a very healthy vegan platter with
+                    lentils, vegetables, and fermented flatbread Injera. The
+                    platter is rich in fiber, gluten-free, and a combination of
+                    complex flavors. Moreover, this recipe has 7 different side
+                    dishes with different vegetables and lentils. Some recipes
+                    call for an Ethiopian spice blend called Berbere or with
+                    simple spices.
+                  </Text>
+                </View>
+                <View
+                  style={
+                    {
+                      // padding: 20,
+                      // paddingBottom: 20,
+                      // paddingTop: 20,
+                    }
+                  }
+                ></View>
+              </>
+            </ScrollView>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                paddingHorizontal: 10,
+                // padding: 3,
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  marginTop: 20,
+
+                  backgroundColor: "white",
+                  borderColor: "gray",
+                  border: "1px solid gray",
+                  alignItems: "center",
+                  padding: 13,
+                  borderRadius: 8,
+                  width: 180,
+                  borderWidth: 1,
+                  marginRight: 15,
+                  // borderBottomWidth:{(title=="Deliver option") ? 0: 1}
+                  // borderBottomWidth: 1,
+                  borderColor: "#616161",
+
+                  position: "relative",
+                }}
+              >
+                <View
+                  spacing={6}
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  <AntDesign
+                    style={{
+                      paddingLeft: 10,
+                    }}
+                    name="minus"
+                    onPress={() => decreasePrice()}
+                    size={30}
+                    color="black"
+                  />
+                  <Text
+                    style={{
+                      fontWeight: "600",
+                      fontSize: 20,
+                      paddingRight: 20,
+                      paddingLeft: 20,
+                    }}
+                  >
+                    {" "}
+                    {quantity}
+                  </Text>
+
+                  <Ionicons
+                    style={{
+                      paddingRight: 10,
+                    }}
+                    onPress={() => {
+                      // updateItem(select);
+                      increasePrice();
+                    }}
+                    name="add"
+                    size={30}
+                    color="black"
+                  />
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  marginTop: 20,
+                  backgroundColor: "green",
+                  alignItems: "center",
+                  padding: 15,
+                  paddingLeft: 10,
+                  borderRadius: 8,
+                  width: 200,
+                  position: "relative",
+                }}
+                onPress={() => {
+                  // setModalVisible1(true);
+                  isFoodInCart(select, cartItems)
+                    ? console.log("here")
+                    : selectItem(select, ind);
+                  setModalVisible(false);
+                }}
+              >
+                {/* <Text style={{ color: "white", fontSize: 20 }}> Checkout</Text> */}
+                <Text style={{ color: "white", fontSize: 20 }}>
+                  {select?.price ? "Add ( " + price + " )" : ""}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      );
+    };
   return (
     <>
       {props.restaurantData.map((restaurant, index) => (

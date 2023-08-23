@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect,useRef } from "react";
 import { StatusBar } from "expo-status-bar";
-import { View, StyleSheet, Text, SafeAreaView, ScrollView,Image } from "react-native";
+import { View, StyleSheet, Text, SafeAreaView, ScrollView,Image ,Modal,TouchableOpacity} from "react-native";
 import Categories from "../components/Categories";
 import HeaderTabs from "../components/HeaderTabs";
 import BottomTabs from "../components/BottomTabs";
@@ -13,15 +13,107 @@ import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvide
 import SearchText from "../components/SearchText";
 import LottieView from "lottie-react-native";
 import BoxShadow from "../components/BoxShadow";
-
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 
 const auth = Firebase.auth();
-
+  const checkoutModal2Content = (
+    setModalVisible,
+    navigation,
+    restaurantData,
+    title
+  ) => {
+    const food_category = [
+      {
+        id: 0,
+        image: require("../assets/images/deals.png"),
+        text: "Vegan",
+        category: "Groceries",
+      },
+      {
+        id: 1,
+        image: require("../assets/images/fast-food.png"),
+        text: "Vegetable",
+        category: "African",
+      },
+      {
+        id: 2,
+        image: require("../assets/images/soft-drink.png"),
+        text: "Lentice",
+        category: "American",
+      },
+      {
+        id: 3,
+        image: require("../assets/images/coffee.png"),
+        text: "Serves two",
+        category: "African",
+      },
+    ];
+    return (
+      <View style={styles.modalContainer}>
+        <View style={styles.modalCheckout2Container}>
+          <ScrollView>
+            <>
+              <SafeAreaView style={styles.container}>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                  <TouchableOpacity
+                    // key={index}
+                    // activeOpacity={1}
+                    style={{
+                      marginTop: 10,
+                      marginBottom: 10,
+                    }}
+                    onPress={() => setModalVisible(false)}
+                  >
+                    <AntDesign name="left" size={25} color="black" />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{
+                      // backgroundColor: props.activeTab === props.text ? "black" : "white",
+                      // color: props.activeTab === props.text ? "black" : "white",
+                      paddingVertical: 20,
+                      paddingHorizontal: 16,
+                      borderRadius: 30,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        // color: props.activeTab === props.text ? "white" : "black",
+                        fontSize: 20,
+                        fontWeight: "900",
+                      }}
+                    >
+                      {title}
+                    </Text>
+                  </TouchableOpacity>
+                  <View style={styles.shadow}>
+                    <RestaurantItems
+                      navigation={navigation}
+                      restaurantData={restaurantData}
+                    />
+                    <RestaurantItems
+                      navigation={navigation}
+                      restaurantData={restaurantData}
+                    />
+                    <RestaurantItems
+                      navigation={navigation}
+                      restaurantData={restaurantData}
+                    />
+                  </View>
+                </ScrollView>
+              </SafeAreaView>
+            </>
+          </ScrollView>
+        </View>
+      </View>
+    );
+  };
 const HomeScreen = ({navigation}) => {
   // const [restaurantData, setRestaurantData] = useState(localRestaurants)
    const [restaurantData, setRestaurantData] = useState(localRestaurants);
    const [query, setQuery] = useState('');
+   const [title, setTitle] = useState('');
+    const [modalVisible, setModalVisible] = useState(false);
     const animation = useRef(null);
     const { user } = useContext(AuthenticatedUserContext);
 
@@ -30,11 +122,7 @@ const HomeScreen = ({navigation}) => {
       console.log("changed");
       // setRestaurantData(restaurantData);
     }, [restaurantData]);
-        // useEffect(() => {
-        //   setRestaurantData(localRestaurants);
-        //   console.log(" query changed");
-        //   // setRestaurantData(restaurantData);
-        // }, [query]);
+
   const search=(query) =>{
     console.log(query)
     let resti = localRestaurants.filter((price) =>
@@ -71,7 +159,11 @@ const HomeScreen = ({navigation}) => {
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <SearchText text={"Choose a Category"} />
-        <Categories search={search} />
+        <Categories
+          setModalVisible={setModalVisible}
+          setTitle={setTitle}
+          //  search={search}
+        />
         <SearchText
           navigation={navigation}
           restaurantData={restaurantData}
@@ -91,20 +183,20 @@ const HomeScreen = ({navigation}) => {
             restaurantData={restaurantData}
           />
         </View>
-
-        {/* <LottieView
-          autoPlay
-          ref={animation}
-          style={{
-            width: 200,
-            height: 200,
-            backgroundColor: "#eee",
-          }}
-          // Find more Lottie files at https://lottiefiles.com/featured
-          source={
-            "https://assets5.lottiefiles.com/packages/lf20_cAsTAnQtxv.json"
-          }
-        /> */}
+        <Modal
+          animationType="slide"
+          visible={modalVisible}
+          transparent={true}
+          onRequestClose={() => setModalVisible(false)}
+        >
+          {checkoutModal2Content(
+            setModalVisible,
+            navigation,
+            restaurantData,
+            title,
+            setTitle,
+          )}
+        </Modal>
       </ScrollView>
       {/* <Divider width={1} />
       <BottomTabs /> */}
@@ -112,6 +204,12 @@ const HomeScreen = ({navigation}) => {
   );
 };
 const styles = StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    backgroundColor: "white",
+    // backgroundColor: "rgba(0,0,0,0.7)",
+  },
   container: {
     flex: 1,
     justifyContent: "flex-start",
@@ -124,7 +222,7 @@ const styles = StyleSheet.create({
     // borderColor: "black",
     // borderWidth: 5,
     // bordrerStyle: "dashed",
-    padding:-2,
+    padding: -2,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -134,6 +232,13 @@ const styles = StyleSheet.create({
     shadowRadius: 2.62,
 
     elevation: 4,
+  },
+  modalCheckout2Container: {
+    backgroundColor: "white",
+
+    // height: 500,
+    height: "100%",
+    borderWidth: 1,
   },
 });
 export default HomeScreen;

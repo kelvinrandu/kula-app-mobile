@@ -5,7 +5,7 @@ export default {
     slug: "kulaApp",
     version: "1.0.0",
     orientation: "portrait",
-    icon: "./assets/icon.png",
+    icon: "./assets/splash.png",
     splash: {
       image: "./assets/splash.png",
       resizeMode: "contain",
