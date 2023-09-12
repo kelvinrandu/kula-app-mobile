@@ -194,7 +194,7 @@ const HomeScreen = ({navigation}) => {
             navigation,
             restaurantData,
             title,
-            setTitle,
+            setTitle
           )}
         </Modal>
       </ScrollView>

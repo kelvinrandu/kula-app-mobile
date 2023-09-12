@@ -675,7 +675,7 @@ export default function RestaurantDetails({ route, navigation }) {
         <Divider width={1.8} style={{ marginVertical: 10 }} />
         <ScrollView
           nestedScrollEnabled={true}
-          style={{ flex: 1, backgroundColor: "white" }}
+          style={{ backgroundColor: "white", height: 1000 }}
           contentContainerStyle={{
             // alignItems: "center",
             alignItems: "flex-start",
@@ -781,6 +781,7 @@ export default function RestaurantDetails({ route, navigation }) {
               </View>
             </View>
           ))}
+
         </ScrollView>
         <Modal
           animationType="slide"
@@ -843,12 +844,14 @@ const RestaurantDescription = (props) => (
     {/* view to handle modal  start */}
     <TouchableOpacity
       activeOpacity={1}
-      // style={{
-      //   marginBottom: 10,
-      //   borderTopRightRadius: 20,
-      //   borderTopLeftRadius: 20,
-      // }}
-      onPress={() => props.setModalVisible1(true)}
+      // onPress={() =>
+      //   // navigation.navigate("HomeScreenScroll", {
+      //   //   name: 'new',
+  
+      //   // })
+      // }
+      // uncomment
+      // onPress={() => props.setModalVisible1(true)}
     >
       <Text
         style={{

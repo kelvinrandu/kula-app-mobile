@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{useEffect,useRef}from "react";
 import {
   Animated,
   View,
@@ -43,30 +43,46 @@ const items = [
 ];
 const HEADER_HEIGHT = 200;
 
+
 const AnimatedHeader = (props) => {
-      const { name, image, price, reviews, rating, categories } =
-        props.route.params;
-    const {
-
-            animatedValue,
-          } = props;
-      const formattedCategories = categories
-        .map((cat) => cat.title)
-        .join(" • ");
-      const description = `${formattedCategories} ${
-        price ? " • " + price : ""
-      }   • 🎫 • ${rating} ⭐  (${reviews}+)`;
+  const { name, image, price, reviews, rating, categories } =
+    props.route.params;
+  const { animatedValue } = props;
+  const formattedCategories = categories.map((cat) => cat.title).join(" • ");
+  const description = `${formattedCategories} ${
+    price ? " • " + price : ""
+  }   • 🎫 • ${rating} ⭐  (${reviews}+)`;
   const insets = useSafeAreaInsets();
-    const headerHeight = animatedValue.interpolate({
-      inputRange: [0, HEADER_HEIGHT + insets.top],
-      outputRange: [HEADER_HEIGHT + insets.top, insets.top + 100],
-      extrapolate: "clamp",
-    });
+  const headerHeight = animatedValue.interpolate({
+    inputRange: [0, HEADER_HEIGHT + insets.top],
+    outputRange: [HEADER_HEIGHT + insets.top, insets.top + 100],
 
+    extrapolate: "clamp",
+  });
+  // const distance = useRef(animatedValue).current;
+  const _headerHeight = animatedValue;
+  const scaleAndFlipOnReverse = animatedValue.interpolate({
+    inputRange: [0, HEADER_HEIGHT],
+    outputRange: [0.1, 2],
+    extrapolateLeft: "extend",
+    extrapolateRight: "clamp",
+  });
+
+  const opacityAnimation = useRef(new Animated.Value(1)).current;
+  const opacityStyle = { opacity: opacityAnimation };
+  // useEffect(() => {
+  //   if (opacityAnimation) {
+  //     console.log("opacity", headerHeight);
+  //   }
+  // }, [headerHeight]);
+ 
+  _headerHeight.addListener( (state) => console.log('state',state))
+  console.log("header height", opacityAnimation);
 
   return (
     <>
       <Animated.View
+        ref={opacityAnimation}
         style={{
           position: "absolute",
           top: 0,
@@ -75,11 +91,11 @@ const AnimatedHeader = (props) => {
           zIndex: 10,
           height: headerHeight,
           backgroundColor: "lightblue",
+          opacityStyle,
+          // transform: [{ scale: scaleAndFlipOnReverse }],
         }}
       >
         <RestaurantImage image={image} />
-        {/* <RestaurantTitle name={name} /> */}
-        {/* <RestaurantDescription description={description} /> */}
       </Animated.View>
     </>
   );

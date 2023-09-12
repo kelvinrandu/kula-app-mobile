@@ -282,8 +282,18 @@ try {
           //   borderTopRightRadius: 20,
           //   borderTopLeftRadius: 20,
           // }}
+          // onPress={() =>
+          //   navigation.navigate("RestaurantDetails", {
+          //     name: restaurant.name,
+          //     image: restaurant.image_url,
+          //     categories: restaurant.categories,
+          //     price: restaurant.price,
+          //     reviews: restaurant.reviews,
+          //     rating: restaurant.rating,
+          //   })
+          // }
           onPress={() =>
-            navigation.navigate("RestaurantDetails", {
+            navigation.navigate("HomeScreenScroll", {
               name: restaurant.name,
               image: restaurant.image_url,
               categories: restaurant.categories,
