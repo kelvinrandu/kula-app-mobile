@@ -4,13 +4,30 @@ import {
   ScrollView,
   Image,
   Animated,
+  Modal,
   Text,
   TouchableOpacity,
 } from "react-native";
+import { Divider } from "react-native-elements";
+import CarouselCards from "../components/Carousel/Carousel";
+
+import {
+  Ionicons,
+  AntDesign,
+  EvilIcons,
+  Octicons,
+  Entypo,
+} from "@expo/vector-icons";
 import { BANNER_H } from "../components/constants";
 import TopNavigation from "../components/TopNavigation";
 import DummyText from "../components/DummyText";
 import HeaderTabs from "../components/HeaderTabs";
+import AnimatedHeader from "../components/AnimatedHeader";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+
+import ViewCart from "../components/ViewCart";
+
 const items = [
   {
     id: 0,
@@ -118,12 +135,21 @@ const food_array = [
       "https://thestayathomechef.com/wp-content/uploads/2017/08/Most-Amazing-Lasagna-2-e1574792735811.jpg",
   },
 ];
+const picsumImages = new Array(11).fill("http://placeimg.com/640/360/any");
+function renderItem({ item }) {
+  return <Image source={{ uri: item }} style={{ height: 100 }} />;
+}
 const HomeScreenScroll = ({ route, navigation }) => {
   const btnRef = React.useRef();
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-   const [ind, setInd] = useState(0);
-   const [foods, setfoods] = useState(food_array);
+  const [select, setSelect] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+  const [price, setPrice] = useState(1);
+  const [ind, setInd] = useState(0);
+  const [modalVisible2, setModalVisible2] = useState(false);
+  const [foods, setfoods] = useState(food_array);
+  const [images, setImages] = React.useState(picsumImages);
   const [active, setActive] = useState(0);
   const [query, setQuery] = useState("Main Dishes");
   const scrollA = useRef(new Animated.Value(0)).current;
@@ -134,9 +160,461 @@ const HomeScreenScroll = ({ route, navigation }) => {
     setQuery(query);
     setfoods(result);
   };
-    useEffect(() => {
-      search(query);
-    }, [query]);
+  useEffect(() => {
+    search(query);
+  }, [query]);
+  useEffect(() => {}, [quantity]);
+  const decreasePrice = () => {
+    if (quantity > 1) {
+      let price_update = quantity - 1;
+      let total_price = Number(select?.price.replace("ksh", ""));
+      setQuantity(price_update);
+      let _total_price = total_price * price_update + " ksh";
+      setPrice(_total_price);
+      // setPrice(select?.price * price_update);
+    } else {
+    }
+  };
+
+  const increasePrice = () => {
+    let price_update = quantity + 1;
+    let total_price = Number(select?.price.replace("ksh", ""));
+    console.log("total", total_price);
+    setQuantity(price_update);
+    let _total_price = total_price * price_update + " ksh";
+    setPrice(_total_price);
+  };
+  const offset = useRef(new Animated.Value(0)).current;
+
+  const dispatch = useDispatch();
+  const selectItem = (item, checkboxValue) => {
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: {
+        item,
+        //  restaurantName: restaurantName,
+        restaurantName: route.params.name,
+        // checkboxValue: checkboxValue,
+        quantity: 1,
+      },
+    });
+  };
+  const cartItems = useSelector(
+    (state) => state.cartReducer.selectedItems.items
+  );
+
+  const isFoodInCart = (food, cartItems) => {
+    return Boolean(cartItems.find((item) => item.item.title === food.title));
+  };
+  const ModalContent = () => {
+    const food_category = [
+      {
+        id: 0,
+        image: require("../assets/images/deals.png"),
+        text: "Vegan",
+        category: "Groceries",
+      },
+      {
+        id: 1,
+        image: require("../assets/images/fast-food.png"),
+        text: "Vegetable",
+        category: "African",
+      },
+      {
+        id: 2,
+        image: require("../assets/images/soft-drink.png"),
+        text: "Lentice",
+        category: "American",
+      },
+      {
+        id: 3,
+        image: require("../assets/images/coffee.png"),
+        text: "Serves two",
+        category: "African",
+      },
+    ];
+    return (
+      <View style={styles.modalContainer}>
+        <View style={styles.modalCheckout2Container}>
+          <ScrollView>
+            <>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  // padding: 20,
+                  paddingBottom: 20,
+                  paddingTop: 20,
+                  // borderBottomWidth: 1,
+                  borderBottomColor: "999",
+                }}
+              >
+                <></>
+                <Text style={{ fontWeight: "600", fontSize: 16 }}>
+                  {select?.title}
+                </Text>
+                <Text style={{ fontWeight: "600", fontSize: 16 }}>
+                  {" "}
+                  {select?.price}
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  // padding: 20,
+                  paddingBottom: 20,
+                  // borderBottomWidth: 1,
+                  borderBottomColor: "999",
+                }}
+              >
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  {food_category.map((item, index) => (
+                    <View
+                      onPress={() => console.log("here")}
+                      key={index}
+                      style={{
+                        // alignItems: "center",
+                        // marginRight: 30,
+                        marginHorizontal: 0,
+                        // marginTop: 20,
+                        paddingHorizontal: 2,
+                        marginBottom: 5,
+                      }}
+                    >
+                      <TouchableOpacity
+                        style={styles.activeCategory}
+                        onPress={() => {
+                          setActive(item.id);
+                          search(item.text);
+                        }}
+                      >
+                        <Text style={styles.activeTextCategory}>
+                          {item.text}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  ))}
+                </ScrollView>
+              </View>
+              <View>
+                <Text style={{ opacity: 0.7, fontSize: 16 }}>
+                  Ethiopian platter is a very healthy vegan platter with
+                  lentils, vegetables, and fermented flatbread Injera. The
+                  platter is rich in fiber, gluten-free, and a combination of
+                  complex flavors. Moreover, this recipe has 7 different side
+                  dishes with different vegetables and lentils. Some recipes
+                  call for an Ethiopian spice blend called Berbere or with
+                  simple spices.
+                </Text>
+              </View>
+              <View
+                style={
+                  {
+                    // padding: 20,
+                    // paddingBottom: 20,
+                    // paddingTop: 20,
+                  }
+                }
+              ></View>
+            </>
+          </ScrollView>
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              paddingHorizontal: 10,
+              // padding: 3,
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                marginTop: 20,
+
+                backgroundColor: "white",
+                borderColor: "gray",
+                border: "1px solid gray",
+                alignItems: "center",
+                padding: 13,
+                borderRadius: 8,
+                width: 180,
+                borderWidth: 1,
+                marginRight: 15,
+                // borderBottomWidth:{(title=="Deliver option") ? 0: 1}
+                // borderBottomWidth: 1,
+                borderColor: "#616161",
+
+                position: "relative",
+              }}
+            >
+              <View
+                spacing={6}
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  paddingHorizontal: 10,
+                }}
+              >
+                <AntDesign
+                  style={{
+                    paddingLeft: 10,
+                  }}
+                  name="minus"
+                  onPress={() => decreasePrice()}
+                  size={30}
+                  color="black"
+                />
+                <Text
+                  style={{
+                    fontWeight: "600",
+                    fontSize: 20,
+                    paddingRight: 20,
+                    paddingLeft: 20,
+                  }}
+                >
+                  {" "}
+                  {quantity}
+                </Text>
+
+                <Ionicons
+                  style={{
+                    paddingRight: 10,
+                  }}
+                  onPress={() => {
+                    // updateItem(select);
+                    increasePrice();
+                  }}
+                  name="add"
+                  size={30}
+                  color="black"
+                />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                marginTop: 20,
+                backgroundColor: "green",
+                alignItems: "center",
+                padding: 15,
+                paddingLeft: 10,
+                borderRadius: 8,
+                width: 200,
+                position: "relative",
+              }}
+              onPress={() => {
+                // setModalVisible1(true);
+                isFoodInCart(select, cartItems)
+                  ? console.log("here")
+                  : selectItem(select, ind);
+                setModalVisible(false);
+              }}
+            >
+              {/* <Text style={{ color: "white", fontSize: 20 }}> Checkout</Text> */}
+              <Text style={{ color: "white", fontSize: 20 }}>
+                {select?.price ? "Add ( " + price + " )" : ""}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+  };
+  const ModalContent2 = () => {
+    const food_category = [
+      {
+        id: 0,
+        image: require("../assets/images/deals.png"),
+        text: "Vegan",
+        category: "Groceries",
+      },
+      {
+        id: 1,
+        image: require("../assets/images/fast-food.png"),
+        text: "Vegetable",
+        category: "African",
+      },
+      {
+        id: 2,
+        image: require("../assets/images/soft-drink.png"),
+        text: "Lentice",
+        category: "American",
+      },
+      {
+        id: 3,
+        image: require("../assets/images/coffee.png"),
+        text: "Serves two",
+        category: "African",
+      },
+    ];
+    return (
+      <View style={styles.modalContainer}>
+        <View style={styles.modalCheckoutContainer}>
+          <AnimatedHeader route={route} animatedValue={offset} />
+
+          <Divider width={1.8} style={{ marginVertical: 10 }} />
+          <ScrollView
+            nestedScrollEnabled={true}
+            style={{ flex: 1, backgroundColor: "white" }}
+            contentContainerStyle={{
+              // alignItems: "center",
+              alignItems: "flex-start",
+              paddingTop: 200,
+              zIndex: 1,
+              // paddingHorizontal: 10,
+            }}
+            showsVerticalScrollIndicator={false}
+            scrollEventThrottle={16}
+            onScroll={Animated.event(
+              [{ nativeEvent: { contentOffset: { y: offset } } }],
+              { useNativeDriver: false }
+            )}
+          >
+            <RestaurantTitle name={route.params.name} />
+            <RestaurantDescription2
+              btnRef={btnRef}
+              images={images}
+              // dataSource={dataSource}
+              modalVisible1={modalVisible1}
+              setModalVisible1={setModalVisible1}
+            />
+            <View
+              style={{
+                marginHorizontal: 10,
+                width: "100%",
+
+                // marginBottom: 5,
+              }}
+            >
+              <Text
+                style={{
+                  // fontWeight: "600",
+                  fontSize: 20,
+                  // paddingRight: 20,
+                  // paddingLeft: 20,
+                }}
+              >
+                Imprint
+              </Text>
+              <Text
+                style={{
+                  // fontWeight: "600",
+                  fontSize: 20,
+                  // paddingRight: 20,
+                  // paddingLeft: 20,
+                }}
+              >
+                Tribeearth Vegan Restaurant
+              </Text>
+              <Text
+                style={{
+                  // fontWeight: "600",
+                  fontSize: 20,
+                  // paddingRight: 20,
+                  // paddingLeft: 20,
+                }}
+              >
+                Diani Beach Road
+              </Text>
+              <Text
+                style={{
+                  // fontWeight: "600",
+                  fontSize: 20,
+                  // paddingRight: 20,
+                  // paddingLeft: 20,
+                }}
+              >
+                Ukunda
+              </Text>
+              <Text
+                style={{
+                  // fontWeight: "600",
+                  fontSize: 20,
+                  // paddingRight: 20,
+                  // paddingLeft: 20,
+                }}
+              >
+                Kenia
+              </Text>
+              <Text
+                style={{
+                  // fontWeight: "600",
+                  fontSize: 20,
+                  // paddingRight: 20,
+                  // paddingLeft: 20,
+                }}
+              >
+                Libosso Müller
+              </Text>
+              <Text
+                style={{
+                  // fontWeight: "600",
+                  fontSize: 20,
+                  // paddingRight: 20,
+                  // paddingLeft: 20,
+                }}
+              >
+                restaurant@tribeearth.com
+              </Text>
+              <Text
+                style={{
+                  // fontWeight: "600",
+                  fontSize: 20,
+                  // paddingRight: 20,
+                  // paddingLeft: 20,
+                }}
+              >
+                +1 123 456 798
+              </Text>
+              <Text
+                style={{
+                  // fontWeight: "600",
+                  fontSize: 20,
+                  marginBottom: 20,
+                  // paddingRight: 20,
+                  // paddingLeft: 20,
+                }}
+              >
+                Tax-ID
+              </Text>
+
+              <Text
+                style={{
+                  // fontWeight: "600",
+                  fontSize: 20,
+                  // paddingRight: 20,
+                  // paddingLeft: 20,
+                }}
+              >
+                We are neither willing nor obliged to participate in a dispute
+                resolution procedure before a consumer arbitration board
+              </Text>
+            </View>
+
+            <View
+              style={{
+                alignItems: "center",
+                marginRight: 30,
+                marginTop: 10,
+              }}
+            >
+              <Text
+                style={{
+                  // fontSize: 20,
+                  zIndex: 10,
+                  // fontWeight: "600",
+                  marginTop: 0,
+                  marginBottom: 0,
+                  marginHorizontal: 10,
+                }}
+              ></Text>
+            </View>
+          </ScrollView>
+        </View>
+      </View>
+    );
+  };
   return (
     <View>
       <TopNavigation title="Home" scrollA={scrollA} />
@@ -212,7 +690,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
             </View>
           ))}
         </ScrollView>
-        <View style={{  marginRight: 30, marginTop: 10 }}>
+        <View style={{ marginRight: 30, marginTop: 10 }}>
           <Text
             style={{
               fontSize: 20,
@@ -245,15 +723,192 @@ const HomeScreenScroll = ({ route, navigation }) => {
             </View>
           </View>
         ))}
-        <View style={styles.menuItemStyle2}>
-            
-        </View>
+        <View style={styles.menuItemStyle2}></View>
         {/* <DummyText /> */}
       </Animated.ScrollView>
+      <Modal
+        animationType="slide"
+        visible={modalVisible}
+        transparent={true}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        {ModalContent()}
+      </Modal>
+      <Modal
+        animationType="slide"
+        visible={modalVisible1}
+        transparent={true}
+        onRequestClose={() => setModalVisible1(false)}
+      >
+        {ModalContent2()}
+      </Modal>
+
+      <View style={styles.action}>
+        <ViewCart
+          ind={ind}
+          setModalVisible2={setModalVisible2}
+          isFoodInCart={isFoodInCart}
+          selectItem={selectItem}
+          cartItems={cartItems}
+          modalVisible2={modalVisible2}
+          setSelect={setSelect}
+          select={select}
+          navigation={navigation}
+          restaurantName={route.params.name}
+        />
+      </View>
     </View>
   );
 };
+const RestaurantDescription2 = (props) => (
+  <>
+    <Text
+      style={{
+        marginTop: 3,
+        marginBottom: 20,
+        marginHorizontal: 15,
+        fontWeight: "700",
+        fontSize: 15.5,
+      }}
+    >
+      100% Vegan - Female-Leaded
+    </Text>
+    <View
+      spacing={6}
+      style={{
+        flexDirection: "row",
+        alignSelf: "stretch",
+        borderBottomColor: "gray",
+        borderBottomWidth: 1,
+      }}
+    >
+      <View
+        spacing={6}
+        style={{
+          flexDirection: "row",
+          // alignSelf: "stretch",
 
+          justifyContent: "space-between",
+          marginHorizontal: 15,
+          // paddingHorizontal: 10,
+          paddingBottom: 15,
+          alignItems: "center",
+          // borderBottomColor: "gray",
+          // borderBottomWidth: 1,
+        }}
+      >
+        <Entypo
+          name="location-pin"
+          // onPress={() => decreasePrice()}
+          size={30}
+          color="black"
+        />
+        <Text
+          style={{
+            fontWeight: "600",
+            fontSize: 20,
+            paddingRight: 20,
+            paddingLeft: 20,
+          }}
+        >
+          Diani Beach Road. Ukunda
+        </Text>
+      </View>
+    </View>
+    <View
+      spacing={6}
+      style={{
+        flexDirection: "row",
+        alignSelf: "stretch",
+        borderBottomColor: "gray",
+        borderBottomWidth: 1,
+      }}
+    >
+      <View
+        spacing={6}
+        style={{
+          flexDirection: "row",
+
+          justifyContent: "space-between",
+          marginHorizontal: 15,
+          // paddingHorizontal: 10,
+          paddingTop: 15,
+          paddingBottom: 15,
+          alignItems: "center",
+          // borderBottomColor: "gray",
+          // borderBottomWidth: 1,
+        }}
+      >
+        <Octicons name="stopwatch" size={30} color="black" />
+        <Text
+          style={{
+            fontWeight: "600",
+            fontSize: 20,
+            paddingRight: 20,
+            paddingLeft: 20,
+          }}
+        >
+          Open till 8:00 pm
+        </Text>
+      </View>
+    </View>
+    <View
+      style={{
+        flexDirection: "row",
+        alignSelf: "stretch",
+        borderBottomColor: "gray",
+        borderBottomWidth: 1,
+        marginBottom: 15,
+      }}
+    >
+      <View
+        spacing={6}
+        style={{
+          flexDirection: "row",
+
+          justifyContent: "space-between",
+          marginHorizontal: 15,
+          // paddingHorizontal: 10,
+          paddingBottom: 15,
+          paddingTop: 15,
+          alignItems: "center",
+          // borderBottomColor: "gray",
+          // borderBottomWidth: 1,
+        }}
+      >
+        <Entypo name="star-outlined" size={30} color="black" />
+        <Text
+          style={{
+            fontWeight: "600",
+            fontSize: 20,
+            paddingRight: 20,
+            paddingLeft: 20,
+          }}
+        >
+          4.6(32 Ratings)
+        </Text>
+      </View>
+    </View>
+    {/* carousel start */}
+    <View style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}>
+      <Text> images</Text>
+      <CarouselCards />
+      {/* <Carousel
+        layout={"default"}
+        ref={(ref) => (props.btnRef = ref)}
+        data={im}
+        sliderWidth={300}
+        itemWidth={300}
+        renderItem={renderItem}
+        // onSnapToItem={(index) => this.setState({ activeIndex: index })}
+      /> */}
+    </View>
+    {/* carousel end */}
+    {/* view to handle modal  start */}
+
+    {/* view to handle modal stop */}
+  </>
+);
 const RestaurantDescription = (props) => (
   <>
     <Text
@@ -287,7 +942,7 @@ const RestaurantDescription = (props) => (
       //   // })
       // }
       // uncomment
-      // onPress={() => props.setModalVisible1(true)}
+      onPress={() => props.setModalVisible1(true)}
     >
       <Text
         style={{
@@ -391,7 +1046,7 @@ const styles = {
     fontSize: 12,
     fontWeight: "600",
     alignItems: "center",
-    
+
     color: "white",
   },
   category: {
@@ -417,7 +1072,10 @@ const styles = {
     // borderRadius: 25,
     padding: 15,
     position: "absolute",
+    justifyContent: "center",
+    alignItems:"center",
     bottom: 5,
+    marginLeft:100,
     backgroundColor: "transparent",
     width: "50%",
     justifyContent: "space-around",
