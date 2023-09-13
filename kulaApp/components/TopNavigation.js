@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StatusBar } from "react-native";
+import {
+  View,
+  Text,
+  StatusBar,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { useSafeArea } from "react-native-safe-area-context";
 import { TOPNAVI_H, BANNER_H } from "./constants";
 
 const TopNavigation = (props) => {
   const safeArea = useSafeArea();
 
-  const { title, scrollA } = props;
+  const { active,items,title, scrollA ,setActive,search} = props;
   const isFloating = !!scrollA;
   const [isTransparent, setTransparent] = useState(isFloating);
 
@@ -18,6 +25,8 @@ const TopNavigation = (props) => {
       const topNaviOffset = BANNER_H - TOPNAVI_H - safeArea.top;
       isTransparent !== a.value < topNaviOffset &&
         setTransparent(!isTransparent);
+        console.log("show me", isTransparent);
+
     });
     return () => scrollA.removeListener(listenerId);
   });
@@ -30,7 +39,54 @@ const TopNavigation = (props) => {
         translucent
       />
       <View style={styles.container(safeArea, isFloating, isTransparent)}>
-        <Text style={styles.title(isTransparent)}>{title}</Text>
+        {!isTransparent ? (
+          <>
+            <Text style={styles.title(isTransparent)}>{title}</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {items.map((item, index) => (
+                <View
+                  onPress={() => console.log("here")}
+                  key={index}
+                  style={{
+                    alignItems: "center",
+                    marginRight: 30,
+                    marginHorizontal: 2,
+                    marginTop: 10,
+                    // marginBottom: 5,
+                  }}
+                >
+                  <TouchableOpacity
+                    style={
+                      active == item.id
+                        ? styles.activeCategory
+                        : styles.category
+                    }
+                    onPress={() => {
+                      setActive(item.id);
+                      search(item.text);
+                    }}
+                  >
+                    {/* <Image
+                source={item.image}
+                style={{ width: 50, height: 40, resizeMode: "contain" }}
+              /> */}
+                    <Text
+                      style={
+                        active == item.id
+                          ? styles.activeTextCategory
+                          : styles.textCategory
+                      }
+                    >
+                      {item.text}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </ScrollView>
+          </>
+        ) : (
+          <></>
+        )}
       </View>
     </>
   );
@@ -54,6 +110,29 @@ const styles = {
     fontSize: 16,
     color: isTransparent ? "#FFF" : "#000",
   }),
+  activeCategory: {
+    backgroundColor: "green",
+    alignItems: "center",
+    padding: 10,
+    borderRadius: 30,
+  },
+  textCategory: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: "black",
+  },
+  activeTextCategory: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: "white",
+  },
+  category: {
+    backgroundColor: "white",
+    color: "white",
+    alignItems: "center",
+    padding: 13,
+    borderRadius: 30,
+  },
 };
 
 export default TopNavigation;

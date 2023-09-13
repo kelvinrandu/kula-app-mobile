@@ -617,7 +617,14 @@ const HomeScreenScroll = ({ route, navigation }) => {
   };
   return (
     <View>
-      <TopNavigation title="Home" scrollA={scrollA} />
+      <TopNavigation
+        active={active}
+        setActive={setActive}
+        search={search}
+        items={items}
+        title="Tribeearth Vegan"
+        scrollA={scrollA}
+      />
       <Animated.ScrollView
         // onScroll={e => console.log(e.nativeEvent.contentOffset.y)}
         onScroll={Animated.event(

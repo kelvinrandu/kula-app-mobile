@@ -1,2 +1,2 @@
-export const BANNER_H = 350;
-export const TOPNAVI_H = 50;
+export const BANNER_H = 200;
+export const TOPNAVI_H = 80;
