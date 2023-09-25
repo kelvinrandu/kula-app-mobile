@@ -16,16 +16,21 @@ const TopNavigation = (props) => {
   const { active,items,title, scrollA ,setActive,search} = props;
   const isFloating = !!scrollA;
   const [isTransparent, setTransparent] = useState(isFloating);
+  const [isShowing, setIsShowing ]= useState(false);
 
   useEffect(() => {
+    console.log("scroll", scrollA);
     if (!scrollA) {
       return;
     }
     const listenerId = scrollA.addListener((a) => {
+    
+
       const topNaviOffset = BANNER_H - TOPNAVI_H - safeArea.top;
       isTransparent !== a.value < topNaviOffset &&
         setTransparent(!isTransparent);
-        console.log("show me", isTransparent);
+        a.value < 302 ? setIsShowing(false) : setIsShowing(true);
+        console.log("show me", a.value, isShowing);
 
     });
     return () => scrollA.removeListener(listenerId);
@@ -42,47 +47,53 @@ const TopNavigation = (props) => {
         {!isTransparent ? (
           <>
             <Text style={styles.title(isTransparent)}>{title}</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {items.map((item, index) => (
-                <View
-                  onPress={() => console.log("here")}
-                  key={index}
-                  style={{
-                    alignItems: "center",
-                    marginRight: 30,
-                    marginHorizontal: 2,
-                    marginTop: 10,
-                    // marginBottom: 5,
-                  }}
-                >
-                  <TouchableOpacity
-                    style={
-                      active == item.id
-                        ? styles.activeCategory
-                        : styles.category
-                    }
-                    onPress={() => {
-                      setActive(item.id);
-                      search(item.text);
+            {isShowing ? (
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {items.map((item, index) => (
+                  <View
+                    onPress={() => console.log("here")}
+                    key={index}
+                    style={{
+                      alignItems: "center",
+                      marginRight: 30,
+                      marginHorizontal: 2,
+                      marginTop: 10,
+                      // marginBottom: 5,
                     }}
                   >
-                    {/* <Image
+                    <TouchableOpacity
+                      style={
+                        active == item.id
+                          ? styles.activeCategory
+                          : styles.category
+                      }
+                      onPress={() => {
+                        setActive(item.id);
+                        search(item.text);
+                      }}
+                    >
+                      {/* <Image
                 source={item.image}
                 style={{ width: 50, height: 40, resizeMode: "contain" }}
               /> */}
-                    <Text
-                      style={
-                        active == item.id
-                          ? styles.activeTextCategory
-                          : styles.textCategory
-                      }
-                    >
-                      {item.text}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              ))}
-            </ScrollView>
+                      <Text
+                        style={
+                          active == item.id
+                            ? styles.activeTextCategory
+                            : styles.textCategory
+                        }
+                      >
+                        {item.text}
+        
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                ))}
+              </ScrollView>
+            ) : (
+              <></>
+            )}
+           
           </>
         ) : (
           <></>

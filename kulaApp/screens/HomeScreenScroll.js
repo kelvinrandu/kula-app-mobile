@@ -1057,8 +1057,8 @@ const styles = {
     color: "white",
   },
   category: {
-    backgroundColor: "white",
-    color: "white",
+    // backgroundColor: "white",
+    // color: "white",
     alignItems: "center",
     padding: 10,
     borderRadius: 30,
