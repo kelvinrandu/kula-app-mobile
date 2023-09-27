@@ -55,7 +55,7 @@ const TopNavigation = (props) => {
                     key={index}
                     style={{
                       alignItems: "center",
-                      marginRight: 30,
+                      // marginRight: 30,
                       marginHorizontal: 2,
                       marginTop: 10,
                       // marginBottom: 5,

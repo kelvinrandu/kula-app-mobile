@@ -665,8 +665,8 @@ const HomeScreenScroll = ({ route, navigation }) => {
               key={index}
               style={{
                 alignItems: "center",
-                marginRight: 30,
-                marginHorizontal: 10,
+                // marginRight: 30,
+                marginHorizontal: 4,
                 marginTop: 20,
                 // marginBottom: 5,
               }}
