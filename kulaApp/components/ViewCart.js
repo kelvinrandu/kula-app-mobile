@@ -1,4 +1,4 @@
-import React, { useState, useContext,useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useSelector } from "react-redux";
 import OrderItem from "./OrderItem";
+import OrderItemTotal from "./OrderItemTotal";
 import CartDetailsItem from "./CartDetailsItem";
 import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
 import Firebase, { Firestore } from "../config/firebase";
@@ -24,7 +25,6 @@ import { Stack, IconButton } from "@react-native-material/core";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-
 
 const details = [
   {
@@ -46,7 +46,11 @@ const details3 = [
 ];
 const fees = [
   {
-    title: "packages",
+    title: "Products",
+    price: "$12",
+  },
+  {
+    title: "Services",
     price: "$12",
   },
 
@@ -71,29 +75,24 @@ export default function ViewCart({
   cartItems,
   isFoodInCart,
   select,
-
 }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible3, setModalVisible3] = useState(false);
+  const [address, setAddress] = useState(false);
+  const [pay, setpay] = useState(false);
   const [location, setLocation] = useState(null);
-   const [price, setPrice] = useState(select?.price);
+  const [price, setPrice] = useState(select?.price);
   useEffect(() => {
     setPrice(select?.price);
-
   }, [select?.price, price]);
-    // useEffect(() => {
-     
-    //   setItemPrice(select?.price * itemPrice);
-    // }, [itemPrice]);
-  
+
   const [phone, setPhone] = useState(null);
-    const [itemPrice, setItemPrice] = useState(1);
-    const dispatch = useDispatch();
- 
+  const [ loc, setLoc] = useState(null);
+  
+  const [itemPrice, setItemPrice] = useState(1);
+  const dispatch = useDispatch();
   const updateItem = (item) => {
-
-
     dispatch({
       type: "UPDATE_CART",
       payload: {
@@ -107,15 +106,11 @@ export default function ViewCart({
     (state) => state.cartReducer.selectedItems
   );
 
-  // items.map((item)=>{
-  //   console.log("items cart", item.item,item.quantity);
-
-  // })
   const { user } = useContext(AuthenticatedUserContext);
-
-  // console.log(user.email)
   const total = items
-    .map((item) =>  Number(item?.item?.price?.replace("ksh", "")*item?.item?.quantity))
+    .map((item) =>
+      Number(item?.item?.price?.replace("ksh", "") * item?.item?.quantity)
+    )
     .reduce((prev, curr) => prev + curr, 0);
 
   const totalFinal = total + 100;
@@ -128,23 +123,20 @@ export default function ViewCart({
     style: "currency",
     currency: "KES",
   });
-  const decreasePrice=()=>{
+  const decreasePrice = () => {
     if (itemPrice > 1) {
-   let price_update = itemPrice - 1;
-    setItemPrice(price_update); 
-      setPrice(select?.price *itemPrice);
-
-  }
-    else{
-
-    }
-  }
-    const increasePrice = () => {
-      let price_update = itemPrice + 1;
+      let price_update = itemPrice - 1;
       setItemPrice(price_update);
-       setPrice(select?.price * price_update);
-    };
-  const payment=(phone,amount)=>{
+      setPrice(select?.price * itemPrice);
+    } else {
+    }
+  };
+  const increasePrice = () => {
+    let price_update = itemPrice + 1;
+    setItemPrice(price_update);
+    setPrice(select?.price * price_update);
+  };
+  const payment = (phone, amount) => {
     const headers = {
       "Content-Type": "application/json",
       Authorization: "Bearer 3MyNRoaH76k24uQEeNGMHmg7FXUM",
@@ -180,8 +172,7 @@ export default function ViewCart({
           type: ERROR_FINDING_USER,
         });
       });
-
-  }
+  };
   const addOrderToFirebase = () => {
     (async () => {
       try {
@@ -233,9 +224,10 @@ export default function ViewCart({
       borderWidth: 1,
     },
     restaurantName: {
-      textAlign: "center",
-      fontWeight: "600",
-      fontSize: 18,
+      textAlign: "left",
+      fontWeight: "800",
+      color: "#303030",
+      fontSize: 20,
       marginBottom: 10,
     },
     subtotalContainer: {
@@ -294,21 +286,26 @@ export default function ViewCart({
       </View>
     );
   };
+  console.log('loc',loc)
   const checkoutModalContent = () => {
     return (
       <View style={styles.modalContainer}>
         <View style={styles.modalCheckoutContainer}>
-          <Text style={styles.restaurantName}>{restaurantName}</Text>
+          {/* <Text style={styles.restaurantName}>{restaurantName}</Text> */}
+          <Text style={styles.restaurantName}>Checkout </Text>
           <ScrollView>
-            {items.map((item, index) => (
-              <OrderItem key={index} item={item} />
-            ))}
+            <OrderItemTotal total={totalKES} items={items} />
+            {/* {loc ? <CartDetailsItem2 title={loc} price={phone} /> : null} */}
             {details.map((item, index) => (
               <CartDetailsItem
                 setMapModalVisible={setMapModalVisible}
                 location={location}
+                icon={"md-home-outline"}
                 setLocation={setLocation}
+                loc={loc}
+                setLoc={setLoc}
                 phone={phone}
+                payee={false}
                 setPhone={setPhone}
                 key={index}
                 item={item}
@@ -327,7 +324,11 @@ export default function ViewCart({
               </Text>
             </View>
             {details2.map((item, index) => (
-              <CartDetailsItem2 key={index} item={item} />
+              <CartDetailsItem2
+                key={index}
+                title={item.title}
+                price={item.price}
+              />
             ))}
             <View
               style={{
@@ -340,15 +341,24 @@ export default function ViewCart({
                 Payment option
               </Text>
             </View>
+            {phone ? <CartDetailsItem2 title={"Mpesa"} price={phone} /> : null}
             {details3.map((item, index) => (
               <CartDetailsItem
+                icon={"creditcard"}
                 phone={phone}
                 setPhone={setPhone}
+                payee={true}
                 payment={payment}
                 key={index}
                 item={item}
                 type={"payment"}
               />
+            ))}
+            <Text style={{ paddingTop: 20, fontWeight: "600", fontSize: 16 }}>
+              Order Overview
+            </Text>
+            {items.map((item, index) => (
+              <OrderItem key={index} item={item} />
             ))}
             <TouchableOpacity
               style={{
@@ -367,13 +377,12 @@ export default function ViewCart({
                 <Text style={{ color: "#6EBE76" }}>(How our fees work)</Text>
               </Text>
             </TouchableOpacity>
-
             {fees.map((item, index) => (
-              <FeesItem key={index} item={item} />
+              <FeesItem total={total}  key={index} item={item} />
             ))}
           </ScrollView>
           <View style={styles.subtotalContainer}>
-            <Text style={styles.subtotalText}> subtotal</Text>
+            <Text style={styles.subtotalText}> Total</Text>
             <Text>
               {totalKES} {"ksh"}
             </Text>
@@ -529,7 +538,7 @@ export default function ViewCart({
                 >
                   <></>
                   <TouchableOpacity
-                  index={index}
+                    index={index}
                     style={{
                       backgroundColor: "white",
                       borderColor: "gray",
@@ -607,7 +616,7 @@ export default function ViewCart({
                 Subtotal
               </Text>
               <Text style={{ fontWeight: "600", opacity: 0.7, fontSize: 16 }}>
-               {totalKES} {"ksh"}
+                {totalKES} {"ksh"}
               </Text>
             </View>
           </ScrollView>
@@ -693,9 +702,8 @@ export default function ViewCart({
               >
                 <></>
                 <Text style={{ fontWeight: "600", fontSize: 16 }}>
-                 How our fees work
+                  How our fees work
                 </Text>
-   
               </View>
 
               <View
@@ -707,9 +715,7 @@ export default function ViewCart({
                   // borderBottomWidth: 1,
                   borderBottomColor: "999",
                 }}
-              >
-       
-              </View>
+              ></View>
               <View>
                 <Text style={{ opacity: 0.7, fontSize: 14 }}>
                   Every order you place, every meal you savored, echoes our
@@ -749,7 +755,6 @@ export default function ViewCart({
               // padding: 3,
             }}
           >
-  
             <TouchableOpacity
               style={{
                 marginTop: 20,
@@ -762,15 +767,11 @@ export default function ViewCart({
                 position: "relative",
               }}
               onPress={() => {
-             
                 setModalVisible2(false);
-             
               }}
             >
               {/* <Text style={{ color: "white", fontSize: 20 }}> Checkout</Text> */}
-              <Text style={{ color: "white", fontSize: 20 }}>
-                close
-              </Text>
+              <Text style={{ color: "white", fontSize: 20 }}>close</Text>
             </TouchableOpacity>
           </View>
         </View>
