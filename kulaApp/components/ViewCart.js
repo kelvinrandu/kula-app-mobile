@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -25,6 +25,7 @@ import { Stack, IconButton } from "@react-native-material/core";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import LottieView from "lottie-react-native";
 
 const details = [
   {
@@ -76,9 +77,11 @@ export default function ViewCart({
   isFoodInCart,
   select,
 }) {
+  const animation = useRef(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible3, setModalVisible3] = useState(false);
+    const [modalVisible4, setModalVisible4] = useState(false);
   const [address, setAddress] = useState(false);
   const [pay, setpay] = useState(false);
   const [location, setLocation] = useState(null);
@@ -195,12 +198,18 @@ export default function ViewCart({
     })();
 
     setModalVisible1(false);
+     setModalVisible4(true);
   };
   const styles = StyleSheet.create({
     modalContainer: {
       flex: 1,
       justifyContent: "flex-end",
       backgroundColor: "rgba(0,0,0,0.7)",
+    },
+    modalContainer2: {
+      flex: 1,
+      justifyContent: "flex-end",
+      backgroundColor: "white",
     },
     modalCheckoutContainer: {
       backgroundColor: "white",
@@ -234,6 +243,13 @@ export default function ViewCart({
       flexDirection: "row",
       justifyContent: "space-between",
       marginTop: 15,
+    },
+    animationContainer: {
+      // backgroundColor: "#fff
+      // backgroundColor: "#eee",
+      alignItems: "center",
+      justifyContent: "center",
+      // flex: 1,
     },
     activeCategory: {
       backgroundColor: "#DADADA",
@@ -642,8 +658,9 @@ export default function ViewCart({
               }}
               onPress={() => {
                 setModalVisible3(false);
-                setModalVisible1(true);
-                console.log("here", modalVisible, modalVisible1);
+            
+                setModalVisible1(true)
+                console.log("here", modalVisible, modalVisible4);
               }}
             >
               {/* <Text style={{ color: "white", fontSize: 20 }}> Checkout</Text> */}
@@ -657,6 +674,129 @@ export default function ViewCart({
       </View>
     );
   };
+    const checkoutModal4Content = () => {
+      const food_category = [
+        {
+          id: 0,
+          image: require("../assets/images/deals.png"),
+          text: "Vegan",
+          category: "Groceries",
+        },
+        {
+          id: 1,
+          image: require("../assets/images/fast-food.png"),
+          text: "Vegetable",
+          category: "African",
+        },
+        {
+          id: 2,
+          image: require("../assets/images/soft-drink.png"),
+          text: "Lentice",
+          category: "American",
+        },
+        {
+          id: 3,
+          image: require("../assets/images/coffee.png"),
+          text: "Serves two",
+          category: "African",
+        },
+      ];
+      return (
+        <View style={styles.modalContainer2}>
+          <View style={styles.modalCheckoutContainer}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                // padding: 20,
+                paddingBottom: 20,
+                paddingTop: 20,
+              }}
+            >
+              <></>
+              <Text style={{ fontWeight: "600", fontSize: 16 }}>
+                Your order from {restaurantName} is being prepared
+              </Text>
+            </View>
+
+            <ScrollView
+              style={{
+                backgroundColor: "white",
+              }}
+            >
+              <View style={styles.animationContainer}>
+                <LottieView
+                  autoPlay
+                  ref={animation}
+                  style={{
+                    width: 400,
+                    height: 400,
+                    // backgroundColor: "#eee",
+                  }}
+                  // Find more Lottie files at https://lottiefiles.com/featured
+                  source={require("../assets/animations/cooking.json")}
+                />
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  // padding: 20,
+                  paddingBottom: 20,
+                  paddingTop: 20,
+                  // borderBottomWidth: 1,
+                  // borderColor: "#616161",
+                }}
+              >
+                <></>
+
+                <Text style={{ fontWeight: "600", opacity: 0.7, fontSize: 16 }}>
+                  Subtotal
+                </Text>
+                <Text style={{ fontWeight: "600", opacity: 0.7, fontSize: 16 }}>
+                  {totalKES} {"ksh"}
+                </Text>
+              </View>
+            </ScrollView>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                paddingHorizontal: 10,
+                padding: 3,
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  marginTop: 20,
+                  backgroundColor: "green",
+                  alignItems: "center",
+                  padding: 15,
+                  paddingLeft: 10,
+                  borderRadius: 8,
+                  width: "90%",
+                  position: "relative",
+                }}
+                onPress={() => {
+                  setModalVisible4(false);
+                  // setModalVisible1(true);
+                  // setModalVisible1(true);
+                  console.log("here", modalVisible, modalVisible4);
+                }}
+              >
+                {/* <Text style={{ color: "white", fontSize: 20 }}> Checkout</Text> */}
+                <Text style={{ color: "white", fontSize: 20 }}>
+                  {/* {total ? "Add ( " + totalUSD + "ksh )" : ""} */}
+                  close
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      );
+    };
   const checkoutModal2Content = () => {
     const food_category = [
       {
@@ -812,6 +952,14 @@ export default function ViewCart({
         onRequestClose={() => setModalVisible3(false)}
       >
         {checkoutModal3Content()}
+      </Modal>
+      <Modal
+        animationType="slide"
+        visible={modalVisible4}
+        transparent={true}
+        onRequestClose={() => setModalVisible4(false)}
+      >
+        {checkoutModal4Content()}
       </Modal>
 
       {total ? (
