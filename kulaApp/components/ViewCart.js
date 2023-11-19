@@ -76,6 +76,7 @@ export default function ViewCart({
   cartItems,
   isFoodInCart,
   select,
+  navigation,
 }) {
   const animation = useRef(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -895,6 +896,7 @@ export default function ViewCart({
                 }}
                 onPress={() => {
                   setModalVisible5(false);
+                  navigation.navigate("Home")
                   // setModalVisible1(true);
                   // setModalVisible1(true);
                   console.log("here", modalVisible, modalVisible4);
