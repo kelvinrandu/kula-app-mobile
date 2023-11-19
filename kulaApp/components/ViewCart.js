@@ -81,7 +81,8 @@ export default function ViewCart({
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible3, setModalVisible3] = useState(false);
-    const [modalVisible4, setModalVisible4] = useState(false);
+  const [modalVisible4, setModalVisible4] = useState(false);
+  const [modalVisible5, setModalVisible5] = useState(false);
   const [address, setAddress] = useState(false);
   const [pay, setpay] = useState(false);
   const [location, setLocation] = useState(null);
@@ -198,7 +199,15 @@ export default function ViewCart({
     })();
 
     setModalVisible1(false);
+
      setModalVisible4(true);
+
+    //  payment function should be here
+     setTimeout(() => {
+      setModalVisible4(false);
+      setModalVisible5(true);
+    }, 6000);
+     
   };
   const styles = StyleSheet.create({
     modalContainer: {
@@ -226,6 +235,13 @@ export default function ViewCart({
       borderWidth: 1,
     },
     modalCheckout2Container: {
+      backgroundColor: "white",
+      padding: 16,
+      // height: 500,
+      height: 500,
+      borderWidth: 1,
+    },
+    modalCheckout3Container: {
       backgroundColor: "white",
       padding: 16,
       // height: 500,
@@ -702,22 +718,9 @@ export default function ViewCart({
         },
       ];
       return (
-        <View style={styles.modalContainer2}>
-          <View style={styles.modalCheckoutContainer}>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                // padding: 20,
-                paddingBottom: 20,
-                paddingTop: 20,
-              }}
-            >
-              <></>
-              <Text style={{ fontWeight: "600", fontSize: 16 }}>
-                Your order from {restaurantName} is being prepared
-              </Text>
-            </View>
+        <View style={styles.modalContainer}>
+        <View style={styles.modalCheckout2Container}>
+
 
             <ScrollView
               style={{
@@ -734,7 +737,7 @@ export default function ViewCart({
                     // backgroundColor: "#eee",
                   }}
                   // Find more Lottie files at https://lottiefiles.com/featured
-                  source={require("../assets/animations/cooking.json")}
+                  source={require("../assets/animations/scanner.json")}
                 />
               </View>
 
@@ -759,6 +762,117 @@ export default function ViewCart({
                 </Text>
               </View>
             </ScrollView>
+            <View
+              style={{
+                flexDirection: "row",
+                
+                justifyContent: "center",
+                // padding: 20,
+           
+                paddingTop: 20,
+              }}
+            >
+              <></>
+              <Text style={{ fontWeight: "600", fontSize: 16 }}>
+                Payment Request underway
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                // padding: 20,
+                paddingBottom: 20,
+                paddingTop: 20,
+              }}
+            >
+              <></>
+              <Text style={{ fontWeight: "400", fontSize: 16 }}>
+                Your payment request is on its way! Please note that this process can take up to 60 seconds.We appreciate your patience as we work on getting the payment details for you
+              </Text>
+            </View>
+
+          </View>
+        </View>
+      );
+    };
+    const checkoutModal5Content = () => {
+      const food_category = [
+        {
+          id: 0,
+          image: require("../assets/images/deals.png"),
+          text: "Vegan",
+          category: "Groceries",
+        },
+        {
+          id: 1,
+          image: require("../assets/images/fast-food.png"),
+          text: "Vegetable",
+          category: "African",
+        },
+        {
+          id: 2,
+          image: require("../assets/images/soft-drink.png"),
+          text: "Lentice",
+          category: "American",
+        },
+        {
+          id: 3,
+          image: require("../assets/images/coffee.png"),
+          text: "Serves two",
+          category: "African",
+        },
+      ];
+      return (
+        <View style={styles.modalContainer}>
+        <View style={styles.modalCheckout3Container}>
+        
+              <View style={styles.animationContainer}>
+                <LottieView
+                  autoPlay
+                  ref={animation}
+                  style={{
+                    width: 300,
+                    height: 300,
+                    // backgroundColor: "#eee",
+                  }}
+                  // Find more Lottie files at https://lottiefiles.com/featured
+                  source={require("../assets/animations/cooking.json")}
+                />
+              </View>
+
+     
+         
+            <View
+              style={{
+                flexDirection: "row",
+                
+                justifyContent: "center",
+                // padding: 20,
+           
+                // paddingTop: 20,
+                paddingBottom: 10,
+              }}
+            >
+              <></>
+              <Text style={{ fontWeight: "600", fontSize: 16 }}>
+                Payment Successful,Bon Appetit!
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                // padding: 20,
+                paddingBottom: 20,
+                // paddingTop: 20,
+              }}
+            >
+              <></>
+              <Text style={{ fontWeight: "400", fontSize: 16 }}>
+                Your payment request is on its way! Please note that this process can take up to 60 seconds.We appreciate your patience as we work on getting the payment details for you
+              </Text>
+            </View>
 
             <View
               style={{
@@ -770,7 +884,7 @@ export default function ViewCart({
             >
               <TouchableOpacity
                 style={{
-                  marginTop: 20,
+                  // marginTop: 20,
                   backgroundColor: "green",
                   alignItems: "center",
                   padding: 15,
@@ -780,7 +894,7 @@ export default function ViewCart({
                   position: "relative",
                 }}
                 onPress={() => {
-                  setModalVisible4(false);
+                  setModalVisible5(false);
                   // setModalVisible1(true);
                   // setModalVisible1(true);
                   console.log("here", modalVisible, modalVisible4);
@@ -961,7 +1075,15 @@ export default function ViewCart({
       >
         {checkoutModal4Content()}
       </Modal>
-
+      <Modal
+        animationType="slide"
+        visible={modalVisible5}
+        transparent={true}
+        onRequestClose={() => setModalVisible5(false)}
+      >
+        {checkoutModal5Content()}
+      </Modal>
+      
       {total ? (
         <View
           style={{
