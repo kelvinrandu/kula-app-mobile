@@ -14,6 +14,7 @@ import SearchText from "../components/SearchText";
 import LottieView from "lottie-react-native";
 import BoxShadow from "../components/BoxShadow";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import TopNavigationOrder from "../components/TopNavigationOrder";
 
 
 const auth = Firebase.auth();
@@ -144,7 +145,11 @@ const HomeScreen = ({navigation}) => {
     // console.log("res->", restaurantData);
 
   return (
+    <>
+    
+    <TopNavigationOrder/>
     <SafeAreaView style={styles.container}>
+      
       <View style={{ backgroundColor: "white", padding: 15 }}>
         <StatusBar style="dark-content" />
         <IconButton
@@ -201,6 +206,7 @@ const HomeScreen = ({navigation}) => {
       {/* <Divider width={1} />
       <BottomTabs /> */}
     </SafeAreaView>
+    </>
   );
 };
 const styles = StyleSheet.create({
@@ -214,7 +220,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     paddingHorizontal: 10,
-    marginTop: 30,
+    // marginTop: 30,
     // backgroundColor: "#eee",
     backgroundColor: "white",
   },
