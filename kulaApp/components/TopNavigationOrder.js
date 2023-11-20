@@ -70,7 +70,7 @@ const TopNavigationOrder = (props) => {
             width: 400,
             position: "relative",
           }}
-          onPress={()=>console.log('here')}
+          onPress={()=>props.setModal1Visible(true)}
         >
           <View
             style={{

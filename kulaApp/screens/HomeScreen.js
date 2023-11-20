@@ -109,12 +109,110 @@ const auth = Firebase.auth();
       </View>
     );
   };
+  const ModalContent = (setModal1Visible) => {
+    const food_category = [
+      {
+        id: 0,
+        image: require("../assets/images/deals.png"),
+        text: "Vegan",
+        category: "Groceries",
+      },
+      {
+        id: 1,
+        image: require("../assets/images/fast-food.png"),
+        text: "Vegetable",
+        category: "African",
+      },
+      {
+        id: 2,
+        image: require("../assets/images/soft-drink.png"),
+        text: "Lentice",
+        category: "American",
+      },
+      {
+        id: 3,
+        image: require("../assets/images/coffee.png"),
+        text: "Serves two",
+        category: "African",
+      },
+    ];
+    return (
+      <View style={styles.modal1Container}>
+        <View style={styles.modalCheckout2Container}>
+          <ScrollView>
+            <>
+   
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  // padding: 20,
+                  paddingBottom: 20,
+                  // borderBottomWidth: 1,
+                  borderBottomColor: "999",
+                }}
+              >
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              
+                </ScrollView>
+              </View>
+
+
+              <View
+                style={
+                  {
+                    // padding: 20,
+                    // paddingBottom: 20,
+                    // paddingTop: 20,
+                  }
+                }
+              ></View>
+            </>
+          </ScrollView>
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              paddingHorizontal: 10,
+              // padding: 3,
+            }}
+          >
+ 
+            <TouchableOpacity
+              style={{
+                marginTop: 20,
+                // backgroundColor: "green",
+                alignItems: "center",
+                padding: 15,
+                paddingLeft: 10,
+                borderRadius: 8,
+                width: 200,
+                position: "relative",
+              }}
+              onPress={() => {
+                setModal1Visible(false)
+     
+              }}
+            >
+              {/* <Text style={{ color: "white", fontSize: 20 }}> Checkout</Text> */}
+              <Text style={{ color: "black", fontSize: 20 }}>
+               call william
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+  };
 const HomeScreen = ({navigation}) => {
   // const [restaurantData, setRestaurantData] = useState(localRestaurants)
    const [restaurantData, setRestaurantData] = useState(localRestaurants);
    const [query, setQuery] = useState('');
    const [title, setTitle] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
+    const [modalVisible1, setModal1Visible] = useState(false);
     const animation = useRef(null);
     const { user } = useContext(AuthenticatedUserContext);
 
@@ -147,7 +245,7 @@ const HomeScreen = ({navigation}) => {
   return (
     <>
     
-    <TopNavigationOrder/>
+    <TopNavigationOrder setModal1Visible={setModal1Visible}/>
     <SafeAreaView style={styles.container}>
       
       <View style={{ backgroundColor: "white", padding: 15 }}>
@@ -202,6 +300,17 @@ const HomeScreen = ({navigation}) => {
             setTitle
           )}
         </Modal>
+        <Modal
+          animationType="slide"
+          visible={modalVisible1}
+          transparent={true}
+          onRequestClose={() => setModal1Visible(false)}
+        >
+          {ModalContent(
+            setModal1Visible
+     
+          )}
+        </Modal>
       </ScrollView>
       {/* <Divider width={1} />
       <BottomTabs /> */}
@@ -215,6 +324,11 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     backgroundColor: "white",
     // backgroundColor: "rgba(0,0,0,0.7)",
+  },
+  modal1Container: {
+    flex: 1,
+    justifyContent: "flex-end",
+    backgroundColor: "rgba(0,0,0,0.7)",
   },
   container: {
     flex: 1,
@@ -242,12 +356,9 @@ const styles = StyleSheet.create({
   modalCheckout2Container: {
     backgroundColor: "white",
 
-    // height: 500,
-    height: "100%",
+    height: 500,
+
     borderWidth: 1,
   },
 });
 export default HomeScreen;
-
-
-//  const data2= {"prompt": form.prompt}
