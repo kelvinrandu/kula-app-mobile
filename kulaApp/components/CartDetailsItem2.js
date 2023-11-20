@@ -3,10 +3,11 @@ import { View, Text } from 'react-native'
 import { Ionicons, AntDesign, FontAwesome5 } from "@expo/vector-icons";
 
 
-export default function CartDetailsItem({ title ,price}) {
+export default function CartDetailsItem({ title ,price,key}) {
     // const { title, price } = item;
     return (
       <View
+      key={key}
         style={{
           flexDirection: "row",
           align:'left',

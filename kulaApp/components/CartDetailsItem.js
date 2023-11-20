@@ -17,6 +17,7 @@ import { Ionicons, AntDesign } from "@expo/vector-icons";
 
 export default function CartDetailsItem({
   item,
+  index,
   type,
   location,
   setLocation,
@@ -27,6 +28,7 @@ export default function CartDetailsItem({
   payee,
   loc,
   setLoc,
+  key
 }) {
   const { title, price } = item;
   const [mapModalVisible, setMapModalVisible] = useState(false);
@@ -296,6 +298,7 @@ export default function CartDetailsItem({
           : PaymentModalContent(phone, setPhone)}
       </Modal>
       <View
+      key={index}
         style={{
           flexDirection: "row",
           // justifyContent: "center",

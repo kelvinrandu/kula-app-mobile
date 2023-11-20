@@ -332,6 +332,7 @@ export default function ViewCart({
             {/* {loc ? <CartDetailsItem2 title={loc} price={phone} /> : null} */}
             {details.map((item, index) => (
               <CartDetailsItem
+             
                 setMapModalVisible={setMapModalVisible}
                 location={location}
                 icon={"md-home-outline"}
@@ -1090,6 +1091,7 @@ export default function ViewCart({
       
       {total ? (
         <View
+        key={ind}
           style={{
             flex: 2,
             alignItems: "center",

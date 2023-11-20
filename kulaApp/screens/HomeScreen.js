@@ -15,6 +15,9 @@ import LottieView from "lottie-react-native";
 import BoxShadow from "../components/BoxShadow";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import TopNavigationOrder from "../components/TopNavigationOrder";
+// import MapView from 'react-native-maps';
+// import MapViewDirections from 'react-native-maps-directions';
+import MapView,{ PROVIDER_GOOGLE,Marker}from 'react-native-maps'
 
 
 const auth = Firebase.auth();
@@ -136,9 +139,13 @@ const auth = Firebase.auth();
         category: "African",
       },
     ];
+    const origin = {latitude: 37.3318456, longitude: -122.0296002};
+const destination = {latitude: 37.771707, longitude: -122.4053769};
+const GOOGLE_MAPS_APIKEY = 'AIzaSyBEEGhDViP0-DC6KGIqx5H59qEFY2vQBWA';
     return (
       <View style={styles.modal1Container}>
         <View style={styles.modalCheckout2Container}>
+   
           <ScrollView>
             <>
    

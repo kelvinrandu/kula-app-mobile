@@ -1,10 +1,11 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-export default function FeesItem({ item, total }) {
+export default function FeesItem({ item, total,key }) {
   const { title } = item;
   return (
     <View
+    key={key}
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
