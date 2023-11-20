@@ -77,6 +77,7 @@ export default function ViewCart({
   isFoodInCart,
   select,
   navigation,
+  setNotification
 }) {
   const animation = useRef(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -797,7 +798,7 @@ export default function ViewCart({
         </View>
       );
     };
-    const checkoutModal5Content = () => {
+    const checkoutModal5Content = (setNotification) => {
       const food_category = [
         {
           id: 0,
@@ -896,6 +897,7 @@ export default function ViewCart({
                 }}
                 onPress={() => {
                   setModalVisible5(false);
+                  setNotification(true);
                   navigation.navigate("Home")
                   // setModalVisible1(true);
                   // setModalVisible1(true);
@@ -1083,7 +1085,7 @@ export default function ViewCart({
         transparent={true}
         onRequestClose={() => setModalVisible5(false)}
       >
-        {checkoutModal5Content()}
+        {checkoutModal5Content(setNotification)}
       </Modal>
       
       {total ? (

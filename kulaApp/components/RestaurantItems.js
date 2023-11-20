@@ -300,6 +300,7 @@ try {
               price: restaurant.price,
               reviews: restaurant.reviews,
               rating: restaurant.rating,
+              setNotification: props.setNotification,
             })
           }
         >

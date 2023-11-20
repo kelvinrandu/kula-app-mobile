@@ -211,6 +211,8 @@ const HomeScreen = ({navigation}) => {
    const [restaurantData, setRestaurantData] = useState(localRestaurants);
    const [query, setQuery] = useState('');
    const [title, setTitle] = useState('');
+   const [showNotification, setNotification] = useState(false);
+
     const [modalVisible, setModalVisible] = useState(false);
     const [modalVisible1, setModal1Visible] = useState(false);
     const animation = useRef(null);
@@ -244,8 +246,13 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <>
+          {showNotification ? (
+   <TopNavigationOrder setModal1Visible={setModal1Visible}/>
+      ) : (
+        <></>
+      )}
     
-    <TopNavigationOrder setModal1Visible={setModal1Visible}/>
+  
     <SafeAreaView style={styles.container}>
       
       <View style={{ backgroundColor: "white", padding: 15 }}>
@@ -276,14 +283,17 @@ const HomeScreen = ({navigation}) => {
           <RestaurantItems
             navigation={navigation}
             restaurantData={restaurantData}
+            setNotification={setNotification}
           />
           <RestaurantItems
             navigation={navigation}
             restaurantData={restaurantData}
+            setNotification={setNotification}
           />
           <RestaurantItems
             navigation={navigation}
             restaurantData={restaurantData}
+            setNotification={setNotification}
           />
         </View>
         <Modal

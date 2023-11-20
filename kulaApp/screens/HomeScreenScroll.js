@@ -753,6 +753,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
       <View style={styles.action}>
         <ViewCart
           ind={ind}
+          setNotification={route.params.setNotification}
           setModalVisible2={setModalVisible2}
           isFoodInCart={isFoodInCart}
           selectItem={selectItem}
