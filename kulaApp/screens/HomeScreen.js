@@ -139,12 +139,13 @@ const auth = Firebase.auth();
         category: "African",
       },
     ];
-    const origin = {latitude: 37.3318456, longitude: -122.0296002};
-const destination = {latitude: 37.771707, longitude: -122.4053769};
-const GOOGLE_MAPS_APIKEY = 'AIzaSyBEEGhDViP0-DC6KGIqx5H59qEFY2vQBWA';
+  const origin = {latitude: 37.3318456, longitude: -122.0296002};
+  const destination = {latitude: 37.771707, longitude: -122.4053769};
+  const GOOGLE_MAPS_APIKEY = 'AIzaSyBEEGhDViP0-DC6KGIqx5H59qEFY2vQBWA';
     return (
       <View style={styles.modal1Container}>
         <View style={styles.modalCheckout2Container}>
+
    
           <ScrollView>
             <>
@@ -160,9 +161,9 @@ const GOOGLE_MAPS_APIKEY = 'AIzaSyBEEGhDViP0-DC6KGIqx5H59qEFY2vQBWA';
                   borderBottomColor: "999",
                 }}
               >
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               
-                </ScrollView>
+                </ScrollView> */}
               </View>
 
 
@@ -213,6 +214,115 @@ const GOOGLE_MAPS_APIKEY = 'AIzaSyBEEGhDViP0-DC6KGIqx5H59qEFY2vQBWA';
       </View>
     );
   };
+  const checkoutModal5Content = (setModal2Visible,animation) => {
+    const food_category = [
+      {
+        id: 0,
+        image: require("../assets/images/deals.png"),
+        text: "Vegan",
+        category: "Groceries",
+      },
+      {
+        id: 1,
+        image: require("../assets/images/fast-food.png"),
+        text: "Vegetable",
+        category: "African",
+      },
+      {
+        id: 2,
+        image: require("../assets/images/soft-drink.png"),
+        text: "Lentice",
+        category: "American",
+      },
+      {
+        id: 3,
+        image: require("../assets/images/coffee.png"),
+        text: "Serves two",
+        category: "African",
+      },
+    ];
+    return (
+      <View style={styles.modal1Container}>
+      <View style={styles.modalCheckout2Container}>
+      <View
+            style={{
+              flexDirection: "row",
+              
+              // justifyContent: "center",
+              // padding: 20,
+         
+              // paddingTop: 20,
+              paddingBottom: 10,
+            }}
+          >
+            <></>
+            <Text style={{ fontWeight: "600", fontSize: 16 }}>
+              Chakula yako yaandaliwa
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              // padding: 20,
+              paddingBottom: 20,
+              // paddingTop: 20,
+            }}
+          >
+            <></>
+            <Text style={{ fontWeight: "400", fontSize: 16 }}>
+              Your order is being prepared
+            </Text>
+          </View>
+            <View style={styles.animationContainer}>
+              <LottieView
+                autoPlay
+                ref={animation}
+                style={{
+                  width: 300,
+                  height: 300,
+                  // backgroundColor: "#eee",
+                }}
+                // Find more Lottie files at https://lottiefiles.com/featured
+                source={require("../assets/animations/cooking.json")}
+              />
+            </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              paddingHorizontal: 10,
+              padding: 3,
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                // marginTop: 20,
+                backgroundColor: "green",
+                alignItems: "center",
+                padding: 15,
+                paddingLeft: 10,
+                borderRadius: 8,
+                width: "90%",
+                position: "relative",
+              }}
+              onPress={() => {
+                setModal2Visible(false);
+          
+              }}
+            >
+              {/* <Text style={{ color: "white", fontSize: 20 }}> Checkout</Text> */}
+              <Text style={{ color: "white", fontSize: 20 }}>
+                {/* {total ? "Add ( " + totalUSD + "ksh )" : ""} */}
+                Support
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+  };
 const HomeScreen = ({navigation}) => {
   // const [restaurantData, setRestaurantData] = useState(localRestaurants)
    const [restaurantData, setRestaurantData] = useState(localRestaurants);
@@ -222,6 +332,7 @@ const HomeScreen = ({navigation}) => {
 
     const [modalVisible, setModalVisible] = useState(false);
     const [modalVisible1, setModal1Visible] = useState(false);
+    const [modalVisible2, setModal2Visible] = useState(false);
     const animation = useRef(null);
     const { user } = useContext(AuthenticatedUserContext);
 
@@ -254,7 +365,7 @@ const HomeScreen = ({navigation}) => {
   return (
     <>
           {showNotification ? (
-   <TopNavigationOrder setModal1Visible={setModal1Visible}/>
+   <TopNavigationOrder setModal2Visible={setModal2Visible} setModal1Visible={setModal1Visible}/>
       ) : (
         <></>
       )}
@@ -328,6 +439,18 @@ const HomeScreen = ({navigation}) => {
      
           )}
         </Modal>
+        <Modal
+          animationType="slide"
+          visible={modalVisible2}
+          transparent={true}
+          onRequestClose={() => setModal2Visible(false)}
+        >
+          {  checkoutModal5Content(
+            setModal2Visible,animation
+     
+          )}
+        </Modal>
+      
       </ScrollView>
       {/* <Divider width={1} />
       <BottomTabs /> */}

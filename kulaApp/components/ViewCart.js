@@ -29,39 +29,46 @@ import LottieView from "lottie-react-native";
 
 const details = [
   {
+    id:0,
     title: "Add your Address",
     description: "With butter lettuce, tomato and sauce bechamel",
   },
 ];
 const details2 = [
   {
+    id:0,
     title: "Standard",
     price: "30-60 Min",
   },
 ];
 const details3 = [
   {
+    id:0,
     title: "Add your Payment option",
     description: "With butter lettuce, tomato and sauce bechamel",
   },
 ];
 const fees = [
   {
+    id:0,
     title: "Products",
     price: "$12",
   },
   {
+    id:1,
     title: "Services",
     price: "$12",
   },
 
   {
+    id:2,
     title: "Delivery",
     price: "$1",
   },
 ];
 const delivery = [
   {
+    id:0,
     title: "placo",
     price: "$12",
   },
@@ -342,7 +349,7 @@ export default function ViewCart({
                 phone={phone}
                 payee={false}
                 setPhone={setPhone}
-                key={index}
+                key={item.id}
                 item={item}
                 type={"map"}
               />
@@ -360,7 +367,8 @@ export default function ViewCart({
             </View>
             {details2.map((item, index) => (
               <CartDetailsItem2
-                key={index}
+                key={item.id}
+             
                 title={item.title}
                 price={item.price}
               />
@@ -384,7 +392,7 @@ export default function ViewCart({
                 setPhone={setPhone}
                 payee={true}
                 payment={payment}
-                key={index}
+                key={item.id}
                 item={item}
                 type={"payment"}
               />
