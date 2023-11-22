@@ -57,7 +57,7 @@ const TopNavigationOrder = (props) => {
       
         }}
       >
-        <TouchableOpacity
+        <View
           style={{
             marginTop: 10,
             padding: 5,
@@ -70,7 +70,7 @@ const TopNavigationOrder = (props) => {
             width: 400,
             position: "relative",
           }}
-          onPress={()=>props.setModal2Visible(true)}
+          onPress={()=>props.setModal1Visible(true)}
         >
           <View
             style={{
@@ -80,12 +80,21 @@ const TopNavigationOrder = (props) => {
               position: "relative",
             }}
           >
+                    <TouchableOpacity
+   
+          onPress={()=>props.setModal2Visible(true)}
+        >
             <Text style={{ fontWeight: "600", fontSize: 16, marginLeft: 2,  color:"#FFF" }}>
             Estimated arrival time: 30 min
             </Text>
+            </TouchableOpacity>
           </View>
 
           <View>
+          <TouchableOpacity
+   
+   onPress={()=>props.setModal1Visible(true)}
+ >
             <AntDesign
               style={{
                 marginRight:1,
@@ -95,8 +104,10 @@ const TopNavigationOrder = (props) => {
               size={21}
               color="#FFF"
             />
+               </TouchableOpacity>
           </View>
-        </TouchableOpacity>
+          </View>
+     
       </View>       
       </View>
     </>
