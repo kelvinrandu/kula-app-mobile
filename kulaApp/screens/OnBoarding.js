@@ -15,7 +15,7 @@ import {  InputField, ErrorMessage } from "../components";
 
 
 const auth = Firebase.auth();
-export default function LoginScreen({ navigation }) {
+export default function OnboardingScreen({ navigation }) {
   // const [email, setEmail] = useState({ value: "", error: "" });
   // const [password, setPassword] = useState({ value: "", error: "" });
     const [email, setEmail] = useState("");
@@ -50,41 +50,13 @@ export default function LoginScreen({ navigation }) {
   return (
     <Background>
       {/* <BackButton goBack={navigation.goBack} /> */}
-      <Logo />
-      <Header>Welcome back.</Header>
-      <TextInput
-        label="Email"
-        returnKeyType="next"
-        value={email.value}
-        // onChangeText={(text) => setEmail({ value: text, error: "" })}
-        onChangeText={(text) => setEmail(text)}
-        error={!!email.error}
-        errorText={email.error}
-        autoCapitalize="none"
-        autoCompleteType="email"
-        textContentType="emailAddress"
-        keyboardType="email-address"
-      />
-      <TextInput
-        label="Password"
-        returnKeyType="done"
-        value={password.value}
-        // onChangeText={(text) => setPassword({ value: text, error: "" })}
-        onChangeText={(text) => setPassword(text)}
-        error={!!password.error}
-        errorText={password.error}
-        secureTextEntry
-      />
-      <View style={styles.forgotPassword}>
-        <TouchableOpacity
-        // onPress={() => navigation.navigate("ResetPasswordScreen")}
-        >
-          <Text style={styles.forgot}>Forgot your password?</Text>
-        </TouchableOpacity>
-      </View>
+      {/* <Logo />
+      <Header>Welcome back.</Header> */}
+
+
       {loginError ? <ErrorMessage error={loginError} visible={true} /> : null}
       <Button mode="contained" onPress={onLogin}>
-      <Text style={styles.link2}>Login </Text>
+        Login
       </Button>
       <View style={styles.row}>
         <Text>Don’t have an account? </Text>
@@ -113,9 +85,5 @@ const styles = StyleSheet.create({
   link: {
     fontWeight: "bold",
     color: theme.colors.primary,
-  },
-  link2: {
-    fontWeight: "bold",
-    color: "#ffff",
   },
 });

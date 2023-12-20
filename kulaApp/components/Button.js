@@ -37,7 +37,7 @@ const Button = ({
         ];
       }}
     >
-      <Text style={[styles.text, { color: titleColor, fontSize: titleSize }]}>
+      <Text style={[styles.text, { color: "white", fontSize: titleSize }]}>
         {title}
       </Text>
     </Pressable>

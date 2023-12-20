@@ -105,14 +105,14 @@ const checkoutModal2Content = (
                     navigation={navigation}
                     restaurantData={restaurantData}
                   />
-                  <RestaurantItems
+                  {/* <RestaurantItems
                     navigation={navigation}
                     restaurantData={restaurantData}
                   />
                   <RestaurantItems
                     navigation={navigation}
                     restaurantData={restaurantData}
-                  />
+                  /> */}
                 </View>
               </ScrollView>
             </SafeAreaView>
@@ -472,7 +472,7 @@ const HomeScreen = ({ navigation }) => {
               restaurantData={restaurantData}
               setNotification={setNotification}
             />
-            <RestaurantItems
+            {/* <RestaurantItems
               navigation={navigation}
               restaurantData={restaurantData}
               setNotification={setNotification}
@@ -481,7 +481,7 @@ const HomeScreen = ({ navigation }) => {
               navigation={navigation}
               restaurantData={restaurantData}
               setNotification={setNotification}
-            />
+            /> */}
           </View>
           <Modal
             animationType="slide"

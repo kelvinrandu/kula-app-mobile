@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Octicons from "react-native-vector-icons/Octicons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { doc, getDoc,getDocs } from "firebase/firestore";
+import { doc, getDoc,getDocs,onSnapshot } from "firebase/firestore";
 import Firebase, { Firestore } from "../config/firebase";
 import "firebase/compat/firestore";
 import firebase from "firebase/compat/app";
@@ -26,35 +26,50 @@ export default function RestaurantItem({navigation, ...props}) {
   //  const [restaurants, setRestaurants] = useState();
    const [restaurants, setRestaurants] = useState(props.restaurantData);
     const [rests, setRests] = useState();
-     useEffect(() => {
-       console.log("reached",restaurants);
-     }, [props.restaurantData]);
-  
-    // const docRef = doc(Firestore, "restaurants");
-  (async () => {
+    const [todos, setTodos] = useState([]);
 
 
-try {
-    const query = Firestore.collection("restaurants");
-    // console.log("data", query);
-    // const docSnap = query
-    const docsSnap = await getDocs(query);
-    docsSnap.forEach((doc) => {
-      //  setCompany({ ...docSnap.data() });
-     
-      // setRests({ ...doc.data()});
-    });
-    // console.log('restaurants',rests)
- 
+    useEffect(() => {
+      const todoRef = Firestore.collection("restaurants");
+    
+      const subscriber = onSnapshot(todoRef, {
+        next: (snapshot) => {
+          const todos = [];
+          snapshot.docs.forEach((doc) => {
+            todos.push({
+              id: doc.id,
+              ...doc.data()
+            });
+          });
+    
+          setTodos(todos);
+        }
+      });
+    
+      // // Unsubscribe from events when no longer in use
+      return () => subscriber();
+    }, []);
 
-} catch (e) {
-  console.log("Error getting cached document:", e);
-}
-  })();
-  console.log('restaurants-->',restaurants)
-  useEffect(() => {
-    console.log('hereerr')
-  }, [restaurants]);
+    
+    
+
+
+//   (async () => {
+// try {
+//   const _orders = [];
+//     const query = Firestore.collection("restaurants");
+//     const docsSnap = await getDocs(query);
+//     docsSnap.forEach((doc) => {
+//       let dat={data:doc.data(),id:doc.id} 
+//       _orders.push(dat);
+//     });
+//     setRests(_orders);
+
+// } catch (e) {
+//   console.log("Error getting cached document:", e);
+// }
+//   })();
+
     const ModalContent = () => {
       const food_category = [
         {
@@ -272,8 +287,9 @@ try {
     };
   return (
     <>
-      {props.restaurantData.map((restaurant, index) => (
-        // {rests.map((restaurant, index) => (
+{todos?console.log('here',todos):console.log('not here')}
+    {/* {props.restaurantData.map((restaurant, index) => ( */}
+        {todos.map((restaurant, index) => (
         <TouchableOpacity
           key={index}
           activeOpacity={1}
