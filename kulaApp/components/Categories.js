@@ -63,10 +63,10 @@ export default function Categories({ setModalVisible, setTitle }) {
                 // position: "relative",
               }}
               // onPress={() => search(item.category)}
-              onPress={() => {
-                setTitle(item.text);
-                setModalVisible(true);
-              }}
+              // onPress={() => {
+              //   setTitle(item.text);
+              //   setModalVisible(true);
+              // }}
             >
               <Image
                 source={item.image}

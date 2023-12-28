@@ -472,16 +472,7 @@ const HomeScreen = ({ navigation }) => {
               restaurantData={restaurantData}
               setNotification={setNotification}
             />
-            {/* <RestaurantItems
-              navigation={navigation}
-              restaurantData={restaurantData}
-              setNotification={setNotification}
-            />
-            <RestaurantItems
-              navigation={navigation}
-              restaurantData={restaurantData}
-              setNotification={setNotification}
-            /> */}
+
           </View>
           <Modal
             animationType="slide"

@@ -287,27 +287,13 @@ export default function RestaurantItem({navigation, ...props}) {
     };
   return (
     <>
-{todos?console.log('here',todos):console.log('not here')}
-    {/* {props.restaurantData.map((restaurant, index) => ( */}
+
+  
         {todos.map((restaurant, index) => (
         <TouchableOpacity
           key={index}
           activeOpacity={1}
-          // style={{
-          //   marginBottom: 10,
-          //   borderTopRightRadius: 20,
-          //   borderTopLeftRadius: 20,
-          // }}
-          // onPress={() =>
-          //   navigation.navigate("RestaurantDetails", {
-          //     name: restaurant.name,
-          //     image: restaurant.image_url,
-          //     categories: restaurant.categories,
-          //     price: restaurant.price,
-          //     reviews: restaurant.reviews,
-          //     rating: restaurant.rating,
-          //   })
-          // }
+
           onPress={() =>
             navigation.navigate("HomeScreenScroll", {
               name: restaurant.name,

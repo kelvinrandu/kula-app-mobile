@@ -1121,7 +1121,8 @@ export default function ViewCart({
                 marginTop: 20,
                 backgroundColor: "green",
                 flexDirection: "row",
-                justifyContent: "flex-end",
+                justifyContent: "center",
+                alignItems:"center",
                 padding: 15,
                 borderRadius: 8,
                 width: 300,
@@ -1130,12 +1131,10 @@ export default function ViewCart({
               }}
               onPress={() => setModalVisible3(true)}
             >
-              <Text style={{ color: "white", fontSize: 20, marginRight: 30 }}>
+              <Text style={{ color: "white", fontSize: 20 }}>
                 Basket( {totalUSD} ksh )
               </Text>
-              <Text
-                style={{ color: "white", fontSize: 20, marginRight: 30 }}
-              ></Text>
+         
             </TouchableOpacity>
           </View>
         </View>

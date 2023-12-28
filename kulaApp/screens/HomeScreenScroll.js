@@ -637,7 +637,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
           <Animated.Image
             style={styles.banner(scrollA)}
             source={{
-              uri: "https://firebasestorage.googleapis.com/v0/b/linkedin-ba98a.appspot.com/o/tribearth.jpeg?alt=media&token=b00c8cb9-6a47-4377-81e1-be7cabd30efb",
+              uri: route.params.image,
             }}
             // source={require("./banner.jpg")}
           />
