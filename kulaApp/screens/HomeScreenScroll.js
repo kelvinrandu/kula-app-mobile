@@ -25,7 +25,10 @@ import HeaderTabs from "../components/HeaderTabs";
 import AnimatedHeader from "../components/AnimatedHeader";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-
+import { doc, getDoc,getDocs,onSnapshot } from "firebase/firestore";
+import Firebase, { Firestore } from "../config/firebase";
+import "firebase/compat/firestore";
+import firebase from "firebase/compat/app";
 import ViewCart from "../components/ViewCart";
 
 const items = [
@@ -152,7 +155,29 @@ const HomeScreenScroll = ({ route, navigation }) => {
   const [images, setImages] = React.useState(picsumImages);
   const [active, setActive] = useState(0);
   const [query, setQuery] = useState("Main Dishes");
-  const scrollA = useRef(new Animated.Value(0)).current;
+  const [todos, setTodos] = useState([]);
+  const scrollA = useRef(new Animated.Value(0))?.current;
+
+  useEffect(() => {
+    const todoRef = Firestore.collection("menu").where("restaurantId", '==', route.params.id);
+  
+    const subscriber = onSnapshot(todoRef, {
+      next: (snapshot) => {
+        const todos = [];
+        snapshot.docs.forEach((doc) => {
+          todos.push({
+            id: doc.id,
+            ...doc.data()
+          });
+        });
+  
+        setTodos(todos);
+      }
+    });
+  
+    // // Unsubscribe from events when no longer in use
+    return () => subscriber();
+  }, []);
   const search = (query) => {
     console.log(query);
     let resti = food_array.filter((food) => food.category === query);
@@ -184,7 +209,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
     let _total_price = total_price * price_update + " ksh";
     setPrice(_total_price);
   };
-  const offset = useRef(new Animated.Value(0)).current;
+  const offset = useRef(new Animated.Value(0))?.current;
 
   const dispatch = useDispatch();
   const selectItem = (item, checkboxValue) => {
@@ -615,6 +640,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
       </View>
     );
   };
+  console.log('rest',route.params.id)
   return (
     <View>
       <TopNavigation
@@ -666,12 +692,14 @@ const HomeScreenScroll = ({ route, navigation }) => {
               style={{
                 alignItems: "center",
                 // marginRight: 30,
-                marginHorizontal: 4,
+                marginHorizontal: 10,
+                paddingHorizontal: 10,
                 marginTop: 20,
                 // marginBottom: 5,
               }}
             >
               <TouchableOpacity
+                  key={index}
                 style={
                   active == item.id ? styles.activeCategory : styles.category
                 }
@@ -685,6 +713,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
                 style={{ width: 50, height: 40, resizeMode: "contain" }}
               /> */}
                 <Text
+                    key={index}
                   style={
                     active == item.id
                       ? styles.activeTextCategory
@@ -711,14 +740,12 @@ const HomeScreenScroll = ({ route, navigation }) => {
             {items[active].text}
           </Text>
         </View>
-        {foods.map((food, index) => (
+        {todos.map((food, index) => (
           <View key={index}>
-            <View style={styles.menuItemStyle}>
+            <View key={index} style={styles.menuItemStyle}>
               <TouchableOpacity
+              key={index}
                 onPress={(index) => {
-                  //      isFoodInCart(food, cartItems)
-                  //        ? console.log("here")
-                  //        : selectItem(food, index);
                   setModalVisible(true);
                   setSelect(food);
                   setPrice(food?.price);
@@ -730,6 +757,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
             </View>
           </View>
         ))}
+
         <View style={styles.menuItemStyle2}></View>
         {/* <DummyText /> */}
       </Animated.ScrollView>
@@ -750,9 +778,10 @@ const HomeScreenScroll = ({ route, navigation }) => {
         {ModalContent2()}
       </Modal>
 
-      <View style={styles.action}>
+      <View    style={styles.action}>
         <ViewCart
-          ind={ind}
+          // ind={ind}
+          // key={ind}
           setNotification={route.params.setNotification}
           setModalVisible2={setModalVisible2}
           isFoodInCart={isFoodInCart}
@@ -1068,6 +1097,7 @@ const styles = {
     flexDirection: "row",
     justifyContent: "space-between",
     margin: 10,
+    paddingHorizontal: 10,
   },
   menuItemStyle2: {
     flexDirection: "row",

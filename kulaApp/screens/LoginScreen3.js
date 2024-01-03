@@ -13,6 +13,8 @@ import { passwordValidator } from "../helpers/passwordValidator";
 import Firebase from "../config/firebase";
 import {  InputField, ErrorMessage } from "../components";
 
+import 'expo-dev-client';
+
 
 const auth = Firebase.auth();
 export default function LoginScreen({ navigation }) {
@@ -40,6 +42,7 @@ export default function LoginScreen({ navigation }) {
     const onLogin = async () => {
       try {
         if (email !== "" && password !== "") {
+          
           await auth.signInWithEmailAndPassword(email, password);
         }
       } catch (error) {
@@ -51,7 +54,7 @@ export default function LoginScreen({ navigation }) {
     <Background>
       {/* <BackButton goBack={navigation.goBack} /> */}
       <Logo />
-      <Header>Welcome back.</Header>
+      <Header color={'green'}>Welcome back.</Header>
       <TextInput
         label="Email"
         returnKeyType="next"
@@ -82,10 +85,20 @@ export default function LoginScreen({ navigation }) {
           <Text style={styles.forgot}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
-      {loginError ? <ErrorMessage error={loginError} visible={true} /> : null}
+      {/* {loginError ? <ErrorMessage error={loginError} visible={true} /> : null}
       <Button mode="contained" onPress={onLogin}>
       <Text style={styles.link2}>Login </Text>
-      </Button>
+      </Button> */}
+            <Button
+        onPress={onLogin}
+        backgroundColor="green"
+        title="Login"
+        tileColor="#fff"
+        titleSize={20}
+        containerStyle={{
+          marginBottom: 24,
+        }}
+      />
       <View style={styles.row}>
         <Text>Don’t have an account? </Text>
         <TouchableOpacity onPress={() => navigation.replace("RegisterScreen")}>
@@ -116,6 +129,6 @@ const styles = StyleSheet.create({
   },
   link2: {
     fontWeight: "bold",
-    color: "#ffff",
+    color: "#fff",
   },
 });

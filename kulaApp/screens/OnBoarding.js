@@ -8,7 +8,7 @@ export default function OnboardingScreen({ navigation }) {
   }
   const doneButton=({props})=>{
     return(<>
-            <TouchableOpacity style={styles.link} onPress={() => navigation.replace("Login")}>
+        <TouchableOpacity style={styles.link} onPress={() => navigation.replace("Login")}>
           <Text >Done</Text>
         </TouchableOpacity>
     </>)
@@ -21,12 +21,6 @@ export default function OnboardingScreen({ navigation }) {
       onSkip={handleDone}
       DoneButtonComponent={doneButton}
         pages={[
-          // {
-          //   backgroundColor: "#fff",
-          //   image: <Image source={require("../assets/images/1.png")} />,
-          //   title: "Spot On,Let's Eat!",
-          //   subtitle: "Hey,what's your corner of the world?.Hit 'Allow Location' and we'll bring the eats to your streets.Quick share,and we're there!",
-          // },
           {
             backgroundColor: "#a7f3d0",
             image: <Image source={require("../assets/images/1.png")} />,

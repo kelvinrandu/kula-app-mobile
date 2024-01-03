@@ -327,7 +327,6 @@ export default function ViewCart({
       </View>
     );
   };
-  console.log('loc',loc)
   const checkoutModalContent = () => {
     return (
       <View style={styles.modalContainer}>
@@ -517,29 +516,33 @@ export default function ViewCart({
                 {"subtotal: "} {totalKES} {"ksh"}
               </Text>
             </View>
-            {items.map((item, index) => (
-              <>
-                <View
-                  index={index}
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    // padding: 20,
-                    paddingBottom: 20,
-                    paddingTop: 20,
-                    // borderBottomWidth: 1,
-                  }}
-                >
-                  <></>
-                  <Text style={{ fontWeight: "600", fontSize: 16 }}>
-                    {item?.item?.title}
-                  </Text>
-                  <Text style={{ fontWeight: "600", fontSize: 16 }}>
-                    {item?.item?.price}
-                  </Text>
-                </View>
-
-                <View
+            {items.map((item,index)=>(
+              <View
+              key={item.item.title}
+                // index={index}
+              >       
+          
+       <View
+       key={item.item.title}
+         // index={index}
+         style={{
+           flexDirection: "row",
+           justifyContent: "space-between",
+           // padding: 20,
+           paddingBottom: 20,
+           paddingTop: 20,
+           // borderBottomWidth: 1,
+         }}
+       >
+      
+         <Text style={{ fontWeight: "600", fontSize: 16 }}>
+           {item?.item?.title}
+         </Text>
+         <Text style={{ fontWeight: "600", fontSize: 16 }}>
+           {item?.item?.price}
+         </Text>
+       </View>
+       <View
                   style={{
                     flexDirection: "row",
                     justifyContent: "space-between",
@@ -568,6 +571,7 @@ export default function ViewCart({
                 ></View>
                 <View
                   index={index}
+                  key={index}
                   style={{
                     flexDirection: "row",
                     justifyContent: "space-between",
@@ -582,6 +586,7 @@ export default function ViewCart({
                   <></>
                   <TouchableOpacity
                     index={index}
+                    key={index}
                     style={{
                       backgroundColor: "white",
                       borderColor: "gray",
@@ -640,8 +645,139 @@ export default function ViewCart({
                     {item?.item?.price}
                   </Text>
                 </View>
-              </>
-            ))}
+           </View>
+
+       
+       
+   ))}
+            {/* {items.map((item, index) => ( */}
+               {/* <><Text>     {item?.item?.title}</Text> */}
+                {/* <View
+                key={item.item.title}
+                  // index={index}
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    // padding: 20,
+                    paddingBottom: 20,
+                    paddingTop: 20,
+                    // borderBottomWidth: 1,
+                  }}
+                >
+                  <></>
+                  <Text style={{ fontWeight: "600", fontSize: 16 }}>
+                    {item?.item?.title}
+                  </Text>
+                  <Text style={{ fontWeight: "600", fontSize: 16 }}>
+                    {item?.item?.price}
+                  </Text>
+                </View> */}
+
+                {/* <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    // padding: 20,
+                    paddingBottom: 20,
+                    // borderBottomWidth: 1,
+                  }}
+                ></View>
+                <View>
+                  <Text style={{ opacity: 0.7, fontSize: 16 }}>
+                    Ethiopian platter is a very healthy vegan platter with
+                    lentils, vegetables, and fermented flatbread Injera. The
+                    platter is rich in fiber, gluten-free, and a combination of
+                    complex flavors. Moreover, this recipe has 7 different side
+                    dishes with different vegetables and lentils. Some recipes
+                    call for an Ethiopian spice blend called Berbere or with
+                    simple spices.
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    // padding: 20,
+                    paddingBottom: 20,
+                    paddingTop: 20,
+                  }}
+                ></View>
+                <View
+                  index={index}
+                  key={index}
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    // padding: 20,
+                    paddingBottom: 20,
+                    // paddingTop: 20,
+                    // borderBottomWidth: 1,
+                    borderBottomColor: "999",
+                  }}
+                >
+                  <></>
+                  <TouchableOpacity
+                    index={index}
+                    key={index}
+                    style={{
+                      backgroundColor: "white",
+                      borderColor: "gray",
+                      border: "1px solid gray",
+                      alignItems: "center",
+                      padding: 5,
+                      borderRadius: 50,
+                      width: 180,
+                      borderWidth: 1,
+                      marginRight: 15,
+                      // borderBottomWidth:{(title=="Deliver option") ? 0: 1}
+                      // borderBottomWidth: 1,
+                      borderColor: "#616161",
+
+                      position: "relative",
+                    }}
+                  >
+                    <View
+                      spacing={6}
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        paddingHorizontal: 10,
+                      }}
+                    >
+                      <Ionicons
+                        style={{
+                          paddingRight: 10,
+                        }}
+                        name="add"
+                        size={30}
+                        color="black"
+                      />
+
+                      <Text
+                        style={{
+                          fontWeight: "600",
+                          fontSize: 20,
+                          paddingRight: 20,
+                          paddingLeft: 20,
+                        }}
+                      >
+                        {itemPrice}
+                      </Text>
+                      <AntDesign
+                        style={{
+                          paddingLeft: 10,
+                        }}
+                        name="minus"
+                        size={30}
+                        color="black"
+                      />
+                    </View>
+                  </TouchableOpacity>
+                  <Text style={{ fontWeight: "600", fontSize: 16 }}>
+                    {item?.item?.price}
+                  </Text>
+                </View> */}
+               {/* </>
+            // ))} */}
             <View
               style={{
                 flexDirection: "row",
@@ -1045,7 +1181,7 @@ export default function ViewCart({
       </View>
     );
   };
-
+console.log('items',items)
   return (
     <>
       <Modal
@@ -1096,7 +1232,7 @@ export default function ViewCart({
       >
         {checkoutModal5Content(setNotification)}
       </Modal>
-      
+   
       {total ? (
         <View
         key={ind}
@@ -1138,9 +1274,7 @@ export default function ViewCart({
             </TouchableOpacity>
           </View>
         </View>
-      ) : (
-        <></>
-      )}
+      ) :(<></>)}
     </>
   );
 }

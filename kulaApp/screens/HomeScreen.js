@@ -535,7 +535,8 @@ const styles = StyleSheet.create({
     // borderColor: "black",
     // borderWidth: 5,
     // bordrerStyle: "dashed",
-    padding: -2,
+    // padding: -2,
+    paddingHorizontal: 10,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
