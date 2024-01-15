@@ -148,7 +148,7 @@ export default function CartDetailsItem({
     );
   };
 
-  const PaymentModalContent = () => {
+  const PaymentModalContent = (phone, setPhone) => {
     const [active, setActive] = useState(false);
     const [isSelected, setIsSelected] = useState(false);
     const [check, setCheck] = useState(false);
@@ -175,7 +175,7 @@ export default function CartDetailsItem({
     const setSelection = () => {};
 
     const onButtonPress = (e, value) => {
-      console.log("here", e.target.checked, value);
+      console.log("here", e, value);
       setCheckbox(value);
       setCheck(true);
       // const selectedCheckBoxes = checkboxes.find(
@@ -227,7 +227,7 @@ export default function CartDetailsItem({
                     position: "relative",
                   }}
                   onPress={() => {
-                    payment(phone);
+                    // payment(phone);
                     setMapModalVisible(false);
                   }}
                 >
@@ -248,7 +248,7 @@ export default function CartDetailsItem({
                 <CheckBox
                   key={item.id}
                   index={item.id}
-                  value={isSelected}
+                  // value={isSelected}
                   checked={checkbox == item.id ? true : false}
                   onPress={(e) => onButtonPress(e, item.id)}
               
