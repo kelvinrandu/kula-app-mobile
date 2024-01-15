@@ -202,7 +202,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
     return () =>{ cat();subscriber();}
   }, []);
   const search = (query) => {
-    console.log('query',query,todos);
+    console.log('query',query);
     let resti = todos.filter((food) => food.category === query);
     // let result = resti;
     setQuery(query);
@@ -210,10 +210,32 @@ const HomeScreenScroll = ({ route, navigation }) => {
     // setfoods(result);
     setTodos(resti)
   };
-  useEffect(() => {
-    search(query);
-  }, [query]);
+  // useEffect(() => {
+  //   search(query);
+  // }, [query]);
   useEffect(() => {}, [quantity]);
+  useEffect(() => {
+    const todoRef = Firestore.collection("menu").where("restaurantId", '==', route.params.id);
+
+  
+    const subscriber = onSnapshot(todoRef, {
+      next: (snapshot) => {
+        const todos = [];
+        snapshot.docs.forEach((doc) => {
+          todos.push({
+            id: doc.id,
+            ...doc.data()
+          });
+        });
+        let resti = todos.filter((food) => food.category === query);
+        
+  
+        setTodos(resti);
+      }
+    });
+
+    return () =>{ subscriber();}
+  }, [query]);
   const decreasePrice = () => {
     if (quantity > 1) {
       let price_update = quantity - 1;
@@ -665,7 +687,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
       </View>
     );
   };
-  console.log('rest',route.params.id)
+
   console.log('category',category[0]?.name)
   return (
     <View>
@@ -673,6 +695,8 @@ const HomeScreenScroll = ({ route, navigation }) => {
         active={active}
         setActive={setActive}
         search={search}
+        query={query}
+        setQuery={setQuery}
         items={category}
         title={route.params.name}
         scrollA={scrollA}

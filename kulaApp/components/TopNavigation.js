@@ -13,7 +13,7 @@ import { TOPNAVI_H, BANNER_H } from "./constants";
 const TopNavigation = (props) => {
   const safeArea = useSafeArea();
 
-  const { active,items,title, scrollA ,setActive,search} = props;
+  const { active,items,title,query,setQuery, scrollA ,setActive,search} = props;
   console.log('title',items)
   const isFloating = !!scrollA;
   const [isTransparent, setTransparent] = useState(isFloating);
@@ -70,7 +70,7 @@ const TopNavigation = (props) => {
                       }
                       onPress={() => {
                         setActive(item.id);
-                        search(item.text);
+                        search(item.name);
                       }}
                     >
                       {/* <Image
