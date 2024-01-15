@@ -1,8 +1,8 @@
 import "dotenv/config";
 export default {
   expo: {
-    name: "kulaApp",
-    slug: "kulaApp",
+    name: "meko",
+    slug: "meko",
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/splash.png",

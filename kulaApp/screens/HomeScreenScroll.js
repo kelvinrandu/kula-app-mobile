@@ -154,12 +154,14 @@ const HomeScreenScroll = ({ route, navigation }) => {
   const [foods, setfoods] = useState(food_array);
   const [images, setImages] = React.useState(picsumImages);
   const [active, setActive] = useState(0);
-  const [query, setQuery] = useState("Main Dishes");
+  const [query, setQuery] = useState("");
   const [todos, setTodos] = useState([]);
-  const scrollA = useRef(new Animated.Value(0))?.current;
+  const [category, setCategory] = useState([]);
+  const scrollA = useRef(new Animated.Value(1))?.current;
 
   useEffect(() => {
     const todoRef = Firestore.collection("menu").where("restaurantId", '==', route.params.id);
+     const categoryRef = Firestore.collection("category").where("restaurantId", '==', route.params.id);
   
     const subscriber = onSnapshot(todoRef, {
       next: (snapshot) => {
@@ -170,20 +172,43 @@ const HomeScreenScroll = ({ route, navigation }) => {
             ...doc.data()
           });
         });
+
+        
   
         setTodos(todos);
       }
     });
   
+    const cat = onSnapshot(categoryRef, {
+      next: (snapshot) => {
+        const category = [];
+        snapshot.docs.forEach((doc) => {
+          category.push({
+            id: doc.id,
+            ...doc.data()
+          });
+        });
+
+        setCategory(category)
+        // setTodos(todos);
+        if(category[0]?.name){
+          setQuery(category[0]?.name)
+        }
+        // setQuery()
+      }
+    });
+  
     // // Unsubscribe from events when no longer in use
-    return () => subscriber();
+    return () =>{ cat();subscriber();}
   }, []);
   const search = (query) => {
-    console.log(query);
-    let resti = food_array.filter((food) => food.category === query);
-    let result = resti;
+    console.log('query',query,todos);
+    let resti = todos.filter((food) => food.category === query);
+    // let result = resti;
     setQuery(query);
-    setfoods(result);
+    console.log('tot',resti)
+    // setfoods(result);
+    setTodos(resti)
   };
   useEffect(() => {
     search(query);
@@ -641,14 +666,15 @@ const HomeScreenScroll = ({ route, navigation }) => {
     );
   };
   console.log('rest',route.params.id)
+  console.log('category',category[0]?.name)
   return (
     <View>
       <TopNavigation
         active={active}
         setActive={setActive}
         search={search}
-        items={items}
-        title="Tribeearth Vegan"
+        items={category}
+        title={route.params.name}
         scrollA={scrollA}
       />
       <Animated.ScrollView
@@ -685,7 +711,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
           <HeaderTabs color={"green"} />
         </View>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {items.map((item, index) => (
+          {category.map((item, index) => (
             <View
               onPress={() => console.log("here")}
               key={index}
@@ -705,7 +731,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
                 }
                 onPress={() => {
                   setActive(item.id);
-                  search(item.text);
+                  search(item.name);
                 }}
               >
                 {/* <Image
@@ -720,7 +746,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
                       : styles.textCategory
                   }
                 >
-                  {item.text}
+                  {item.name}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -737,7 +763,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
               marginHorizontal: 10,
             }}
           >
-            {items[active].text}
+           {query}
           </Text>
         </View>
         {todos.map((food, index) => (

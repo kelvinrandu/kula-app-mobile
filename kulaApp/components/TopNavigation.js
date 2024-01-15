@@ -14,6 +14,7 @@ const TopNavigation = (props) => {
   const safeArea = useSafeArea();
 
   const { active,items,title, scrollA ,setActive,search} = props;
+  console.log('title',items)
   const isFloating = !!scrollA;
   const [isTransparent, setTransparent] = useState(isFloating);
   const [isShowing, setIsShowing ]= useState(false);
@@ -83,7 +84,7 @@ const TopNavigation = (props) => {
                             : styles.textCategory
                         }
                       >
-                        {item.text}
+                        {item.name}
         
                       </Text>
                     </TouchableOpacity>
