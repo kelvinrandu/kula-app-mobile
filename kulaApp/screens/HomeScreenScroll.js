@@ -684,7 +684,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
     );
   };
 
-  console.log('category',category[0]?.name)
+  console.log('category',cartItems.length)
   return (
     <View>
       <TopNavigation
@@ -825,10 +825,10 @@ const HomeScreenScroll = ({ route, navigation }) => {
       </Modal>
 
       <View    style={styles.action}>
-        <ViewCart
-          // ind={ind}
-          // key={ind}
-          setNotification={route.params.setNotification}
+      {cartItems.length >0?(
+
+             <ViewCart
+
           setModalVisible2={setModalVisible2}
           isFoodInCart={isFoodInCart}
           selectItem={selectItem}
@@ -838,7 +838,20 @@ const HomeScreenScroll = ({ route, navigation }) => {
           select={select}
           navigation={navigation}
           restaurantName={route.params.name}
-        />
+        /> 
+      ):(<></>)}
+        {/* <ViewCart
+
+          setModalVisible2={setModalVisible2}
+          isFoodInCart={isFoodInCart}
+          selectItem={selectItem}
+          cartItems={cartItems}
+          modalVisible2={modalVisible2}
+          setSelect={setSelect}
+          select={select}
+          navigation={navigation}
+          restaurantName={route.params.name}
+        /> */}
       </View>
     </View>
   );

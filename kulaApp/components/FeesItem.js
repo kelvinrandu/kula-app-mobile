@@ -5,7 +5,7 @@ export default function FeesItem({ item, total }) {
   const { title } = item;
   return (
     <View
-    // key={key}
+    key={item?.id}
       style={{
         flexDirection: "row",
         justifyContent: "space-between",

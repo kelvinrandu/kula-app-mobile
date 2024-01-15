@@ -279,7 +279,7 @@ export default function RestaurantItem({ navigation, ...props }) {
               price: restaurant.price,
               reviews: restaurant.reviews,
               rating: restaurant.rating,
-              setNotification: props.setNotification,
+              // setNotification: props.setNotification,
           
             })
           }

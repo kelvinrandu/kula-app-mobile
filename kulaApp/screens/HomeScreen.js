@@ -404,7 +404,7 @@ const HomeScreen = ({ navigation }) => {
   const [modalVisible1, setModal1Visible] = useState(false);
   const [modalVisible2, setModal2Visible] = useState(false);
   const animation = useRef(null);
-  const { user } = useContext(AuthenticatedUserContext);
+  const { user,order } = useContext(AuthenticatedUserContext);
 
   useEffect(() => {
     // setRestaurantData(restaurantData);
@@ -428,11 +428,11 @@ const HomeScreen = ({ navigation }) => {
       console.log(error);
     }
   };
-  // console.log("res->", restaurantData);
+  console.log("res->", order);
 
   return (
     <>
-      {showNotification ? (
+      {order ? (
         <TopNavigationOrder
           setModal2Visible={setModal2Visible}
           setModal1Visible={setModal1Visible}
@@ -470,7 +470,7 @@ const HomeScreen = ({ navigation }) => {
             <RestaurantItems
               navigation={navigation}
               restaurantData={restaurantData}
-              setNotification={setNotification}
+              // setNotification={setNotification}
             />
 
           </View>

@@ -119,7 +119,7 @@ export default function ViewCart({
     (state) => state.cartReducer.selectedItems
   );
 
-  const { user } = useContext(AuthenticatedUserContext);
+  const { user,setOrder } = useContext(AuthenticatedUserContext);
   const total = items
     .map((item) =>
       Number(item?.item?.price?.replace("ksh", "") * item?.item?.quantity)
@@ -337,7 +337,7 @@ export default function ViewCart({
             {/* {loc ? <CartDetailsItem2 title={loc} price={phone} /> : null} */}
             {details.map((item, index) => (
               <CartDetailsItem
-              index={index}
+              index={item.id}
                 setMapModalVisible={setMapModalVisible}
                 location={location}
                 icon={"md-home-outline"}
@@ -363,12 +363,15 @@ export default function ViewCart({
                 Delivery option
               </Text>
             </View>
-            {details2.map((item) => (
-              <CartDetailsItem2
+            {details2.map((item,index) => (
+                 <View key={index}>
+           <CartDetailsItem2
                
-                title={item.title}
-                price={item.price}
-              />
+               title={item.title}
+               price={item.price}
+             />
+                 </View>
+   
             ))}
             <View
               style={{
@@ -382,23 +385,34 @@ export default function ViewCart({
               </Text>
             </View>
             {phone ? <CartDetailsItem2 title={"Mpesa"} price={phone} /> : null}
-            {details3.map((item) => (
-              <CartDetailsItem
+            {details3.map((item,index) => (
+                       <View key={index}>
+                         <CartDetailsItem
                 icon={"creditcard"}
+                index={item?.id}
                 phone={phone}
                 setPhone={setPhone}
                 payee={true}
                 payment={payment}
-                // key={item.id}
+                key={item.id}
                 item={item}
                 type={"payment"}
               />
+
+               </View>
+              
+ 
             ))}
             <Text style={{ paddingTop: 20, fontWeight: "600", fontSize: 16 }}>
               Order Overview
             </Text>
-            {items.map((item) => (
-              <OrderItem  item={item} />
+            {items.map((item,index) => (
+               <View key={index}>
+                 <OrderItem  item={item} />
+
+               </View>
+
+             
             ))}
             <TouchableOpacity
               style={{
@@ -417,8 +431,11 @@ export default function ViewCart({
                 <Text style={{ color: "#6EBE76" }}>(How our fees work)</Text>
               </Text>
             </TouchableOpacity>
-            {fees.map((item) => (
-              <FeesItem total={total}  item={item} />
+            {fees.map((item,index) => (
+                <View key={index}>
+    <FeesItem total={total}  item={item} />
+                </View>
+          
             ))}
           </ScrollView>
           <View style={styles.subtotalContainer}>
@@ -885,7 +902,8 @@ export default function ViewCart({
               }}
               onPress={() => {
                 setModalVisible5(false);
-                setNotification(true);
+                // setNotification(true);
+                setOrder(true)
                 navigation.navigate("Home");
                 // setModalVisible1(true);
                 // setModalVisible1(true);
