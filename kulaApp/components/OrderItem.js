@@ -1,11 +1,11 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-export default function OrderItem({ item,key }) {
+export default function OrderItem({ item }) {
     const { title, price } = item.item;
     return (
         <View 
-        key={key}
+        // key={key}
         style={{ 
             flexDirection: 'row',
             justifyContent: 'space-between',

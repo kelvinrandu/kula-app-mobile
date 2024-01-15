@@ -193,6 +193,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
         // setTodos(todos);
         if(category[0]?.name){
           setQuery(category[0]?.name)
+          setActive(category[0]?.id)
         }
         // setQuery()
       }
@@ -305,6 +306,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
         category: "African",
       },
     ];
+    console.log('select',select)
     return (
       <View style={styles.modalContainer}>
         <View style={styles.modalCheckout2Container}>
@@ -372,13 +374,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
               </View>
               <View>
                 <Text style={{ opacity: 0.7, fontSize: 16 }}>
-                  Ethiopian platter is a very healthy vegan platter with
-                  lentils, vegetables, and fermented flatbread Injera. The
-                  platter is rich in fiber, gluten-free, and a combination of
-                  complex flavors. Moreover, this recipe has 7 different side
-                  dishes with different vegetables and lentils. Some recipes
-                  call for an Ethiopian spice blend called Berbere or with
-                  simple spices.
+              {select?.description}
                 </Text>
               </View>
               <View

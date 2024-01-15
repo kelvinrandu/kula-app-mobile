@@ -29,46 +29,46 @@ import LottieView from "lottie-react-native";
 
 const details = [
   {
-    id:0,
+    id: 0,
     title: "Add your Address",
     description: "With butter lettuce, tomato and sauce bechamel",
   },
 ];
 const details2 = [
   {
-    id:0,
+    id: 0,
     title: "Standard",
     price: "30-60 Min",
   },
 ];
 const details3 = [
   {
-    id:0,
+    id: 0,
     title: "Add your Payment option",
     description: "With butter lettuce, tomato and sauce bechamel",
   },
 ];
 const fees = [
   {
-    id:0,
+    id: 0,
     title: "Products",
     price: "$12",
   },
   {
-    id:1,
+    id: 1,
     title: "Services",
     price: "$12",
   },
 
   {
-    id:2,
+    id: 2,
     title: "Delivery",
     price: "$1",
   },
 ];
 const delivery = [
   {
-    id:0,
+    id: 0,
     title: "placo",
     price: "$12",
   },
@@ -84,7 +84,7 @@ export default function ViewCart({
   isFoodInCart,
   select,
   navigation,
-  setNotification
+  setNotification,
 }) {
   const animation = useRef(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -101,8 +101,8 @@ export default function ViewCart({
   }, [select?.price, price]);
 
   const [phone, setPhone] = useState(null);
-  const [ loc, setLoc] = useState(null);
-  
+  const [loc, setLoc] = useState(null);
+
   const [itemPrice, setItemPrice] = useState(1);
   const dispatch = useDispatch();
   const updateItem = (item) => {
@@ -209,14 +209,13 @@ export default function ViewCart({
 
     setModalVisible1(false);
 
-     setModalVisible4(true);
+    setModalVisible4(true);
 
     //  payment function should be here
-     setTimeout(() => {
+    setTimeout(() => {
       setModalVisible4(false);
       setModalVisible5(true);
     }, 6000);
-     
   };
   const styles = StyleSheet.create({
     modalContainer: {
@@ -338,7 +337,7 @@ export default function ViewCart({
             {/* {loc ? <CartDetailsItem2 title={loc} price={phone} /> : null} */}
             {details.map((item, index) => (
               <CartDetailsItem
-             
+              index={index}
                 setMapModalVisible={setMapModalVisible}
                 location={location}
                 icon={"md-home-outline"}
@@ -355,7 +354,7 @@ export default function ViewCart({
             ))}
             <View
               style={{
-                // padding: 20,
+     
                 paddingBottom: 20,
                 paddingTop: 20,
               }}
@@ -364,17 +363,16 @@ export default function ViewCart({
                 Delivery option
               </Text>
             </View>
-            {details2.map((item, index) => (
+            {details2.map((item) => (
               <CartDetailsItem2
-                key={item.id}
-             
+               
                 title={item.title}
                 price={item.price}
               />
             ))}
             <View
               style={{
-                // padding: 20,
+           
                 paddingBottom: 10,
                 paddingTop: 20,
               }}
@@ -384,14 +382,14 @@ export default function ViewCart({
               </Text>
             </View>
             {phone ? <CartDetailsItem2 title={"Mpesa"} price={phone} /> : null}
-            {details3.map((item, index) => (
+            {details3.map((item) => (
               <CartDetailsItem
                 icon={"creditcard"}
                 phone={phone}
                 setPhone={setPhone}
                 payee={true}
                 payment={payment}
-                key={item.id}
+                // key={item.id}
                 item={item}
                 type={"payment"}
               />
@@ -399,8 +397,8 @@ export default function ViewCart({
             <Text style={{ paddingTop: 20, fontWeight: "600", fontSize: 16 }}>
               Order Overview
             </Text>
-            {items.map((item, index) => (
-              <OrderItem key={index} item={item} />
+            {items.map((item) => (
+              <OrderItem  item={item} />
             ))}
             <TouchableOpacity
               style={{
@@ -419,8 +417,8 @@ export default function ViewCart({
                 <Text style={{ color: "#6EBE76" }}>(How our fees work)</Text>
               </Text>
             </TouchableOpacity>
-            {fees.map((item, index) => (
-              <FeesItem total={total}  key={index} item={item} />
+            {fees.map((item) => (
+              <FeesItem total={total}  item={item} />
             ))}
           </ScrollView>
           <View style={styles.subtotalContainer}>
@@ -516,208 +514,60 @@ export default function ViewCart({
                 {"subtotal: "} {totalKES} {"ksh"}
               </Text>
             </View>
-            {items.map((item,index)=>(
+            {items.map((item,index) => (
               <View
-              key={item.item.title}
+                key={index}
                 // index={index}
-              >       
-          
-       <View
-       key={item.item.title}
-         // index={index}
-         style={{
-           flexDirection: "row",
-           justifyContent: "space-between",
-           // padding: 20,
-           paddingBottom: 20,
-           paddingTop: 20,
-           // borderBottomWidth: 1,
-         }}
-       >
-      
-         <Text style={{ fontWeight: "600", fontSize: 16 }}>
-           {item?.item?.title}
-         </Text>
-         <Text style={{ fontWeight: "600", fontSize: 16 }}>
-           {item?.item?.price}
-         </Text>
-       </View>
-       <View
+              >
+                <View
+     
                   style={{
                     flexDirection: "row",
                     justifyContent: "space-between",
-                    // padding: 20,
-                    paddingBottom: 20,
-                    // borderBottomWidth: 1,
-                  }}
-                ></View>
-                <View>
-                  <Text style={{ opacity: 0.7, fontSize: 16 }}>
-                    Ethiopian platter is a very healthy vegan platter with
-                    lentils, vegetables, and fermented flatbread Injera. The
-                    platter is rich in fiber, gluten-free, and a combination of
-                    complex flavors. Moreover, this recipe has 7 different side
-                    dishes with different vegetables and lentils. Some recipes
-                    call for an Ethiopian spice blend called Berbere or with
-                    simple spices.
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    // padding: 20,
+  
                     paddingBottom: 20,
                     paddingTop: 20,
-                  }}
-                ></View>
-                <View
-                  index={index}
-                  key={index}
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    // padding: 20,
-                    paddingBottom: 20,
-                    // paddingTop: 20,
-                    // borderBottomWidth: 1,
-                    borderBottomColor: "999",
+ 
                   }}
                 >
-                  <></>
-                  <TouchableOpacity
-                    index={index}
-                    key={index}
-                    style={{
-                      backgroundColor: "white",
-                      borderColor: "gray",
-                      border: "1px solid gray",
-                      alignItems: "center",
-                      padding: 5,
-                      borderRadius: 50,
-                      width: 180,
-                      borderWidth: 1,
-                      marginRight: 15,
-                      // borderBottomWidth:{(title=="Deliver option") ? 0: 1}
-                      // borderBottomWidth: 1,
-                      borderColor: "#616161",
-
-                      position: "relative",
-                    }}
-                  >
-                    <View
-                      spacing={6}
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        paddingHorizontal: 10,
-                      }}
-                    >
-                      <Ionicons
-                        style={{
-                          paddingRight: 10,
-                        }}
-                        name="add"
-                        size={30}
-                        color="black"
-                      />
-
-                      <Text
-                        style={{
-                          fontWeight: "600",
-                          fontSize: 20,
-                          paddingRight: 20,
-                          paddingLeft: 20,
-                        }}
-                      >
-                        {itemPrice}
-                      </Text>
-                      <AntDesign
-                        style={{
-                          paddingLeft: 10,
-                        }}
-                        name="minus"
-                        size={30}
-                        color="black"
-                      />
-                    </View>
-                  </TouchableOpacity>
-                  <Text style={{ fontWeight: "600", fontSize: 16 }}>
-                    {item?.item?.price}
-                  </Text>
-                </View>
-           </View>
-
-       
-       
-   ))}
-            {/* {items.map((item, index) => ( */}
-               {/* <><Text>     {item?.item?.title}</Text> */}
-                {/* <View
-                key={item.item.title}
-                  // index={index}
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    // padding: 20,
-                    paddingBottom: 20,
-                    paddingTop: 20,
-                    // borderBottomWidth: 1,
-                  }}
-                >
-                  <></>
                   <Text style={{ fontWeight: "600", fontSize: 16 }}>
                     {item?.item?.title}
                   </Text>
                   <Text style={{ fontWeight: "600", fontSize: 16 }}>
                     {item?.item?.price}
                   </Text>
-                </View> */}
-
-                {/* <View
+                </View>
+                <View
                   style={{
                     flexDirection: "row",
                     justifyContent: "space-between",
-                    // padding: 20,
                     paddingBottom: 20,
-                    // borderBottomWidth: 1,
                   }}
                 ></View>
                 <View>
                   <Text style={{ opacity: 0.7, fontSize: 16 }}>
-                    Ethiopian platter is a very healthy vegan platter with
-                    lentils, vegetables, and fermented flatbread Injera. The
-                    platter is rich in fiber, gluten-free, and a combination of
-                    complex flavors. Moreover, this recipe has 7 different side
-                    dishes with different vegetables and lentils. Some recipes
-                    call for an Ethiopian spice blend called Berbere or with
-                    simple spices.
+                  {item?.item?.description}
                   </Text>
                 </View>
                 <View
                   style={{
-                    // padding: 20,
                     paddingBottom: 20,
                     paddingTop: 20,
                   }}
                 ></View>
                 <View
-                  index={index}
-                  key={index}
+               
                   style={{
                     flexDirection: "row",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    // padding: 20,
                     paddingBottom: 20,
-                    // paddingTop: 20,
-                    // borderBottomWidth: 1,
                     borderBottomColor: "999",
                   }}
                 >
                   <></>
                   <TouchableOpacity
-                    index={index}
-                    key={index}
+                 
                     style={{
                       backgroundColor: "white",
                       borderColor: "gray",
@@ -728,10 +578,7 @@ export default function ViewCart({
                       width: 180,
                       borderWidth: 1,
                       marginRight: 15,
-                      // borderBottomWidth:{(title=="Deliver option") ? 0: 1}
-                      // borderBottomWidth: 1,
                       borderColor: "#616161",
-
                       position: "relative",
                     }}
                   >
@@ -775,18 +622,16 @@ export default function ViewCart({
                   <Text style={{ fontWeight: "600", fontSize: 16 }}>
                     {item?.item?.price}
                   </Text>
-                </View> */}
-               {/* </>
-            // ))} */}
+                </View>
+              </View>
+            ))}
+
             <View
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
-                // padding: 20,
                 paddingBottom: 20,
                 paddingTop: 20,
-                // borderBottomWidth: 1,
-                // borderColor: "#616161",
               }}
             >
               <></>
@@ -821,8 +666,8 @@ export default function ViewCart({
               }}
               onPress={() => {
                 setModalVisible3(false);
-            
-                setModalVisible1(true)
+
+                setModalVisible1(true);
                 console.log("here", modalVisible, modalVisible4);
               }}
             >
@@ -837,93 +682,55 @@ export default function ViewCart({
       </View>
     );
   };
-    const checkoutModal4Content = () => {
-      const food_category = [
-        {
-          id: 0,
-          image: require("../assets/images/deals.png"),
-          text: "Vegan",
-          category: "Groceries",
-        },
-        {
-          id: 1,
-          image: require("../assets/images/fast-food.png"),
-          text: "Vegetable",
-          category: "African",
-        },
-        {
-          id: 2,
-          image: require("../assets/images/soft-drink.png"),
-          text: "Lentice",
-          category: "American",
-        },
-        {
-          id: 3,
-          image: require("../assets/images/coffee.png"),
-          text: "Serves two",
-          category: "African",
-        },
-      ];
-      return (
-        <View style={styles.modalContainer}>
+  const checkoutModal4Content = () => {
+    const food_category = [
+      {
+        id: 0,
+        image: require("../assets/images/deals.png"),
+        text: "Vegan",
+        category: "Groceries",
+      },
+      {
+        id: 1,
+        image: require("../assets/images/fast-food.png"),
+        text: "Vegetable",
+        category: "African",
+      },
+      {
+        id: 2,
+        image: require("../assets/images/soft-drink.png"),
+        text: "Lentice",
+        category: "American",
+      },
+      {
+        id: 3,
+        image: require("../assets/images/coffee.png"),
+        text: "Serves two",
+        category: "African",
+      },
+    ];
+    return (
+      <View style={styles.modalContainer}>
         <View style={styles.modalCheckout2Container}>
-
-
-            <ScrollView
-              style={{
-                backgroundColor: "white",
-              }}
-            >
-              <View style={styles.animationContainer}>
-                <LottieView
-                  autoPlay
-                  ref={animation}
-                  style={{
-                    width: 400,
-                    height: 400,
-                    // backgroundColor: "#eee",
-                  }}
-                  // Find more Lottie files at https://lottiefiles.com/featured
-                  source={require("../assets/animations/scanner.json")}
-                />
-              </View>
-
-              <View
+          <ScrollView
+            style={{
+              backgroundColor: "white",
+            }}
+          >
+            <View style={styles.animationContainer}>
+              <LottieView
+                autoPlay
+                ref={animation}
                 style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  // padding: 20,
-                  paddingBottom: 20,
-                  paddingTop: 20,
-                  // borderBottomWidth: 1,
-                  // borderColor: "#616161",
+                  width: 400,
+                  height: 400,
+                  // backgroundColor: "#eee",
                 }}
-              >
-                <></>
-
-                <Text style={{ fontWeight: "600", opacity: 0.7, fontSize: 16 }}>
-                  Subtotal
-                </Text>
-                <Text style={{ fontWeight: "600", opacity: 0.7, fontSize: 16 }}>
-                  {totalKES} {"ksh"}
-                </Text>
-              </View>
-            </ScrollView>
-            <View
-              style={{
-                flexDirection: "row",
-                
-                justifyContent: "center",
-                // padding: 20,
-           
-                paddingTop: 20,
-              }}
-            >
-              <></>
-              <Text style={{ fontWeight: "600", fontSize: 16 }}>
-                Payment Request underway
-              </Text>
+                // Find more Lottie files at https://lottiefiles.com/featured
+                source={require("../assets/animations/scanner.json")}
+              />
             </View>
+
             <View
               style={{
                 flexDirection: "row",
@@ -931,135 +738,171 @@ export default function ViewCart({
                 // padding: 20,
                 paddingBottom: 20,
                 paddingTop: 20,
+                // borderBottomWidth: 1,
+                // borderColor: "#616161",
               }}
             >
               <></>
-              <Text style={{ fontWeight: "400", fontSize: 16 }}>
-                Your payment request is on its way! Please note that this process can take up to 60 seconds.We appreciate your patience as we work on getting the payment details for you
+
+              <Text style={{ fontWeight: "600", opacity: 0.7, fontSize: 16 }}>
+                Subtotal
+              </Text>
+              <Text style={{ fontWeight: "600", opacity: 0.7, fontSize: 16 }}>
+                {totalKES} {"ksh"}
               </Text>
             </View>
+          </ScrollView>
+          <View
+            style={{
+              flexDirection: "row",
 
+              justifyContent: "center",
+              // padding: 20,
+
+              paddingTop: 20,
+            }}
+          >
+            <></>
+            <Text style={{ fontWeight: "600", fontSize: 16 }}>
+              Payment Request underway
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              // padding: 20,
+              paddingBottom: 20,
+              paddingTop: 20,
+            }}
+          >
+            <></>
+            <Text style={{ fontWeight: "400", fontSize: 16 }}>
+              Your payment request is on its way! Please note that this process
+              can take up to 60 seconds.We appreciate your patience as we work
+              on getting the payment details for you
+            </Text>
           </View>
         </View>
-      );
-    };
-    const checkoutModal5Content = (setNotification) => {
-      const food_category = [
-        {
-          id: 0,
-          image: require("../assets/images/deals.png"),
-          text: "Vegan",
-          category: "Groceries",
-        },
-        {
-          id: 1,
-          image: require("../assets/images/fast-food.png"),
-          text: "Vegetable",
-          category: "African",
-        },
-        {
-          id: 2,
-          image: require("../assets/images/soft-drink.png"),
-          text: "Lentice",
-          category: "American",
-        },
-        {
-          id: 3,
-          image: require("../assets/images/coffee.png"),
-          text: "Serves two",
-          category: "African",
-        },
-      ];
-      return (
-        <View style={styles.modalContainer}>
+      </View>
+    );
+  };
+  const checkoutModal5Content = (setNotification) => {
+    const food_category = [
+      {
+        id: 0,
+        image: require("../assets/images/deals.png"),
+        text: "Vegan",
+        category: "Groceries",
+      },
+      {
+        id: 1,
+        image: require("../assets/images/fast-food.png"),
+        text: "Vegetable",
+        category: "African",
+      },
+      {
+        id: 2,
+        image: require("../assets/images/soft-drink.png"),
+        text: "Lentice",
+        category: "American",
+      },
+      {
+        id: 3,
+        image: require("../assets/images/coffee.png"),
+        text: "Serves two",
+        category: "African",
+      },
+    ];
+    return (
+      <View style={styles.modalContainer}>
         <View style={styles.modalCheckout3Container}>
-        
-              <View style={styles.animationContainer}>
-                <LottieView
-                  autoPlay
-                  ref={animation}
-                  style={{
-                    width: 300,
-                    height: 300,
-                    // backgroundColor: "#eee",
-                  }}
-                  // Find more Lottie files at https://lottiefiles.com/featured
-                  source={require("../assets/animations/cooking.json")}
-                />
-              </View>
+          <View style={styles.animationContainer}>
+            <LottieView
+              autoPlay
+              ref={animation}
+              style={{
+                width: 300,
+                height: 300,
+                // backgroundColor: "#eee",
+              }}
+              // Find more Lottie files at https://lottiefiles.com/featured
+              source={require("../assets/animations/cooking.json")}
+            />
+          </View>
 
-     
-         
-            <View
-              style={{
-                flexDirection: "row",
-                
-                justifyContent: "center",
-                // padding: 20,
-           
-                // paddingTop: 20,
-                paddingBottom: 10,
-              }}
-            >
-              <></>
-              <Text style={{ fontWeight: "600", fontSize: 16 }}>
-                Payment Successful,Bon Appetit!
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                // padding: 20,
-                paddingBottom: 20,
-                // paddingTop: 20,
-              }}
-            >
-              <></>
-              <Text style={{ fontWeight: "400", fontSize: 16 }}>
-                Your payment request is on its way! Please note that this process can take up to 60 seconds.We appreciate your patience as we work on getting the payment details for you
-              </Text>
-            </View>
+          <View
+            style={{
+              flexDirection: "row",
 
-            <View
+              justifyContent: "center",
+              // padding: 20,
+
+              // paddingTop: 20,
+              paddingBottom: 10,
+            }}
+          >
+            <></>
+            <Text style={{ fontWeight: "600", fontSize: 16 }}>
+              Payment Successful,Bon Appetit!
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              // padding: 20,
+              paddingBottom: 20,
+              // paddingTop: 20,
+            }}
+          >
+            <></>
+            <Text style={{ fontWeight: "400", fontSize: 16 }}>
+              Your payment request is on its way! Please note that this process
+              can take up to 60 seconds.We appreciate your patience as we work
+              on getting the payment details for you
+            </Text>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              paddingHorizontal: 10,
+              padding: 3,
+            }}
+          >
+            <TouchableOpacity
               style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                paddingHorizontal: 10,
-                padding: 3,
+                // marginTop: 20,
+                backgroundColor: "green",
+                alignItems: "center",
+                padding: 15,
+                paddingLeft: 10,
+                borderRadius: 8,
+                width: "90%",
+                position: "relative",
+              }}
+              onPress={() => {
+                setModalVisible5(false);
+                setNotification(true);
+                navigation.navigate("Home");
+                // setModalVisible1(true);
+                // setModalVisible1(true);
+                console.log("here", modalVisible, modalVisible4);
               }}
             >
-              <TouchableOpacity
-                style={{
-                  // marginTop: 20,
-                  backgroundColor: "green",
-                  alignItems: "center",
-                  padding: 15,
-                  paddingLeft: 10,
-                  borderRadius: 8,
-                  width: "90%",
-                  position: "relative",
-                }}
-                onPress={() => {
-                  setModalVisible5(false);
-                  setNotification(true);
-                  navigation.navigate("Home")
-                  // setModalVisible1(true);
-                  // setModalVisible1(true);
-                  console.log("here", modalVisible, modalVisible4);
-                }}
-              >
-                {/* <Text style={{ color: "white", fontSize: 20 }}> Checkout</Text> */}
-                <Text style={{ color: "white", fontSize: 20 }}>
-                  {/* {total ? "Add ( " + totalUSD + "ksh )" : ""} */}
-                  close
-                </Text>
-              </TouchableOpacity>
-            </View>
+              {/* <Text style={{ color: "white", fontSize: 20 }}> Checkout</Text> */}
+              <Text style={{ color: "white", fontSize: 20 }}>
+                {/* {total ? "Add ( " + totalUSD + "ksh )" : ""} */}
+                close
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
-      );
-    };
+      </View>
+    );
+  };
   const checkoutModal2Content = () => {
     const food_category = [
       {
@@ -1181,7 +1024,7 @@ export default function ViewCart({
       </View>
     );
   };
-console.log('items',items)
+  console.log("items", items);
   return (
     <>
       <Modal
@@ -1232,10 +1075,10 @@ console.log('items',items)
       >
         {checkoutModal5Content(setNotification)}
       </Modal>
-   
+
       {total ? (
         <View
-        key={ind}
+         
           style={{
             flex: 2,
             alignItems: "center",
@@ -1258,7 +1101,7 @@ console.log('items',items)
                 backgroundColor: "green",
                 flexDirection: "row",
                 justifyContent: "center",
-                alignItems:"center",
+                alignItems: "center",
                 padding: 15,
                 borderRadius: 8,
                 width: 300,
@@ -1270,11 +1113,12 @@ console.log('items',items)
               <Text style={{ color: "white", fontSize: 20 }}>
                 Basket( {totalUSD} ksh )
               </Text>
-         
             </TouchableOpacity>
           </View>
         </View>
-      ) :(<></>)}
+      ) : (
+        <></>
+      )}
     </>
   );
 }

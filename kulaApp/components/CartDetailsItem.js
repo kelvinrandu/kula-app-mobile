@@ -17,7 +17,7 @@ import { Ionicons, AntDesign } from "@expo/vector-icons";
 
 export default function CartDetailsItem({
   item,
-  index,
+
   type,
   location,
   setLocation,
@@ -28,7 +28,7 @@ export default function CartDetailsItem({
   payee,
   loc,
   setLoc,
-  key
+  
 }) {
   const { title, price } = item;
   const [mapModalVisible, setMapModalVisible] = useState(false);
@@ -242,42 +242,21 @@ export default function CartDetailsItem({
           <View style={styles.modalMapCheckoutContainer}>
             <Text style={styles.restaurantName}>Payment Options</Text>
             {checkboxes.map((item, index) => (
-              <View>
-                {/* <CheckBox
-              value={isSelected}
-              onValueChange={setSelection}
-              style={styles.checkbox}
-            /> */}
+              <View
+              key={item.id }>
+      
                 <CheckBox
-                  key={index}
-                  index={index}
+                  key={item.id}
+                  index={item.id}
                   value={isSelected}
                   checked={checkbox == item.id ? true : false}
                   onPress={(e) => onButtonPress(e, item.id)}
-                  // checked
+              
                   title={item.title}
                 />
               </View>
             ))}
 
-            {/* 
-          <View style={{ flexDirection: "row", justifyContent: "center" }}>
-            <TouchableOpacity
-              style={{
-                marginTop: 20,
-                backgroundColor: "black",
-                alignItems: "center",
-                padding: 13,
-                borderRadius: 8,
-                width: 300,
-                position: "relative",
-              }}
-              onPress={() => setMapModalVisible(false)}
-            >
-              <Text style={{ color: "white", fontSize: 20 }}> Done</Text>
-             
-            </TouchableOpacity>
-          </View> */}
           </View>
         </View>
       </>
@@ -298,10 +277,9 @@ export default function CartDetailsItem({
           : PaymentModalContent(phone, setPhone)}
       </Modal>
       <View
-      key={index}
         style={{
           flexDirection: "row",
-          // justifyContent: "center",
+
           justifyContent: "space-between",
           paddingTop: 0,
           paddingBottom: 0,
@@ -312,14 +290,11 @@ export default function CartDetailsItem({
         <TouchableOpacity
           style={{
             marginTop: 10,
-
-            // alignItems: "center",
             padding: 5,
             paddingTop: 5,
             paddingBottom: 20,
             marginBottom: 0,
             borderRadius: 8,
-            // justifyContent: "space-evenly",
             flexDirection: "row",
             justifyContent: "space-between",
             width: 360,
@@ -329,18 +304,8 @@ export default function CartDetailsItem({
         >
           <View
             style={{
-              // marginTop: 10,
-
-              // alignItems: "center",
-              // padding: 5,
-              // paddingTop: 5,
-              // paddingBottom: 20,
-              // marginBottom: 0,
-              // borderRadius: 8,
-              // justifyContent: "space-evenly",
               flexDirection: "row",
               justifyContent: "space-between",
-              // width: 200,
               position: "relative",
             }}
           >

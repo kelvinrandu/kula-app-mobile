@@ -1,16 +1,16 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-export default function FeesItem({ item, total,key }) {
+export default function FeesItem({ item, total }) {
   const { title } = item;
   return (
     <View
-    key={key}
+    // key={key}
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
         padding: 10,
-        // borderBottomWidth:1,
+        borderBottomWidth:1,
         borderBottomColor: "999",
       }}
     >
