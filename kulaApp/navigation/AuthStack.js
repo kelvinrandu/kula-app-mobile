@@ -13,8 +13,8 @@ export default function AuthStack() {
     <Stack.Navigator initialRouteName="Onboarding">
     {/* // <Stack.Navigator initialRouteName="Onboarding" headerMode="none"> */}
       <Stack.Screen name="Onboarding" component={OnboardingScreen}   options={{ headerShown:false}}/>
-      <Stack.Screen name="Login" component={LoginScreen3} />
-      <Stack.Screen name="Signup" component={SignupScreen} />
+      <Stack.Screen name="Login" component={LoginScreen3}options={{ headerShown:false}} />
+      <Stack.Screen name="Signup" component={SignupScreen}options={{ headerShown:false}} />
     </Stack.Navigator>
   );
 }

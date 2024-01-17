@@ -1038,7 +1038,7 @@ const RestaurantDescription = (props) => (
       //   // })
       // }
       // uncomment
-      onPress={() => props.setModalVisible1(true)}
+      // onPress={() => props.setModalVisible1(true)}
     >
       <Text
         style={{
