@@ -246,6 +246,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
       setPrice(_total_price);
       // setPrice(select?.price * price_update);
     } else {
+      console.log('remove from cart')
     }
   };
 
@@ -260,17 +261,35 @@ const HomeScreenScroll = ({ route, navigation }) => {
   const offset = useRef(new Animated.Value(0))?.current;
 
   const dispatch = useDispatch();
-  const selectItem = (item, checkboxValue) => {
+  const selectItem = (item, ind,quantity) => {
+    console.log('iteems',item,quantity)
+    let _item = {
+      category: item?.category,
+      description: item?.description,
+      id: item?.id,
+      price: item?.price,
+      quantity:quantity,
+      total:price,
+      restaurantId: item?.restaurantId,
+      title: item?.title,
+
+    }
+    // console.log('item & quantity',_item)
+
+  
+
     dispatch({
       type: "ADD_TO_CART",
       payload: {
-        item,
-        //  restaurantName: restaurantName,
+        item:_item,
         restaurantName: route.params.name,
-        // checkboxValue: checkboxValue,
-        quantity: 1,
+   
+        // quantity:quantity ,
+        quantity:price,
+        total: price,
       },
     });
+    setQuantity(1)
   };
   const cartItems = useSelector(
     (state) => state.cartReducer.selectedItems.items
@@ -306,6 +325,12 @@ const HomeScreenScroll = ({ route, navigation }) => {
         category: "African",
       },
     ];
+    useEffect(() => {
+ 
+    
+      // // Unsubscribe from events when no longer in use
+      return () =>{console.log('modal destroy')}
+    }, []);
     console.log('select',select)
     return (
       <View style={styles.modalContainer}>
@@ -475,7 +500,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
                 // setModalVisible1(true);
                 isFoodInCart(select, cartItems)
                   ? console.log("here")
-                  : selectItem(select, ind);
+                  : selectItem(select, ind,quantity,price);
                 setModalVisible(false);
               }}
             >

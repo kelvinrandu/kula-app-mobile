@@ -115,7 +115,7 @@ export default function ViewCart({
     });
   };
   const [mapModalVisible, setMapModalVisible] = useState(false);
-  const { items, restaurantName } = useSelector(
+  const { items, restaurantName,quantity} = useSelector(
     (state) => state.cartReducer.selectedItems
   );
 
@@ -624,7 +624,8 @@ export default function ViewCart({
                           paddingLeft: 20,
                         }}
                       >
-                        {itemPrice}
+                        {/* {itemPrice} */}
+                        {item?.item?.quantity}
                       </Text>
                       <AntDesign
                         style={{
@@ -637,7 +638,7 @@ export default function ViewCart({
                     </View>
                   </TouchableOpacity>
                   <Text style={{ fontWeight: "600", fontSize: 16 }}>
-                    {item?.item?.price}
+                    {item?.item?.total}
                   </Text>
                 </View>
               </View>
@@ -1129,7 +1130,8 @@ export default function ViewCart({
               onPress={() => setModalVisible3(true)}
             >
               <Text style={{ color: "white", fontSize: 20 }}>
-                Basket( {totalUSD} ksh )
+                Basket( {totalUSD} ksh ) 
+              
               </Text>
             </TouchableOpacity>
           </View>
