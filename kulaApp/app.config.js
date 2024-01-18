@@ -25,6 +25,9 @@ export default {
     android: {
       package: "com.meko.kulaapp",
       versionCode: 1,
+      config: {
+        googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
+      },
       adaptiveIcon: {
         foregroundImage: "./assets/adaptive-icon.png",
         backgroundColor: "#FFFFFF",
@@ -41,6 +44,7 @@ export default {
       messagingSenderId: process.env.MESSAGING_SENDER_ID,
       databaseURL: process.env.DATABASE_URL,
       appId: process.env.APP_ID,
+      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
       eas: {
         projectId: process.env.EAS_PROJECT_ID,
       },

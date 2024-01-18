@@ -95,20 +95,50 @@ export default function CartDetailsItem({
         }
 
         let location = await Location.getCurrentPositionAsync({});
+        if(location){
+          let _region = {
+            latitude: parseFloat(location?.coords?.latitude),
+            longitude: parseFloat(location?.coords?.longitude),
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
+          };
+          let _location = {
+            latitude: parseFloat(location?.coords?.latitude),
+            longitude: parseFloat(location?.coords?.longitude),
+          };
+  
+          setRegion(_region);
+          setLocation(_location);
+        }else{
+          let _region = {
+    latitude: 33.8220918,
+    longitude: -117.9199742,
+    latitudeDelta: 0.05,
+    longitudeDelta: 0.05,
+          };
+          let _location = {
+            latitude: 33.8220918,
+            longitude: -117.9199742,
+          };
+  
+          setRegion(_region);
+          setLocation(_location);
 
-        let _region = {
-          latitude: parseFloat(location?.coords?.latitude),
-          longitude: parseFloat(location?.coords?.longitude),
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
-        };
-        let _location = {
-          latitude: parseFloat(location?.coords?.latitude),
-          longitude: parseFloat(location?.coords?.longitude),
-        };
+        }
 
-        setRegion(_region);
-        setLocation(_location);
+        // let _region = {
+        //   latitude: parseFloat(location?.coords?.latitude),
+        //   longitude: parseFloat(location?.coords?.longitude),
+        //   latitudeDelta: 0.01,
+        //   longitudeDelta: 0.01,
+        // };
+        // let _location = {
+        //   latitude: parseFloat(location?.coords?.latitude),
+        //   longitude: parseFloat(location?.coords?.longitude),
+        // };
+
+        // setRegion(_region);
+        // setLocation(_location);
       })();
     }, []);
     console.log("region", region);

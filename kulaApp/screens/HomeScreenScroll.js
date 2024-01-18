@@ -157,7 +157,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
   const [query, setQuery] = useState("");
   const [todos, setTodos] = useState([]);
   const [category, setCategory] = useState([]);
-  const scrollA = useRef(new Animated.Value(1))?.current;
+  const scrollA = useRef(new Animated.Value(0))?.current;
 
   useEffect(() => {
     const todoRef = Firestore.collection("menu").where("restaurantId", '==', route.params.id);
@@ -200,7 +200,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
     });
   
     // // Unsubscribe from events when no longer in use
-    return () =>{ cat();subscriber();}
+    return () =>{ cat();subscriber(); }
   }, []);
   const search = (query) => {
     console.log('query',query);
@@ -329,7 +329,9 @@ const HomeScreenScroll = ({ route, navigation }) => {
  
     
       // // Unsubscribe from events when no longer in use
-      return () =>{console.log('modal destroy')}
+      return () =>{    dispatch({
+        type: "RESET_CART"
+      });console.log('modal destroy')}
     }, []);
     console.log('select',select)
     return (
@@ -736,7 +738,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
             source={{
               uri: route.params.image,
             }}
-            // source={require("./banner.jpg")}
+          
           />
         </View>
         <RestaurantTitle name={route.params.name} />

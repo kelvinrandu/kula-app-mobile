@@ -63,7 +63,7 @@ export default function MapComponent({
       <MapView
         style={styles.map}
         initialRegion={region}
-        style={{ height: "100%", width: "100%" }}
+
         showsUserLocation={true}
         PROVIDER={PROVIDER_GOOGLE}
         // onRegionChangeComplete={(region) => console.log("route", region)}

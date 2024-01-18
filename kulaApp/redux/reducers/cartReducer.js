@@ -54,6 +54,16 @@ let cartReducer = (state = defaultState, action) => {
 
       return newState;
     }
+    case "RESET_CART": {
+      let newState = { ...state };
+      console.log('reset')
+
+
+
+        newState.selectedItems = { items: [], restaurantName: "",quantity:1,total:0 }
+
+      return newState;
+    }
 
     default:
       return state;
