@@ -65,7 +65,7 @@ export default function MapComponent({
         initialRegion={region}
 
         showsUserLocation={true}
-        PROVIDER={PROVIDER_GOOGLE}
+        // PROVIDER={PROVIDER_GOOGLE}
         // onRegionChangeComplete={(region) => console.log("route", region)}
       >
         <Marker

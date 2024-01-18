@@ -452,14 +452,13 @@ const HomeScreen = ({ navigation }) => {
           />
           <HeaderTabs color={""} />
 
-          {/* <SearchBar search={search} /> */}
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           <SearchText text={"Choose a Category"} />
           <Categories
             setModalVisible={setModalVisible}
             setTitle={setTitle}
-            //  search={search}
+        
           />
           <SearchText
             navigation={navigation}
@@ -470,7 +469,7 @@ const HomeScreen = ({ navigation }) => {
             <RestaurantItems
               navigation={navigation}
               restaurantData={restaurantData}
-              // setNotification={setNotification}
+         
             />
 
           </View>
@@ -505,9 +504,11 @@ const HomeScreen = ({ navigation }) => {
             {checkoutModal5Content(setModal2Visible, animation)}
           </Modal>
         </ScrollView>
-        {/* <Divider width={1} />
-      <BottomTabs /> */}
+   
       </SafeAreaView>
+          {/* <View style={styles.container}>
+      <MapView style={styles.map} />
+    </View> */}
     </>
   );
 };
@@ -522,6 +523,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
     backgroundColor: "rgba(0,0,0,0.7)",
+  },
+  map: {
+    width: '100%',
+    height: '100%',
   },
   container: {
     flex: 1,
