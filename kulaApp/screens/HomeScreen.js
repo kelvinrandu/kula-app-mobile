@@ -506,9 +506,7 @@ const HomeScreen = ({ navigation }) => {
         </ScrollView>
    
       </SafeAreaView>
-          {/* <View style={styles.container}>
-      <MapView style={styles.map} />
-    </View> */}
+
     </>
   );
 };

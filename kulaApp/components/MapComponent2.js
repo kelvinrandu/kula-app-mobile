@@ -39,31 +39,31 @@ export default function MapComponent({
   //   latitudeDelta: 0.01,
   //   longitudeDelta: 0.01,
   // };
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
+  // useEffect(() => {
+  //   (async () => {
+  //     let { status } = await Location.requestForegroundPermissionsAsync();
+  //     if (status !== "granted") {
+  //       setErrorMsg("Permission to access location was denied");
+  //       return;
+  //     }
 
-      let location = await Location.getCurrentPositionAsync({});
-    })();
-  }, []);
-  let text = "Waiting..";
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
-  }
+  //     let location = await Location.getCurrentPositionAsync({});
+  //   })();
+  // }, []);
+  // let text = "Waiting..";
+  // if (errorMsg) {
+  //   text = errorMsg;
+  // } else if (location) {
+  //   text = JSON.stringify(location);
+  // }
 
   return (
     <View style={styles.container}>
-      <Text>{text}</Text>
+      {/* <Text>{text}</Text> */}
       <MapView
         style={styles.map}
         initialRegion={region}
-        style={{ height: "100%", width: "100%" }}
+
         showsUserLocation={true}
         PROVIDER={PROVIDER_GOOGLE}
         // onRegionChangeComplete={(region) => console.log("route", region)}

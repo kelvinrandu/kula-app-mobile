@@ -25,6 +25,7 @@ export default {
     android: {
       package: "com.meko.kulaapp",
       versionCode: 1,
+      permissions: ["ACCESS_BACKGROUND_LOCATION"],
       config: {
     
         googleMaps: {

@@ -12,6 +12,7 @@ import MapComponent from './MapComponent';
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
+import { StatusBar } from 'expo-status-bar'
 
 
 
@@ -32,13 +33,17 @@ export default function CartDetailsItem({
 }) {
   const { title, price } = item;
   const [mapModalVisible, setMapModalVisible] = useState(false);
-  // const [location, setLocation] = useState(null);
+  const [error, setErrorMsg] = useState(null);
   const [region, setRegion] = useState({});
   const styles = StyleSheet.create({
     modalContainer: {
       flex: 1,
       justifyContent: "flex-end",
       backgroundColor: "rgba(0,0,0,0.7)",
+    },
+    map: {
+      width: '100%',
+      height: '70%',
     },
     modalCheckoutContainer: {
       backgroundColor: "white",
@@ -90,11 +95,11 @@ export default function CartDetailsItem({
       (async () => {
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== "granted") {
-          setErrorMsg("Permission to access location was denied");
+          setErrorMsg(status);
           return;
         }
 
-        let location = await Location.getCurrentPositionAsync({});
+        let location = await Location.getCurrentPositionAsync();
         if(location){
           let _region = {
             latitude: parseFloat(location?.coords?.latitude),
@@ -109,6 +114,7 @@ export default function CartDetailsItem({
   
           setRegion(_region);
           setLocation(_location);
+          // setLocation(location);
         }else{
           let _region = {
     latitude: 33.8220918,
@@ -141,12 +147,12 @@ export default function CartDetailsItem({
         // setLocation(_location);
       })();
     }, []);
-    console.log("region", region);
+    
     return (
       <View style={styles.modalContainer}>
         <View style={styles.modalMapCheckoutContainer}>
-          <Text style={styles.restaurantName}>here</Text>
-          <MapComponent
+          <Text style={styles.restaurantName}>here{region?.longitude}</Text>
+          {/* <MapComponent
             setLocation={setLocation}
             setLoc={setLoc}
             loc={loc}
@@ -154,8 +160,65 @@ export default function CartDetailsItem({
             setRegion={setRegion}
             region={region}
             setMapModalVisible={setMapModalVisible}
-          />
+          /> */}
+    <View style={styles.container}>
+      <MapView    showsUserLocation={true} style={styles.map} />
+    </View>
+    <StatusBar />
+      <View style={{ flexDirection: "column", justifyContent: "center" }}>
+        <View>
+          <TextInput
+            style={{
+              height: 40,
+              width: 300,
+              marginBottom: 20,
 
+              textAlign: "center",
+              borderColor: "gray",
+              borderWidth: 1,
+              position: "relative",
+
+              placeholderTextColor: "black",
+            }}
+            onChangeText={(text) => setLoc(text)}
+            value={loc}
+            type="text"
+            placeholder="House/apartment/door"
+          />
+          <TextInput
+            style={{
+              height: 40,
+              width: 300,
+
+              textAlign: "center",
+              borderColor: "gray",
+              borderWidth: 1,
+              position: "relative",
+
+              placeholderTextColor: "black",
+            }}
+            //  onChangeText={(text) => setPhone(text)}
+            //  value={phone}
+            type="number"
+            placeholder="Notes "
+          />
+        </View>
+        <TouchableOpacity
+          style={{
+            marginTop: 20,
+            backgroundColor: "green",
+            alignItems: "center",
+            padding: 13,
+            borderRadius: 8,
+            width: 300,
+            position: "relative",
+          }}
+          onPress={() => setMapModalVisible(false)}
+        >
+          <Text style={{ color: "white", fontSize: 20 }}> Done</Text>
+          {/* <Text style ={{ position:'absolute',color:"white",right:20 ,fontSize:15,top:17}}>{total ? totalUSD : ""}</Text> */}
+        </TouchableOpacity>
+      </View>
           <View style={{ flexDirection: "column", justifyContent: "center" }}>
             <View></View>
             {/* <TouchableOpacity
