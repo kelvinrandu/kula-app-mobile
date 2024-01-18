@@ -331,7 +331,7 @@ export default function ViewCart({
       <View style={styles.modalContainer}>
         <View style={styles.modalCheckoutContainer}>
           {/* <Text style={styles.restaurantName}>{restaurantName}</Text> */}
-          <Text style={styles.restaurantName}>Checkout </Text>
+          <Text style={styles.restaurantName}>Checkout {location?.latitude} </Text>
           <ScrollView>
             <OrderItemTotal total={totalKES} items={items} />
             {/* {loc ? <CartDetailsItem2 title={loc} price={phone} /> : null} */}

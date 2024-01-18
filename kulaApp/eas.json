@@ -3,6 +3,9 @@
     "preview": {
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+        "googleMapsApiKey": "AIzaSyBEEGhDViP0-DC6KGIqx5H59qEFY2vQBWA"
       }
     },
     "preview2": {

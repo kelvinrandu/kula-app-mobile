@@ -26,7 +26,10 @@ export default {
       package: "com.meko.kulaapp",
       versionCode: 1,
       config: {
-        googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
+    
+        googleMaps: {
+          apiKey: "AIzaSyBEEGhDViP0-DC6KGIqx5H59qEFY2vQBWA",
+        },
       },
       adaptiveIcon: {
         foregroundImage: "./assets/adaptive-icon.png",

@@ -247,6 +247,7 @@ const HomeScreenScroll = ({ route, navigation }) => {
       // setPrice(select?.price * price_update);
     } else {
       console.log('remove from cart')
+      setModalVisible(false);
     }
   };
 
