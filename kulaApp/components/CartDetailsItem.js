@@ -151,7 +151,7 @@ export default function CartDetailsItem({
     return (
       <View style={styles.modalContainer}>
         <View style={styles.modalMapCheckoutContainer}>
-          <Text style={styles.restaurantName}>here{region?.longitude}</Text>
+          <Text style={styles.restaurantName}>here</Text>
           {/* <MapComponent
             setLocation={setLocation}
             setLoc={setLoc}
